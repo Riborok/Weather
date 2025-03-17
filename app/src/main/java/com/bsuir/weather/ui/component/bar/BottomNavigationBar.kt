@@ -1,4 +1,4 @@
-package com.bsuir.weather.ui.nav
+package com.bsuir.weather.ui.component.bar
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState

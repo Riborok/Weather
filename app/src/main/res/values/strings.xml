@@ -3,4 +3,5 @@
     <string name="weather">Погода</string>
     <string name="forecast">Прогноз</string>
     <string name="ecology">Экология</string>
+    <string name="settings">Настройки</string>
 </resources>
