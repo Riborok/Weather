@@ -21,7 +21,7 @@ fun DailyForecast (dailyForecastList: List<DailyForecastInfo>, modifier: Modifie
         modifier = modifier
     ) {
         Column (
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .fillMaxWidth()

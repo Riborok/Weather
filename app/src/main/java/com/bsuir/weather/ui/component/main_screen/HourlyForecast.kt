@@ -13,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.model.HourlyForecastInfo
-import com.bsuir.weather.ui.component.main_screen.HourlyForecastItem
 
 @Composable
 fun HourlyForecast (hourlyForecastList: List<HourlyForecastInfo>, modifier: Modifier = Modifier) {
@@ -21,7 +20,7 @@ fun HourlyForecast (hourlyForecastList: List<HourlyForecastInfo>, modifier: Modi
         modifier = modifier
     ) {
         Column (
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.Start,
             modifier = Modifier.padding(16.dp)
         ) {

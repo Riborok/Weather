@@ -1,7 +1,7 @@
 package com.bsuir.weather.usecase
 
-import com.bsuir.weather.model.HourlyForecastInfo
 import com.bsuir.weather.R
+import com.bsuir.weather.model.HourlyForecastInfo
 
 class HourlyForecastManager {
     fun getHourlyForecastList (): List<HourlyForecastInfo> {
