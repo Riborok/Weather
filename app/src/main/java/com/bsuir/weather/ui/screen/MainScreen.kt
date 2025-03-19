@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
@@ -46,7 +48,10 @@ fun MainScreen() {
 
     Surface {
         ModalNavigationDrawer(
-            modifier = Modifier.windowInsetsPadding(WindowInsets.statusBars),
+            modifier = Modifier
+                .windowInsetsPadding(
+                    WindowInsets.statusBars.union(WindowInsets.navigationBars)
+                ),
             drawerState = drawerState,
             drawerContent = {
                 LocationModal (

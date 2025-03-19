@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 
+// TODO: DELETE THIS
 @Composable
 fun TopBar(onSettingsClick: () -> Unit) {
     Surface (
