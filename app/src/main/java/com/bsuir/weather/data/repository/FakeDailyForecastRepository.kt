@@ -1,11 +1,13 @@
-package com.bsuir.weather.domain.usecase
+package com.bsuir.weather.data.repository
 
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.DailyForecastModel
+import com.bsuir.weather.domain.repository.DailyForecastRepository
+import javax.inject.Inject
 
-class DailyForecastUseCase {
-    fun getHourlyForecastList (): List<DailyForecastModel> {
-        return listOf<DailyForecastModel>(
+class FakeDailyForecastRepository @Inject constructor() : DailyForecastRepository {
+    override fun getDailyForecastList(): List<DailyForecastModel> {
+        return listOf(
             DailyForecastModel("Сегодня", R.drawable.sun, "Облачно", "+14°C", "+14°C"),
             DailyForecastModel("Завтра", R.drawable.cloud_basic, "Облачно", "+14°C", "+14°C"),
             DailyForecastModel("Вт", R.drawable.moon, "Облачно", "+14°C", "+14°C"),

@@ -1,15 +1,16 @@
 package com.bsuir.weather.domain.usecase
 
-class LocationUseCase {
+import com.bsuir.weather.domain.repository.LocationRepository
+import javax.inject.Inject
+
+class LocationUseCase @Inject constructor(
+    private val locationRepository: LocationRepository
+) {
     fun getCurrentLocation(): String {
-        return "г. Минск"
+        return locationRepository.getCurrentLocation()
     }
 
     fun getSavedLocations(): List<String> {
-        return listOf<String>(
-            "д. Копище",
-            "г. Бобруйск",
-            "г. Аляулюпалякулюмалютулюпинск",
-        )
+        return locationRepository.getSavedLocations()
     }
 }

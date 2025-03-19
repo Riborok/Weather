@@ -15,6 +15,7 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Surface
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,27 +25,33 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bsuir.weather.presentation.ui.component.main_screen.AdditionalInfo
 import com.bsuir.weather.presentation.ui.component.main_screen.DailyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.MainInfo
 import com.bsuir.weather.presentation.ui.component.modal.LocationModal
 import com.bsuir.weather.presentation.ui.theme.WeatherTheme
-import com.bsuir.weather.domain.usecase.DailyForecastUseCase
-import com.bsuir.weather.domain.usecase.HourlyForecastUseCase
-import com.bsuir.weather.domain.usecase.LocationUseCase
+import com.bsuir.weather.presentation.viewmodel.DailyForecastViewModel
+import com.bsuir.weather.presentation.viewmodel.HourlyForecastViewModel
+import com.bsuir.weather.presentation.viewmodel.LocationViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    dailyForecastViewModel: DailyForecastViewModel = hiltViewModel(),
+    hourlyForecastViewModel: HourlyForecastViewModel = hiltViewModel(),
+    locationViewModel: LocationViewModel = hiltViewModel(),
+) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     var drawerMenuExpanded by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
     //TODO: Добавить прослойку viewmodel вместо этого
-    val hourlyForecastManger = HourlyForecastUseCase()
-    val dailyForecastUseCase = DailyForecastUseCase()
-    val locationUseCase = LocationUseCase()
+    val hourlyForecast by hourlyForecastViewModel.hourlyForecast.collectAsState()
+    val dailyForecast by dailyForecastViewModel.dailyForecast.collectAsState()
+    val currentLocation by locationViewModel.currentLocation.collectAsState()
+    val savedLocations by locationViewModel.savedLocations.collectAsState()
 
     Surface {
         ModalNavigationDrawer(
@@ -55,8 +62,8 @@ fun MainScreen() {
             drawerState = drawerState,
             drawerContent = {
                 LocationModal (
-                    currentLocation = locationUseCase.getCurrentLocation(),
-                    savedLocations = locationUseCase.getSavedLocations(),
+                    currentLocation = currentLocation,
+                    savedLocations = savedLocations,
                     drawerMenuExpanded = drawerMenuExpanded,
                     onDrawerMenuExpandedChange = { drawerMenuExpanded = !drawerMenuExpanded },
                     onDrawerMenuDismissRequest = { drawerMenuExpanded = false },
@@ -84,14 +91,14 @@ fun MainScreen() {
                 )
 
                 HourlyForecast(
-                    hourlyForecastManger.getHourlyForecastList(),
+                    hourlyForecast,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
                 )
 
                 DailyForecast(
-                    dailyForecastUseCase.getHourlyForecastList(),
+                    dailyForecast,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
