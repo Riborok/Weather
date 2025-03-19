@@ -4,4 +4,33 @@
     <string name="forecast">Прогноз</string>
     <string name="ecology">Экология</string>
     <string name="settings">Настройки</string>
+
+    <string name="weather_clear_sky">Ясно</string>
+    <string name="weather_mainly_clear">Облачно</string>
+    <string name="weather_partly_cloudy">Облачно</string>
+    <string name="weather_overcast">Пасмурно</string>
+    <string name="weather_fog">Туман</string>
+    <string name="weather_rime_fog">Туман с обледенением</string>
+    <string name="weather_light_drizzle">Мелкий дождик</string>
+    <string name="weather_moderate_drizzle">Умеренный дождик</string>
+    <string name="weather_dense_drizzle">Дождик высокой интенсивности</string>
+    <string name="weather_light_freezing_drizzle">Мелкий дождик при отрицательной температуре</string>
+    <string name="weather_dense_freezing_drizzle">Дождик высокой интенсивности при отрицательной температуре</string>
+    <string name="weather_light_rain">Небольшой дождь</string>
+    <string name="weather_moderate_rain">Умеренный дождь</string>
+    <string name="weather_heavy_rain">Сильный дождь</string>
+    <string name="weather_light_freezing_rain">Мелкий дождь при отрицательной температуре</string>
+    <string name="weather_heavy_freezing_rain">Сильный дождь при отрицательной температуре</string>
+    <string name="weather_light_snow">Небольшой снег</string>
+    <string name="weather_moderate_snow">Умеренный снег</string>
+    <string name="weather_heavy_snow">Сильный снег</string>
+    <string name="weather_snow_grains">Снежные зерна</string>
+    <string name="weather_light_rain_showers">Небольшие дожди с ливнями</string>
+    <string name="weather_moderate_rain_showers">Умеренные дожди с ливнями</string>
+    <string name="weather_heavy_rain_showers">Сильные дожди с ливнями</string>
+    <string name="weather_light_snow_showers">Небольшие снежные дожди</string>
+    <string name="weather_heavy_snow_showers">Сильные снежные дожди</string>
+    <string name="weather_thunderstorm">Гроза</string>
+    <string name="weather_thunderstorm_light_hail">Гроза с мелким градом</string>
+    <string name="weather_thunderstorm_heavy_hail">Гроза с сильным градом</string>
 </resources>
