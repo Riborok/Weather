@@ -18,13 +18,9 @@ class HourlyForecastViewModel @Inject constructor(
     private val _hourlyForecast = MutableStateFlow<List<HourlyForecastModel>>(emptyList())
     val hourlyForecast: StateFlow<List<HourlyForecastModel>> = _hourlyForecast
 
-    init {
-        loadHourlyForecast()
-    }
-
-    private fun loadHourlyForecast() {
+    fun loadHourlyForecast(latitude: Double, longitude: Double) {
         viewModelScope.launch {
-            _hourlyForecast.value = getHourlyForecastUseCase.execute()
+            _hourlyForecast.value = getHourlyForecastUseCase.execute(latitude, longitude)
         }
     }
 }

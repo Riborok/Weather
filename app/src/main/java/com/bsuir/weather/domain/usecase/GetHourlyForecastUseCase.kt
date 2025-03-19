@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetHourlyForecastUseCase @Inject constructor(
     private val hourlyForecastRepository: HourlyForecastRepository
 ) {
-    fun execute(): List<HourlyForecastModel> {
-        return hourlyForecastRepository.getHourlyForecastList()
+    fun execute(latitude: Double, longitude: Double): List<HourlyForecastModel> {
+        return hourlyForecastRepository.getHourlyForecastList(latitude, longitude)
     }
 }

@@ -6,7 +6,7 @@ import com.bsuir.weather.domain.repository.DailyForecastRepository
 import javax.inject.Inject
 
 class FakeDailyForecastRepository @Inject constructor() : DailyForecastRepository {
-    override fun getDailyForecastList(): List<DailyForecastModel> {
+    override fun getDailyForecastList(latitude: Double, longitude: Double): List<DailyForecastModel> {
         return listOf(
             DailyForecastModel("Сегодня", R.drawable.sun, "Облачно", "+14°C", "+14°C"),
             DailyForecastModel("Завтра", R.drawable.cloud_basic, "Облачно", "+14°C", "+14°C"),

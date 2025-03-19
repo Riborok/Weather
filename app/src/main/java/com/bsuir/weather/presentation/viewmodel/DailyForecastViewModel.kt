@@ -18,13 +18,9 @@ class DailyForecastViewModel @Inject constructor(
     private val _dailyForecast = MutableStateFlow<List<DailyForecastModel>>(emptyList())
     val dailyForecast: StateFlow<List<DailyForecastModel>> = _dailyForecast
 
-    init {
-        loadForecast()
-    }
-
-    private fun loadForecast() {
+    fun loadDailyForecast(latitude: Double, longitude: Double) {
         viewModelScope.launch {
-            _dailyForecast.value = getDailyForecastUseCase.execute()
+            _dailyForecast.value = getDailyForecastUseCase.execute(latitude, longitude)
         }
     }
 }

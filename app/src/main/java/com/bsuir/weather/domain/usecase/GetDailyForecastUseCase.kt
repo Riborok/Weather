@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetDailyForecastUseCase @Inject constructor(
     private val dailyForecastRepository: DailyForecastRepository
 ) {
-    fun execute(): List<DailyForecastModel> {
-        return dailyForecastRepository.getDailyForecastList()
+    fun execute(latitude: Double, longitude: Double): List<DailyForecastModel> {
+        return dailyForecastRepository.getDailyForecastList(latitude, longitude)
     }
 }

@@ -6,7 +6,7 @@ import com.bsuir.weather.domain.repository.HourlyForecastRepository
 import javax.inject.Inject
 
 class FakeHourlyForecastRepository @Inject constructor() : HourlyForecastRepository {
-    override fun getHourlyForecastList(): List<HourlyForecastModel> {
+    override fun getHourlyForecastList(latitude: Double, longitude: Double): List<HourlyForecastModel> {
         return listOf(
             HourlyForecastModel("+14°C", R.drawable.sun, "Облачно", "7:00"),
             HourlyForecastModel("+14°C", R.drawable.cloud_basic, "Облачно", "8:00"),
