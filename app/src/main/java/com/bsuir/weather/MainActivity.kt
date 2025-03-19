@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.bsuir.weather.ui.screen.MainScreen
-import com.bsuir.weather.ui.theme.WeatherTheme
+import com.bsuir.weather.presentation.ui.screen.MainScreen
+import com.bsuir.weather.presentation.ui.theme.WeatherTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
