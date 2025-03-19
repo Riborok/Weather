@@ -26,7 +26,7 @@ fun HourlyForecast (hourlyForecastList: List<HourlyForecastInfo>, modifier: Modi
             modifier = Modifier.padding(16.dp)
         ) {
             Text (
-                text = "24h Forecast",
+                text = "Прогноз на 24 часа",
                 style = MaterialTheme.typography.titleLarge
             )
 

@@ -18,11 +18,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.ui.component.main_screen.AdditionalInfo
+import com.bsuir.weather.ui.component.main_screen.DailyForecast
 import com.bsuir.weather.ui.component.main_screen.HourlyForecast
 import com.bsuir.weather.ui.component.main_screen.HourlyForecastItem
 import com.bsuir.weather.ui.component.main_screen.MainInfo
 import com.bsuir.weather.ui.component.modal.SettingsModal
 import com.bsuir.weather.ui.theme.WeatherTheme
+import com.bsuir.weather.usecase.DailyForecastManager
 import com.bsuir.weather.usecase.HourlyForecastManager
 import kotlinx.coroutines.launch
 
@@ -33,6 +35,7 @@ fun MainScreen() {
 
     //TODO: Добавить прослойку viewmodel вместо этого
     val hourlyForecastManger = HourlyForecastManager()
+    val dailyForecastManager = DailyForecastManager()
 
     Surface {
         ModalNavigationDrawer(
@@ -61,6 +64,13 @@ fun MainScreen() {
 
                 HourlyForecast(
                     hourlyForecastManger.getHourlyForecastList(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                )
+
+                DailyForecast(
+                    dailyForecastManager.getHourlyForecastList(),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
