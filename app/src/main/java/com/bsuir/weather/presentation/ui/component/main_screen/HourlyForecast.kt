@@ -34,10 +34,10 @@ fun HourlyForecast (hourlyForecastList: List<HourlyForecastModel>, modifier: Mod
             ) {
                 items(hourlyForecastList) { hourlyForecastInfo ->
                     HourlyForecastItem(
-                        hourlyForecastInfo.temperature,
-                        hourlyForecastInfo.icon,
-                        hourlyForecastInfo.weatherDescription,
-                        hourlyForecastInfo.hour
+                        hourlyForecastInfo.temperature.toString(),
+                        hourlyForecastInfo.iconId,
+                        hourlyForecastInfo.weatherDescriptionId,
+                        hourlyForecastInfo.time.hour.toString()
                     )
                 }
             }

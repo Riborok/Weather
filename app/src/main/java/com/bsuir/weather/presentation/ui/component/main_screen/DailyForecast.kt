@@ -40,11 +40,11 @@ fun DailyForecast (dailyForecastList: List<DailyForecastModel>, modifier: Modifi
             ) {
                 items(dailyForecastList) { dailyForecastInfo ->
                     DailyForecastItem(
-                        dailyForecastInfo.dayName,
-                        dailyForecastInfo.icon,
-                        dailyForecastInfo.weatherDescription,
-                        dailyForecastInfo.minTemperature,
-                        dailyForecastInfo.maxTemperature,
+                        dailyForecastInfo.date.dayOfWeek.toString(),
+                        dailyForecastInfo.iconId,
+                        dailyForecastInfo.weatherDescriptionId,
+                        dailyForecastInfo.minTemperature.toString(),
+                        dailyForecastInfo.maxTemperature.toString(),
                         Modifier
                             .fillMaxWidth()
                     )

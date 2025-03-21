@@ -10,13 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun DailyForecastItem(
     dayName: String,
     @DrawableRes icon: Int,
-    weatherDescription: String,
+    weatherDescriptionId: Int,
     minTemperature: String,
     maxTemperature: String,
     modifier: Modifier = Modifier
@@ -34,7 +35,7 @@ fun DailyForecastItem(
 
         Image (
             painter = painterResource(icon),
-            contentDescription = weatherDescription,
+            contentDescription = stringResource(weatherDescriptionId),
             modifier = Modifier
                 .size(42.dp)
                 .weight(0.5f)
