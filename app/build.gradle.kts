@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.kotlin.serialization)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -42,8 +43,12 @@ android {
     }
 }
 
-dependencies {
+secrets {
+    propertiesFileName = "secrets.properties"
+    defaultPropertiesFileName = "local.defaults.properties"
+}
 
+dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -77,7 +82,9 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.android.compiler)
 
-    implementation(libs.osmdroid.android)
+    implementation(libs.maps.compose)
+    implementation(libs.maps.compose.utils)
+    implementation(libs.maps.compose.widgets)
 }
 
 kapt {
