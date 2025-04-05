@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,13 +30,13 @@ fun DailyForecast (dailyForecastList: List<DailyForecastModel>, modifier: Modifi
                 style = MaterialTheme.typography.titleLarge
             )
 
-            LazyColumn (
+            Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                items(dailyForecastList) { dailyForecastInfo ->
+                dailyForecastList.forEach { dailyForecastInfo ->
                     DailyForecastItem(
                         dailyForecastInfo.date.dayOfWeek.toString(),
                         dailyForecastInfo.iconId,
