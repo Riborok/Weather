@@ -17,9 +17,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class CurrentLocationViewModel(application: Application) : AndroidViewModel(application) {
+class CurrentLocationViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
     private val _currentLocation = MutableStateFlow<LocationModel?>(null)
     val currentLocation = _currentLocation.asStateFlow()
