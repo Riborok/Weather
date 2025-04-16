@@ -1,11 +1,14 @@
 package com.bsuir.weather.di
 
-import com.bsuir.weather.data.repository.FakeLocationRepository
+import android.content.Context
+import com.bsuir.weather.data.repository.LocationRepositoryImpl
+import com.bsuir.weather.data.source.datastore.LocationDataStore
 import com.bsuir.weather.domain.repository.LocationRepository
 import com.bsuir.weather.domain.usecase.LocationUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -15,8 +18,14 @@ object LocationModule {
 
     @Provides
     @Singleton
-    fun provideLocationRepository(): LocationRepository {
-        return FakeLocationRepository()
+    fun provideLocationDataStore(@ApplicationContext context: Context): LocationDataStore {
+        return LocationDataStore(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLocationRepository(locationDataStore: LocationDataStore): LocationRepository {
+        return LocationRepositoryImpl(locationDataStore)
     }
 
     @Provides

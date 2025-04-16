@@ -49,26 +49,3 @@ fun LocationModal(
         }
     }
 }
-
-@Preview
-@Composable
-fun ModalPreview(
-    locationViewModel: LocationViewModel = hiltViewModel(),
-) {
-    val currentLocation by locationViewModel.currentLocation.collectAsState()
-    val savedLocations by locationViewModel.savedLocations.collectAsState()
-    var drawerMenuExpanded by remember { mutableStateOf(false) }
-
-    WeatherTheme {
-        LocationModal (
-            currentLocation = currentLocation,
-            savedLocations = savedLocations,
-            drawerMenuExpanded = drawerMenuExpanded,
-            onDrawerMenuExpandedChange = { drawerMenuExpanded = !drawerMenuExpanded },
-            onDrawerMenuDismissRequest = { drawerMenuExpanded = false },
-            modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth(0.75f)
-        )
-    }
-}

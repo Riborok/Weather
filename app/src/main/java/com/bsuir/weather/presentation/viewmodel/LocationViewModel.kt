@@ -2,10 +2,10 @@ package com.bsuir.weather.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.domain.usecase.LocationUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -13,21 +13,24 @@ import javax.inject.Inject
 class LocationViewModel @Inject constructor(
     private val locationUseCase: LocationUseCase
 ) : ViewModel() {
-
-    private val _currentLocation = MutableStateFlow<String>("")
-    val currentLocation: StateFlow<String> = _currentLocation
-
-    private val _savedLocations = MutableStateFlow<List<String>>(emptyList())
-    val savedLocations: StateFlow<List<String>> = _savedLocations
+    private var _savedLocations = MutableStateFlow<List<LocationModel>>(emptyList())
+    val savedLocations: StateFlow<List<LocationModel>> = _savedLocations
 
     init {
-        loadLocations()
+        observeLocations()
     }
 
-    private fun loadLocations() {
+    private fun observeLocations() {
+        locationUseCase.getSavedLocations()
+            .onEach { locations ->
+                _savedLocations.value = locations
+            }
+            .launchIn(viewModelScope)
+    }
+
+    fun saveLocation(location: LocationModel) {
         viewModelScope.launch {
-            _currentLocation.value = locationUseCase.getCurrentLocation()
-            _savedLocations.value = locationUseCase.getSavedLocations()
+            locationUseCase.saveLocation(location)
         }
     }
 }

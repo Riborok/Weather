@@ -58,7 +58,6 @@ fun MainScreen(
     }
 
     val forecastState by forecastViewModel.forecastState.collectAsState()
-    val currentLocation by locationViewModel.currentLocation.collectAsState()
     val savedLocations by locationViewModel.savedLocations.collectAsState()
 
     Surface {
@@ -70,8 +69,8 @@ fun MainScreen(
             drawerState = drawerState,
             drawerContent = {
                 LocationModal(
-                    currentLocation = currentLocation,
-                    savedLocations = savedLocations,
+                    currentLocation = "СДЕЛАТЬ",
+                    savedLocations = savedLocations.map { it.name },
                     drawerMenuExpanded = drawerMenuExpanded,
                     onDrawerMenuExpandedChange = { drawerMenuExpanded = !drawerMenuExpanded },
                     onDrawerMenuDismissRequest = { drawerMenuExpanded = false },

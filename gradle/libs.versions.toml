@@ -1,5 +1,6 @@
 [versions]
 agp = "8.9.1"
+datastorePreferences = "1.1.4"
 hiltAndroid = "2.51.1"
 hiltNavigationCompose = "1.2.0"
 kotlin = "2.1.10"
@@ -29,6 +30,7 @@ serialization = "1.9.22"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }

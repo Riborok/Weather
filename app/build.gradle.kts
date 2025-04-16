@@ -88,6 +88,8 @@ dependencies {
     implementation(libs.maps.compose.widgets)
 
     implementation(libs.play.services.location)
+
+    implementation(libs.androidx.datastore.preferences)
 }
 
 kapt {
