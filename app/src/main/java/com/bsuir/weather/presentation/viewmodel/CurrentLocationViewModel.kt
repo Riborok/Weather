@@ -13,10 +13,12 @@ import com.bsuir.weather.utils.Geocoder.getCityFromAddress
 import com.bsuir.weather.utils.Geocoder.getCityName
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+@HiltViewModel
 class CurrentLocationViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _currentLocation = MutableStateFlow<LocationModel?>(null)
