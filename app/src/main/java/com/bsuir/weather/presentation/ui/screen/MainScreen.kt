@@ -30,7 +30,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bsuir.weather.presentation.state.ForecastState
@@ -39,12 +38,12 @@ import com.bsuir.weather.presentation.ui.component.main_screen.DailyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.MainInfo
 import com.bsuir.weather.presentation.ui.component.modal.LocationModal
-import com.bsuir.weather.presentation.ui.theme.WeatherTheme
 import com.bsuir.weather.presentation.viewmodel.ForecastViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
+    onAddWithMapClick: () -> Unit,
     forecastViewModel: ForecastViewModel = hiltViewModel(),
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -69,6 +68,7 @@ fun MainScreen(
                     drawerMenuExpanded = drawerMenuExpanded,
                     onDrawerMenuExpandedChange = { drawerMenuExpanded = !drawerMenuExpanded },
                     onDrawerMenuDismissRequest = { drawerMenuExpanded = false },
+                    onAddWithMapClick,
                     modifier = Modifier
                         .fillMaxHeight()
                         .fillMaxWidth(0.75f)
@@ -135,13 +135,5 @@ fun MainScreen(
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun MainPreview() {
-    WeatherTheme {
-        MainScreen()
     }
 }

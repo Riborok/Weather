@@ -13,6 +13,7 @@ fun LocationModal(
     drawerMenuExpanded: Boolean,
     onDrawerMenuExpandedChange: () -> Unit,
     onDrawerMenuDismissRequest: () -> Unit,
+    onAddWithMapClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -26,7 +27,8 @@ fun LocationModal(
             CurrentLocation (
                 drawerMenuExpanded,
                 onDrawerMenuExpandedChange,
-                onDrawerMenuDismissRequest
+                onDrawerMenuDismissRequest,
+                onAddWithMapClick
             )
             SavedLocations()
         }

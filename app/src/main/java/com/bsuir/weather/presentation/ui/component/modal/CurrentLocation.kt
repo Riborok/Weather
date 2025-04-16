@@ -35,6 +35,7 @@ fun CurrentLocation(
     drawerMenuExpanded: Boolean,
     onDrawerMenuExpandedChange: () -> Unit,
     onDrawerMenuDismissRequest: () -> Unit,
+    onAddWithMapClick: () -> Unit,
     modifier: Modifier = Modifier,
     currentLocationViewModel: CurrentLocationViewModel = hiltViewModel(),
 ) {
@@ -83,7 +84,7 @@ fun CurrentLocation(
                     DropdownMenuItem(
                         text = { Text("Добавить на карте") },
                         leadingIcon = { Icon(Icons.Outlined.Map, contentDescription = null) },
-                        onClick = { /* Do something... */ }
+                        onClick = { onAddWithMapClick() }
                     )
 
                     DropdownMenuItem(
