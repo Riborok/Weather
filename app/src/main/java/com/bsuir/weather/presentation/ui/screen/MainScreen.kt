@@ -41,13 +41,11 @@ import com.bsuir.weather.presentation.ui.component.main_screen.MainInfo
 import com.bsuir.weather.presentation.ui.component.modal.LocationModal
 import com.bsuir.weather.presentation.ui.theme.WeatherTheme
 import com.bsuir.weather.presentation.viewmodel.ForecastViewModel
-import com.bsuir.weather.presentation.viewmodel.LocationViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
     forecastViewModel: ForecastViewModel = hiltViewModel(),
-    locationViewModel: LocationViewModel = hiltViewModel(),
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     var drawerMenuExpanded by remember { mutableStateOf(false) }
@@ -58,7 +56,6 @@ fun MainScreen(
     }
 
     val forecastState by forecastViewModel.forecastState.collectAsState()
-    val savedLocations by locationViewModel.savedLocations.collectAsState()
 
     Surface {
         ModalNavigationDrawer(
@@ -69,8 +66,6 @@ fun MainScreen(
             drawerState = drawerState,
             drawerContent = {
                 LocationModal(
-                    currentLocation = "СДЕЛАТЬ",
-                    savedLocations = savedLocations.map { it.name },
                     drawerMenuExpanded = drawerMenuExpanded,
                     onDrawerMenuExpandedChange = { drawerMenuExpanded = !drawerMenuExpanded },
                     onDrawerMenuDismissRequest = { drawerMenuExpanded = false },

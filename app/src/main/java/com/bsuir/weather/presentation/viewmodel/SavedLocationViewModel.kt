@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LocationViewModel @Inject constructor(
+class SavedLocationViewModel @Inject constructor(
     private val locationUseCase: LocationUseCase
 ) : ViewModel() {
     private var _savedLocations = MutableStateFlow<List<LocationModel>>(emptyList())

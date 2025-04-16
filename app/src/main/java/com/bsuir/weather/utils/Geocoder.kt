@@ -44,4 +44,8 @@ object Geocoder {
             }
         }
     }
+
+    fun getCityFromAddress(address: Address?): String? {
+        return address?.locality ?: address?.subAdminArea
+    }
 }
