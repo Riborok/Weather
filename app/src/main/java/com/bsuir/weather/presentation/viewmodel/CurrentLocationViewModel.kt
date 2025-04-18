@@ -9,8 +9,8 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.bsuir.weather.domain.model.LocationModel
-import com.bsuir.weather.utils.Geocoder.getCityFromAddress
-import com.bsuir.weather.utils.Geocoder.getCityName
+import com.bsuir.weather.utils.GeocoderUtils.getAddressByCoordinates
+import com.bsuir.weather.utils.GeocoderUtils.getCityFromAddress
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -72,7 +72,7 @@ class CurrentLocationViewModel @Inject constructor(application: Application) : A
     }
 
     private fun handleLocationResult(context: Context, latitude: Double, longitude: Double) {
-        context.getCityName(
+        context.getAddressByCoordinates(
             latitude = latitude,
             longitude = longitude,
             onResult = { address ->
