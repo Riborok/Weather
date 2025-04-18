@@ -39,6 +39,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
@@ -83,6 +84,8 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.android.compiler)
 
+    implementation(libs.places)
+    implementation(libs.material)
     implementation(libs.maps.compose)
     implementation(libs.maps.compose.utils)
     implementation(libs.maps.compose.widgets)
