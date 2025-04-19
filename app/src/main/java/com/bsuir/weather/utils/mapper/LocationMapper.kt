@@ -6,7 +6,7 @@ import com.bsuir.weather.data.dto.LocationDTO
 import com.bsuir.weather.domain.model.AddressModel
 import com.bsuir.weather.domain.model.LocationModel
 
-object LocationDTOMapper {
+object LocationMapper {
     fun Address.toModel(): LocationModel {
         return LocationModel(
             latitude = this.latitude,
