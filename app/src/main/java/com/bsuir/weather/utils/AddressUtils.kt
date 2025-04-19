@@ -17,8 +17,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
-object GeocoderUtils {
-    suspend fun getAddressNamesByQuery(
+object AddressUtils {
+    suspend fun fetchAddressSuggestions(
         context: Context,
         query: String,
         sessionToken: AutocompleteSessionToken,
@@ -44,7 +44,7 @@ object GeocoderUtils {
         }
     }
 
-    suspend fun getLocationModelByPlaceId(
+    suspend fun fetchLocationDetailsByPlaceId(
         context: Context,
         placeId: String,
         onResult: (LocationModel) -> Unit,
@@ -69,21 +69,22 @@ object GeocoderUtils {
             val addressComponents = place.addressComponents?.asList()
 
             if (latLng != null) {
-                val addressModel = AddressModel(
-                    countryName = getAddressComponent(addressComponents, "country"),
-                    locality = getAddressComponent(addressComponents, "locality"),
-                    subLocality = getAddressComponent(addressComponents, "sublocality"),
-                    adminArea = getAddressComponent(addressComponents, "administrative_area_level_1"),
-                    subAdminArea = getAddressComponent(addressComponents, "administrative_area_level_2"),
-                    thoroughfare = getAddressComponent(addressComponents, "route"),
-                    subThoroughfare = getAddressComponent(addressComponents, "street_number")
-                )
-
-                onResult(LocationModel(
-                    latitude = latLng.latitude,
-                    longitude = latLng.longitude,
-                    address = addressModel
-                ))
+                with(addressComponents) {
+                    val addressModel = AddressModel(
+                        countryName = extractAddressComponent("country"),
+                        locality = extractAddressComponent("locality"),
+                        subLocality = extractAddressComponent("sublocality"),
+                        adminArea = extractAddressComponent("administrative_area_level_1"),
+                        subAdminArea = extractAddressComponent("administrative_area_level_2"),
+                        thoroughfare = extractAddressComponent("route"),
+                        subThoroughfare = extractAddressComponent("street_number")
+                    )
+                    onResult(LocationModel(
+                        latitude = latLng.latitude,
+                        longitude = latLng.longitude,
+                        address = addressModel
+                    ))
+                }
             } else {
                 onError(Exception())
             }
@@ -92,22 +93,21 @@ object GeocoderUtils {
         }
     }
 
-    private fun getAddressComponent(
-        addressComponents: List<AddressComponent>?,
+    private fun List<AddressComponent>?.extractAddressComponent(
         type: String
     ): String? {
-        return addressComponents
+        return this
             ?.find { it.types.contains(type) }
             ?.name
     }
 
-    fun getLocationModel(
+    fun fetchLocationModelFromCoordinates(
         context: Context,
         latitude: Double,
         longitude: Double,
         onResult: (LocationModel) -> Unit
     ) {
-        getAddressByCoordinates(
+        fetchAddressByCoordinates(
             context = context,
             latitude = latitude,
             longitude = longitude,
@@ -120,7 +120,7 @@ object GeocoderUtils {
         )
     }
 
-    fun getAddressByCoordinates(
+    fun fetchAddressByCoordinates(
         context: Context,
         latitude: Double,
         longitude: Double,

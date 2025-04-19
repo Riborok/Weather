@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.bsuir.weather.domain.model.LocationModel
-import com.bsuir.weather.utils.GeocoderUtils.getAddressNamesByQuery
-import com.bsuir.weather.utils.GeocoderUtils.getLocationModelByPlaceId
+import com.bsuir.weather.utils.AddressUtils.fetchAddressSuggestions
+import com.bsuir.weather.utils.AddressUtils.fetchLocationDetailsByPlaceId
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,7 +32,7 @@ class AddressSearchViewModel @Inject constructor(application: Application) : And
         val context = getApplication<Application>().weatherAppContext
         if (query.isNotBlank()) {
             viewModelScope.launch {
-                getAddressNamesByQuery(
+                fetchAddressSuggestions(
                     context = context,
                     query = query,
                     sessionToken = sessionToken,
@@ -56,7 +56,7 @@ class AddressSearchViewModel @Inject constructor(application: Application) : And
     ) {
         val context = getApplication<Application>().weatherAppContext
         viewModelScope.launch {
-            getLocationModelByPlaceId(
+            fetchLocationDetailsByPlaceId(
                 context = context,
                 placeId = placeId,
                 onResult = onResult,

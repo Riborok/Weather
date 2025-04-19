@@ -24,7 +24,7 @@ import com.bsuir.weather.R
 import com.bsuir.weather.RequestLocationPermission
 import com.bsuir.weather.presentation.viewmodel.CurrentLocationViewModel
 import com.bsuir.weather.presentation.viewmodel.SavedLocationViewModel
-import com.bsuir.weather.utils.GeocoderUtils.getLocationModel
+import com.bsuir.weather.utils.AddressUtils.fetchLocationModelFromCoordinates
 import com.bsuir.weather.utils.mapZoom
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -84,7 +84,7 @@ fun MapScreen(
                 Button(
                     onClick = {
                         isDialogOpen = false
-                        getLocationModel(
+                        fetchLocationModelFromCoordinates(
                             context = context,
                             latitude = selectedCoordinates!!.latitude,
                             longitude = selectedCoordinates!!.longitude,
