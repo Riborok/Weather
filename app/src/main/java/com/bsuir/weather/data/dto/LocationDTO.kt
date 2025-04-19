@@ -7,7 +7,7 @@ import kotlinx.serialization.json.Json
 data class LocationDTO (
     val latitude: Double,
     val longitude: Double,
-    val name: String,
+    val address: AddressDTO,
 ) {
     fun toJson(): String = Json.encodeToString(serializer(), this)
 
@@ -15,3 +15,15 @@ data class LocationDTO (
         fun fromJson(json: String): LocationDTO = Json.decodeFromString(serializer(), json)
     }
 }
+
+@Serializable
+data class AddressDTO (
+    val countryName: String?,
+    val locality: String?,
+    val subLocality: String?,
+    val adminArea: String?,
+    val subAdminArea: String?,
+    val thoroughfare: String?,
+    val subThoroughfare: String?,
+    val alias: String?
+)

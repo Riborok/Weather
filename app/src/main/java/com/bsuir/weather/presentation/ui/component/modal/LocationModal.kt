@@ -7,6 +7,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.bsuir.weather.domain.model.LocationModel
 
 @Composable
@@ -15,7 +16,7 @@ fun LocationModal(
     drawerMenuExpanded: Boolean,
     onDrawerMenuExpandedChange: () -> Unit,
     onDrawerMenuDismissRequest: () -> Unit,
-    onAddWithMapClick: () -> Unit,
+    navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
     Surface(
@@ -30,7 +31,7 @@ fun LocationModal(
                 drawerMenuExpanded,
                 onDrawerMenuExpandedChange,
                 onDrawerMenuDismissRequest,
-                onAddWithMapClick
+                navController
             )
 
             SavedLocations(

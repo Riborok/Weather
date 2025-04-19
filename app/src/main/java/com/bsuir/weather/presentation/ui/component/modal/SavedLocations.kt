@@ -38,7 +38,7 @@ fun SavedLocations(
         ) {
             items (savedLocations) { location ->
                 Text (
-                    text = location.name,
+                    text = location.address.formatAddress(),
                     style = MaterialTheme.typography.titleLarge,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

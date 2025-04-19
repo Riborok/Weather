@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.bsuir.weather.RequestLocationPermission
 import com.bsuir.weather.presentation.state.ForecastState
 import com.bsuir.weather.presentation.ui.component.main_screen.AdditionalInfo
@@ -48,7 +49,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
-    onAddWithMapClick: () -> Unit,
+    navController: NavHostController,
     forecastViewModel: ForecastViewModel = hiltViewModel(),
     currentLocationViewModel: CurrentLocationViewModel = hiltViewModel(),
     pickedLocationViewModel: PickedLocationViewModel = hiltViewModel(),
@@ -102,83 +103,81 @@ fun MainScreen(
         )
     }
 
-    Surface {
-        ModalNavigationDrawer(
-            modifier = Modifier
-                .windowInsetsPadding(
-                    WindowInsets.statusBars.union(WindowInsets.navigationBars)
-                ),
-            drawerState = drawerState,
-            drawerContent = {
-                LocationModal(
-                    savedLocations,
-                    drawerMenuExpanded = drawerMenuExpanded,
-                    onDrawerMenuExpandedChange = { drawerMenuExpanded = !drawerMenuExpanded },
-                    onDrawerMenuDismissRequest = { drawerMenuExpanded = false },
-                    onAddWithMapClick,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .fillMaxWidth(0.75f)
-                )
+    ModalNavigationDrawer(
+        modifier = Modifier
+            .windowInsetsPadding(
+                WindowInsets.statusBars.union(WindowInsets.navigationBars)
+            ),
+        drawerState = drawerState,
+        drawerContent = {
+            LocationModal(
+                savedLocations,
+                drawerMenuExpanded = drawerMenuExpanded,
+                onDrawerMenuExpandedChange = { drawerMenuExpanded = !drawerMenuExpanded },
+                onDrawerMenuDismissRequest = { drawerMenuExpanded = false },
+                navController,
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(0.75f)
+            )
+        }
+    ) {
+        when (forecastState) {
+            is ForecastState.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
             }
-        ) {
-            when (forecastState) {
-                is ForecastState.Loading -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
+            is ForecastState.Success -> {
+                val forecast = (forecastState as ForecastState.Success).forecast
+                LazyColumn (
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    item {
+                        MainInfo(
+                            pickedLocationName = pickedLocation?.address?.formatAddress() ?: "",
+                            onOpenDrawerClick = { scope.launch { drawerState.open() } },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        )
+
+                        AdditionalInfo(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        )
+
+                        HourlyForecast(
+                            forecast.hourlyForecastModels,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        )
+
+                        DailyForecast(
+                            forecast.dailyForecastModels,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp)
+                        )
                     }
                 }
-                is ForecastState.Success -> {
-                    val forecast = (forecastState as ForecastState.Success).forecast
-                    LazyColumn (
-                        verticalArrangement = Arrangement.Top,
+            }
+            is ForecastState.Error -> {
+                val errorMessage = (forecastState as ForecastState.Error).error.message ?: "Unknown error"
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        item {
-                            MainInfo(
-                                pickedLocationName = pickedLocation?.name ?: defaultLocation.name,
-                                onOpenDrawerClick = { scope.launch { drawerState.open() } },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                            )
-
-                            AdditionalInfo(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                            )
-
-                            HourlyForecast(
-                                forecast.hourlyForecastModels,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                            )
-
-                            DailyForecast(
-                                forecast.dailyForecastModels,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp)
-                            )
-                        }
-                    }
-                }
-                is ForecastState.Error -> {
-                    val errorMessage = (forecastState as ForecastState.Error).error.message ?: "Unknown error"
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Column(
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(text = "Error: $errorMessage", color = Color.Red)
-                        }
+                        Text(text = "Error: $errorMessage", color = Color.Red)
                     }
                 }
             }

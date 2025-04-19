@@ -7,8 +7,7 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.domain.repository.LocationRepository
-import com.bsuir.weather.utils.GeocoderUtils.getAddressByCoordinates
-import com.bsuir.weather.utils.GeocoderUtils.getCityFromAddress
+import com.bsuir.weather.utils.GeocoderUtils.getLocationModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
 import kotlinx.coroutines.flow.Flow
@@ -61,26 +60,11 @@ class LocationUseCase @Inject constructor(
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location ->
                 if (location != null) {
-                    context.getAddressByCoordinates(
+                    getLocationModel(
+                        context = context,
                         latitude = location.latitude,
                         longitude = location.longitude,
-                        onResult = { address ->
-                            setCurrentLocationCallback(
-                                LocationModel(
-                                    location.latitude,
-                                    location.longitude,
-                                    getCityFromAddress(address)
-                                )
-                            )
-                        },
-                        onError = {
-                            setCurrentLocationCallback(
-                                LocationModel(
-                                    location.latitude,
-                                    location.longitude
-                                )
-                            )
-                        }
+                        onResult = setCurrentLocationCallback,
                     )
                 } else {
                     setCurrentLocationCallback(null)

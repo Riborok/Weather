@@ -7,5 +7,5 @@ const val mapZoom = 15f
 val defaultLocation = LocationModel(
     latitude = 53.911,
     longitude = 27.593,
-    name = "Минск"
+    //name = "Минск"
 )

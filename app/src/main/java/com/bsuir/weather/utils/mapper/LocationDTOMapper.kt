@@ -1,14 +1,43 @@
 package com.bsuir.weather.utils.mapper
 
+import android.location.Address
+import com.bsuir.weather.data.dto.AddressDTO
 import com.bsuir.weather.data.dto.LocationDTO
+import com.bsuir.weather.domain.model.AddressModel
 import com.bsuir.weather.domain.model.LocationModel
 
 object LocationDTOMapper {
+    fun Address.toModel(): LocationModel {
+        return LocationModel(
+            latitude = this.latitude,
+            longitude = this.longitude,
+            address = AddressModel(
+                countryName = this.countryName,
+                locality = this.locality,
+                subLocality = this.subLocality,
+                adminArea = this.adminArea,
+                subAdminArea = this.subAdminArea,
+                thoroughfare = this.thoroughfare,
+                subThoroughfare = this.subThoroughfare,
+            )
+        )
+    }
+
     fun LocationDTO.toModel(): LocationModel {
         return LocationModel(
             latitude = this.latitude,
             longitude = this.longitude,
-            name = this.name
+            address = AddressModel(
+                countryName = this.address.countryName,
+                locality = this.address.locality,
+                subLocality = this.address.subLocality,
+                adminArea = this.address.adminArea,
+                subAdminArea = this.address.subAdminArea,
+                thoroughfare = this.address.thoroughfare,
+                subThoroughfare = this.address.subThoroughfare,
+            ).also {
+                it.alias = this.address.alias
+            }
         )
     }
 
@@ -16,7 +45,16 @@ object LocationDTOMapper {
         return LocationDTO(
             latitude = this.latitude,
             longitude = this.longitude,
-            name = this.name
+            address = AddressDTO(
+                countryName = this.address.countryName,
+                locality = this.address.locality,
+                subLocality = this.address.subLocality,
+                adminArea = this.address.adminArea,
+                subAdminArea = this.address.subAdminArea,
+                thoroughfare = this.address.thoroughfare,
+                subThoroughfare = this.address.subThoroughfare,
+                alias = this.address.alias
+            )
         )
     }
 }

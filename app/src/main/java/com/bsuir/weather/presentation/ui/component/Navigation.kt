@@ -1,11 +1,18 @@
 package com.bsuir.weather.presentation.ui.component
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.union
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.bsuir.weather.presentation.ui.screen.AddressSearchScreen
 import com.bsuir.weather.presentation.ui.screen.MainScreen
 import com.bsuir.weather.presentation.ui.screen.MapScreen
 import com.bsuir.weather.utils.Route
@@ -14,24 +21,39 @@ import com.bsuir.weather.utils.Route
 fun Navigation() {
     val navController = rememberNavController()
 
-    NavHost(
-        navController = navController,
-        startDestination = Route.Main.name,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        composable(route = Route.Main.name) {
-            MainScreen(
-                onAddWithMapClick = { navController.navigate(Route.Map.name) }
-            )
-        }
+    Surface {
+        NavHost(
+            navController = navController,
+            startDestination = Route.Main.name,
+            modifier = Modifier
+                .fillMaxSize()
+                .windowInsetsPadding(
+                    WindowInsets.statusBars.union(WindowInsets.navigationBars)
+                )
+        ) {
+            composable(route = Route.Main.name) {
+                MainScreen(
+                    navController = navController
+                )
+            }
 
-        composable(route = Route.Map.name) {
-            MapScreen(
-                onSaveLocationClick = {
-                    navController.popBackStack()
-                    navController.navigate(Route.Main.name)
-                }
-            )
+            composable(route = Route.Map.name) {
+                MapScreen(
+                    onSaveLocationClick = {
+                        navController.popBackStack()
+                        navController.navigate(Route.Main.name)
+                    }
+                )
+            }
+
+            composable(route = Route.AddressSearch.name) {
+                AddressSearchScreen(
+                    onSaveLocationClick = {
+                        navController.popBackStack()
+                        navController.navigate(Route.Main.name)
+                    }
+                )
+            }
         }
     }
 }

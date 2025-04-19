@@ -16,14 +16,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bsuir.weather.R
 import com.bsuir.weather.RequestLocationPermission
-import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.presentation.viewmodel.CurrentLocationViewModel
 import com.bsuir.weather.presentation.viewmodel.SavedLocationViewModel
+import com.bsuir.weather.utils.GeocoderUtils.getLocationModel
 import com.bsuir.weather.utils.mapZoom
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -37,6 +38,7 @@ fun MapScreen(
     locationViewModel: SavedLocationViewModel = hiltViewModel(),
     onSaveLocationClick: () -> Unit
 ) {
+    val context = LocalContext.current
     var selectedCoordinates by remember { mutableStateOf<LatLng?>(null) }
     var isDialogOpen by remember { mutableStateOf(false) }
     var userInput by remember { mutableStateOf("") }
@@ -82,13 +84,14 @@ fun MapScreen(
                 Button(
                     onClick = {
                         isDialogOpen = false
-                        locationViewModel.saveLocation(
-                            LocationModel (
-                                latitude = selectedCoordinates!!.latitude,
-                                longitude = selectedCoordinates!!.longitude,
-                                name = userInput
-                            )
-
+                        getLocationModel(
+                            context = context,
+                            latitude = selectedCoordinates!!.latitude,
+                            longitude = selectedCoordinates!!.longitude,
+                            onResult = { locationModel ->
+                                locationModel.address.alias = userInput
+                                locationViewModel.saveLocation(locationModel)
+                            },
                         )
                         onSaveLocationClick()
                     }

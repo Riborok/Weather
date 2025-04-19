@@ -3,11 +3,24 @@ package com.bsuir.weather.domain.model
 data class LocationModel(
     val latitude: Double,
     val longitude: Double,
-    val name: String
+    val address: AddressModel = AddressModel()
+)
+
+data class AddressModel(
+    val countryName: String? = null,
+    val locality: String? = null,
+    val subLocality: String? = null,
+    val adminArea: String? = null,
+    val subAdminArea: String? = null,
+    val thoroughfare: String? = null,
+    val subThoroughfare: String? = null,
 ) {
-    constructor(latitude: Double, longitude: Double, anyName: Any? = null) : this(
-        latitude,
-        longitude,
-        anyName?.toString() ?: "Unknown"
-    )
+    var alias: String? = null
+        set(value) {
+            field = if (value.isNullOrBlank()) null else value
+        }
+
+    fun formatAddress(): String {
+        return locality ?: subLocality ?: ""
+    }
 }

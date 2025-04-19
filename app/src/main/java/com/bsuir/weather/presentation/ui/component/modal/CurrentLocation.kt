@@ -23,21 +23,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.bsuir.weather.presentation.viewmodel.CurrentLocationViewModel
+import com.bsuir.weather.utils.Route
 
 @Composable
 fun CurrentLocation(
     drawerMenuExpanded: Boolean,
     onDrawerMenuExpandedChange: () -> Unit,
     onDrawerMenuDismissRequest: () -> Unit,
-    onAddWithMapClick: () -> Unit,
+    navController: NavHostController,
     modifier: Modifier = Modifier,
     currentLocationViewModel: CurrentLocationViewModel = hiltViewModel(),
 ) {
-
-
     val currentLocation by currentLocationViewModel.currentLocation.collectAsState()
-    val locationName = currentLocation?.name
+    val locationName = currentLocation?.address?.formatAddress()
 
     Column (
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -68,14 +68,20 @@ fun CurrentLocation(
                 ) {
                     DropdownMenuItem(
                         text = { Text("Добавить на карте") },
-                        leadingIcon = { Icon(Icons.Outlined.Map, contentDescription = null) },
-                        onClick = { onAddWithMapClick() }
+                        leadingIcon = { Icon(Icons.Outlined.Map, contentDescription = "Добавить на карте") },
+                        onClick = {
+                            onDrawerMenuExpandedChange()
+                            navController.navigate(Route.Map.name)
+                        }
                     )
 
                     DropdownMenuItem(
                         text = { Text("Добавить по названию") },
-                        leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = null) },
-                        onClick = { /* Do something... */ }
+                        leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Добавить по названию") },
+                        onClick = {
+                            onDrawerMenuExpandedChange()
+                            navController.navigate(Route.AddressSearch.name)
+                        }
                     )
                 }
             }
