@@ -11,6 +11,7 @@ import com.google.android.libraries.places.api.model.AddressComponent
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.PlaceTypes
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +31,7 @@ object AddressUtils {
 
             val request = FindAutocompletePredictionsRequest.builder()
                 .setQuery(query)
+                .setTypesFilter(listOf(PlaceTypes.CITIES))
                 .setSessionToken(sessionToken)
                 .build()
 
