@@ -52,7 +52,7 @@ object WeatherResponseMapper {
             DailyForecastModel(
                 iconId = WeatherCodeConverter.getWeatherIconId(weatherCode[index], true),
                 weatherDescriptionId = WeatherCodeConverter.getWeatherDescriptionId(weatherCode[index]),
-                minTemperature = apparentTemperatureMin[index],
+                minTemperature = temperature2mMin[index],
                 maxTemperature = temperature2mMax[index],
                 sunrise = sunrise[index],
                 sunset = sunset[index],

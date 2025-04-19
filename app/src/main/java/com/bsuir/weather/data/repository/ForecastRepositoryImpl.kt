@@ -1,6 +1,6 @@
 package com.bsuir.weather.data.repository
 
-import com.bsuir.weather.data.source.network.WeatherForecastNetwork
+import com.bsuir.weather.data.source.network.weather.WeatherForecastNetwork
 import com.bsuir.weather.domain.model.ForecastModel
 import com.bsuir.weather.domain.repository.ForecastRepository
 import com.bsuir.weather.utils.mapper.WeatherResponseMapper.toModel

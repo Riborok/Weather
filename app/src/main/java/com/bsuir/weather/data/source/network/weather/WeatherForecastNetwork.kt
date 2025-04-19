@@ -1,7 +1,7 @@
-package com.bsuir.weather.data.source.network
+package com.bsuir.weather.data.source.network.weather
 
 import com.bsuir.weather.data.dto.WeatherResponse
-import com.bsuir.weather.data.source.network.WeatherForecastRequestBuilder.Companion.weatherForecast
+import com.bsuir.weather.data.source.network.weather.WeatherForecastRequestBuilder.Companion.weatherForecast
 import com.bsuir.weather.exception.NetworkRequestException
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -14,7 +14,11 @@ import javax.inject.Inject
 class WeatherForecastNetwork @Inject constructor(
     private val http: HttpClient
 ) {
-    suspend fun getForecastList(latitude: Double, longitude: Double, forecastDays: Int): WeatherResponse {
+    suspend fun getForecastList(
+        latitude: Double,
+        longitude: Double,
+        forecastDays: Int
+    ): WeatherResponse {
         val response = makeWeatherForecastRequest(latitude, longitude, forecastDays)
         return handleWeatherForecastResponse(response)
     }
@@ -39,23 +43,9 @@ class WeatherForecastNetwork @Inject constructor(
                 setForecastDays(forecastDays)
                 setTimezone("Europe/Moscow")
 
-                addDailyParam("sunset")
-                addDailyParam("sunrise")
-                addDailyParam("weather_code")
-                addDailyParam("apparent_temperature_min")
-                addDailyParam("temperature_2m_max")
-
-                addHourlyParam("temperature_2m")
-                addHourlyParam("weather_code")
-
-                addCurrentParam("temperature_2m")
-                addCurrentParam("weather_code")
-                addCurrentParam("wind_speed_10m")
-                addCurrentParam("relative_humidity_2m")
-                addCurrentParam("wind_direction_10m")
-                addCurrentParam("apparent_temperature")
-                addCurrentParam("is_day")
-                addCurrentParam("surface_pressure")
+                addDailyParams(WeatherParameters.dailyParameters)
+                addHourlyParams(WeatherParameters.hourlyParameters)
+                addCurrentParams(WeatherParameters.currentParameters)
             }
         }
     }

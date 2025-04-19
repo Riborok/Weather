@@ -1,7 +1,7 @@
 package com.bsuir.weather.di
 
 import com.bsuir.weather.data.repository.ForecastRepositoryImpl
-import com.bsuir.weather.data.source.network.WeatherForecastNetwork
+import com.bsuir.weather.data.source.network.weather.WeatherForecastNetwork
 import com.bsuir.weather.domain.repository.ForecastRepository
 import com.bsuir.weather.domain.usecase.GetForecastUseCase
 import dagger.Module

@@ -1,4 +1,4 @@
-package com.bsuir.weather.data.source.network
+package com.bsuir.weather.data.source.network.weather
 
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.parameter
@@ -44,6 +44,18 @@ class WeatherForecastRequestBuilder private constructor(private val builder: Htt
 
     fun addCurrentParam(param: String): WeatherForecastRequestBuilder = apply {
         currentParams.add(param)
+    }
+
+    fun addDailyParams(params: List<String>): WeatherForecastRequestBuilder = apply {
+        dailyParams.addAll(params)
+    }
+
+    fun addHourlyParams(params: List<String>): WeatherForecastRequestBuilder = apply {
+        hourlyParams.addAll(params)
+    }
+
+    fun addCurrentParams(params: List<String>): WeatherForecastRequestBuilder = apply {
+        currentParams.addAll(params)
     }
 
     fun setForecastDays(days: Int): WeatherForecastRequestBuilder = apply {
