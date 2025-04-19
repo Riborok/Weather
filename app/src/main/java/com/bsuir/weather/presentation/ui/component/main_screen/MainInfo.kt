@@ -18,7 +18,11 @@ import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 
 @Composable
-fun MainInfo (drawerOpen: () -> Unit, modifier: Modifier = Modifier) {
+fun MainInfo (
+    pickedLocationName: String,
+    onOpenDrawerClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Surface(
         modifier = modifier
     ) {
@@ -28,12 +32,12 @@ fun MainInfo (drawerOpen: () -> Unit, modifier: Modifier = Modifier) {
         ) {
             Column {
                 Text(
-                    text = "г. Минск",
+                    text = pickedLocationName,
                     style = MaterialTheme.typography.titleLarge,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
                     modifier = Modifier
-                        .clickable(onClick = drawerOpen)
+                        .clickable(onClick = onOpenDrawerClick)
                 )
                 Text(
                     text = "+14°C",

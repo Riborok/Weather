@@ -7,9 +7,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.bsuir.weather.domain.model.LocationModel
 
 @Composable
 fun LocationModal(
+    savedLocations: List<LocationModel>,
     drawerMenuExpanded: Boolean,
     onDrawerMenuExpandedChange: () -> Unit,
     onDrawerMenuDismissRequest: () -> Unit,
@@ -30,7 +32,10 @@ fun LocationModal(
                 onDrawerMenuDismissRequest,
                 onAddWithMapClick
             )
-            SavedLocations()
+
+            SavedLocations(
+                savedLocations
+            )
         }
     }
 }

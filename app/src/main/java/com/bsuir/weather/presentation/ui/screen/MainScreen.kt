@@ -32,29 +32,75 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.bsuir.weather.RequestLocationPermission
 import com.bsuir.weather.presentation.state.ForecastState
 import com.bsuir.weather.presentation.ui.component.main_screen.AdditionalInfo
 import com.bsuir.weather.presentation.ui.component.main_screen.DailyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.MainInfo
 import com.bsuir.weather.presentation.ui.component.modal.LocationModal
+import com.bsuir.weather.presentation.viewmodel.CurrentLocationViewModel
 import com.bsuir.weather.presentation.viewmodel.ForecastViewModel
+import com.bsuir.weather.presentation.viewmodel.PickedLocationViewModel
+import com.bsuir.weather.presentation.viewmodel.SavedLocationViewModel
+import com.bsuir.weather.utils.defaultLocation
 import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
     onAddWithMapClick: () -> Unit,
     forecastViewModel: ForecastViewModel = hiltViewModel(),
+    currentLocationViewModel: CurrentLocationViewModel = hiltViewModel(),
+    pickedLocationViewModel: PickedLocationViewModel = hiltViewModel(),
+    savedLocationViewModel: SavedLocationViewModel = hiltViewModel()
 ) {
+    // Drawer
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     var drawerMenuExpanded by remember { mutableStateOf(false) }
+
+    // Scope
     val scope = rememberCoroutineScope()
 
-    LaunchedEffect(Unit) {
-        forecastViewModel.loadForecast(53.911, 27.593)
+    // Permission
+    var permissionGranted by remember { mutableStateOf(false) }
+
+    // Forecast
+    val forecastState by forecastViewModel.forecastState.collectAsState()
+
+    // Location
+    val currentLocation by currentLocationViewModel.currentLocation.collectAsState()
+    val pickedLocation by pickedLocationViewModel.pickedLocation.collectAsState()
+    val savedLocations by savedLocationViewModel.savedLocations.collectAsState()
+
+    RequestLocationPermission { granted ->
+        permissionGranted = granted
     }
 
-    val forecastState by forecastViewModel.forecastState.collectAsState()
+    LaunchedEffect(permissionGranted) {
+        if (permissionGranted) {
+            currentLocationViewModel.fetchCurrentLocation()
+        }
+    }
+
+    LaunchedEffect(currentLocation) {
+        if (permissionGranted && currentLocation != null) {
+            pickedLocationViewModel.setPickedLocation(currentLocation)
+        } else {
+            pickedLocationViewModel.setPickedLocation(
+                if (savedLocations.isNotEmpty())
+                    savedLocations[0]
+                else
+                    null
+            )
+        }
+    }
+
+    LaunchedEffect(pickedLocation) {
+        forecastViewModel.loadForecast(
+            pickedLocation?.latitude ?: defaultLocation.latitude,
+            pickedLocation?.longitude ?: defaultLocation.longitude
+        )
+    }
 
     Surface {
         ModalNavigationDrawer(
@@ -65,6 +111,7 @@ fun MainScreen(
             drawerState = drawerState,
             drawerContent = {
                 LocationModal(
+                    savedLocations,
                     drawerMenuExpanded = drawerMenuExpanded,
                     onDrawerMenuExpandedChange = { drawerMenuExpanded = !drawerMenuExpanded },
                     onDrawerMenuDismissRequest = { drawerMenuExpanded = false },
@@ -92,7 +139,8 @@ fun MainScreen(
                     ) {
                         item {
                             MainInfo(
-                                drawerOpen = { scope.launch { drawerState.open() } },
+                                pickedLocationName = pickedLocation?.name ?: defaultLocation.name,
+                                onOpenDrawerClick = { scope.launch { drawerState.open() } },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(16.dp)

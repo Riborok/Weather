@@ -9,21 +9,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.bsuir.weather.presentation.viewmodel.SavedLocationViewModel
+import com.bsuir.weather.domain.model.LocationModel
 
 @Composable
 fun SavedLocations(
+    savedLocations: List<LocationModel>,
     modifier: Modifier = Modifier,
-    savedLocationViewModel: SavedLocationViewModel = hiltViewModel(),
 ) {
-    val savedLocations by savedLocationViewModel.savedLocations.collectAsState()
 
     Column (
         verticalArrangement = Arrangement.spacedBy(8.dp),
