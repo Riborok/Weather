@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -32,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.bsuir.weather.RequestLocationPermission
 import com.bsuir.weather.presentation.state.ForecastState
 import com.bsuir.weather.presentation.ui.component.main_screen.AdditionalInfo
@@ -49,7 +47,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
-    navController: NavHostController,
+    onNavigate: (String) -> Unit,
     forecastViewModel: ForecastViewModel = hiltViewModel(),
     currentLocationViewModel: CurrentLocationViewModel = hiltViewModel(),
     pickedLocationViewModel: PickedLocationViewModel = hiltViewModel(),
@@ -57,7 +55,6 @@ fun MainScreen(
 ) {
     // Drawer
     val drawerState = rememberDrawerState(DrawerValue.Closed)
-    var drawerMenuExpanded by remember { mutableStateOf(false) }
 
     // Scope
     val scope = rememberCoroutineScope()
@@ -112,10 +109,7 @@ fun MainScreen(
         drawerContent = {
             LocationModal(
                 savedLocations,
-                drawerMenuExpanded = drawerMenuExpanded,
-                onDrawerMenuExpandedChange = { drawerMenuExpanded = !drawerMenuExpanded },
-                onDrawerMenuDismissRequest = { drawerMenuExpanded = false },
-                navController,
+                onNavigate = onNavigate,
                 modifier = Modifier
                     .fillMaxHeight()
                     .fillMaxWidth(0.75f)

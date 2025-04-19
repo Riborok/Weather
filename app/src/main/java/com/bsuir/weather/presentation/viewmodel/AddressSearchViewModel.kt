@@ -12,9 +12,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import com.bsuir.weather.utils.weatherAppContext
 import com.google.android.libraries.places.api.model.AutocompletePrediction
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-class AddressSearchViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class AddressSearchViewModel @Inject constructor(
+    application: Application
+) : AndroidViewModel(application) {
     private val _searchText = MutableStateFlow("")
     val searchText: StateFlow<String> = _searchText
 

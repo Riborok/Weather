@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.bsuir.weather.presentation.viewmodel.CurrentLocationViewModel
 import com.bsuir.weather.utils.Route
 
@@ -32,7 +31,7 @@ fun CurrentLocation(
     drawerMenuExpanded: Boolean,
     onDrawerMenuExpandedChange: () -> Unit,
     onDrawerMenuDismissRequest: () -> Unit,
-    navController: NavHostController,
+    onNavigate: (String) -> Unit,
     modifier: Modifier = Modifier,
     currentLocationViewModel: CurrentLocationViewModel = hiltViewModel(),
 ) {
@@ -71,7 +70,7 @@ fun CurrentLocation(
                         leadingIcon = { Icon(Icons.Outlined.Map, contentDescription = "Добавить на карте") },
                         onClick = {
                             onDrawerMenuExpandedChange()
-                            navController.navigate(Route.Map.name)
+                            onNavigate(Route.Map.name)
                         }
                     )
 
@@ -80,7 +79,7 @@ fun CurrentLocation(
                         leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Добавить по названию") },
                         onClick = {
                             onDrawerMenuExpandedChange()
-                            navController.navigate(Route.AddressSearch.name)
+                            onNavigate(Route.AddressSearch.name)
                         }
                     )
                 }
