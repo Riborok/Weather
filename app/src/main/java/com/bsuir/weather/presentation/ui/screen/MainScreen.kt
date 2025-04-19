@@ -108,7 +108,8 @@ fun MainScreen(
         drawerState = drawerState,
         drawerContent = {
             LocationModal(
-                savedLocations,
+                currentLocation = currentLocation,
+                savedLocations = savedLocations,
                 onNavigate = onNavigate,
                 modifier = Modifier
                     .fillMaxHeight()
