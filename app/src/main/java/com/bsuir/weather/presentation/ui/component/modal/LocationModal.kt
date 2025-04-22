@@ -23,7 +23,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.utils.Route
 
@@ -52,7 +54,7 @@ fun LocationModal(
                 item {
                     if (currentLocation != null) {
                         LocationGroup(
-                            title = "Текущее:",
+                            title = stringResource(R.string.current),
                             locations = listOf(currentLocation),
                             modifier = Modifier
                                 .padding(vertical = 12.dp)
@@ -61,7 +63,7 @@ fun LocationModal(
 
                     if (savedLocations.isNotEmpty()) {
                         LocationGroup(
-                            title = "Сохраненные:",
+                            title = stringResource(R.string.saved),
                             locations = savedLocations,
                             modifier = Modifier
                                 .padding(vertical = 12.dp)
@@ -77,7 +79,7 @@ fun LocationModal(
                 IconButton(
                     onClick = { drawerMenuExpanded = !drawerMenuExpanded },
                 ) {
-                    Icon(Icons.Default.MoreVert, contentDescription = "Меню")
+                    Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.menu))
                 }
 
                 DropdownMenu(
@@ -85,11 +87,11 @@ fun LocationModal(
                     onDismissRequest = { drawerMenuExpanded = false }
                 ) {
                     DropdownMenuItem(
-                        text = { Text("Добавить на карте") },
+                        text = { Text(stringResource(R.string.add_with_map)) },
                         leadingIcon = {
                             Icon(
                                 Icons.Outlined.Map,
-                                contentDescription = "Добавить на карте"
+                                contentDescription = stringResource(R.string.add_with_map)
                             )
                         },
                         onClick = {
@@ -99,11 +101,11 @@ fun LocationModal(
                     )
 
                     DropdownMenuItem(
-                        text = { Text("Добавить по названию") },
+                        text = { Text(stringResource(R.string.add_with_name)) },
                         leadingIcon = {
                             Icon(
                                 Icons.Outlined.Search,
-                                contentDescription = "Добавить по названию"
+                                contentDescription = stringResource(R.string.add_with_name)
                             )
                         },
                         onClick = {

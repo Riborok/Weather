@@ -14,14 +14,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.bsuir.weather.R
 import com.bsuir.weather.presentation.viewmodel.AddressSearchViewModel
 import com.bsuir.weather.presentation.viewmodel.SavedLocationViewModel
 
 @Composable
 fun AddressSearchScreen(
-    onSaveLocationClick: () -> Unit,
+    onNavigateToMainClick: () -> Unit,
     modifier: Modifier = Modifier,
     addressSearchViewModel: AddressSearchViewModel = hiltViewModel(),
     locationViewModel: SavedLocationViewModel = hiltViewModel(),
@@ -38,8 +40,8 @@ fun AddressSearchScreen(
         OutlinedTextField(
             value = searchText,
             onValueChange = { addressSearchViewModel.onSearchTextChanged(it) },
-            label = { Text("Введите название города") },
-            leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = "Поиск") },
+            label = { Text(stringResource(R.string.enter_city_name)) },
+            leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = stringResource(R.string.search)) },
             singleLine = true,
             modifier = Modifier
                 .fillMaxWidth()
@@ -49,7 +51,7 @@ fun AddressSearchScreen(
 
         if (cityResults.isEmpty() && searchText.isNotBlank()) {
             Text(
-                text = "Ничего не найдено",
+                text = stringResource(R.string.nothing_found),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier
@@ -76,7 +78,7 @@ fun AddressSearchScreen(
 
                             }
                         )
-                        onSaveLocationClick()
+                        onNavigateToMainClick()
                     }
                 )
             }
@@ -110,7 +112,7 @@ fun AddressSearchItem(
         ) {
             Icon(
                 imageVector = Icons.Outlined.LocationOn,
-                contentDescription = "Иконка города",
+                contentDescription = stringResource(R.string.city_icon),
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(24.dp)
             )
@@ -125,7 +127,7 @@ fun AddressSearchItem(
 
             Icon(
                 imageVector = Icons.AutoMirrored.Outlined.ArrowForward,
-                contentDescription = "Перейти",
+                contentDescription = stringResource(R.string.go_forward),
                 tint = MaterialTheme.colorScheme.onPrimaryContainer,
                 modifier = Modifier.size(24.dp)
             )

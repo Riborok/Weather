@@ -39,7 +39,7 @@ fun Navigation() {
 
             composable(route = Route.Map.name) {
                 MapScreen(
-                    onSaveLocationClick = {
+                    onNavigateToMainClick = {
                         navController.popBackStack()
                         navController.navigate(Route.Main.name)
                     }
@@ -48,7 +48,7 @@ fun Navigation() {
 
             composable(route = Route.AddressSearch.name) {
                 AddressSearchScreen(
-                    onSaveLocationClick = {
+                    onNavigateToMainClick = {
                         navController.popBackStack()
                         navController.navigate(Route.Main.name)
                     }

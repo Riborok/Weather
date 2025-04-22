@@ -37,6 +37,20 @@
     <string name="save">Сохранить</string>
     <string name="cancel">Отмена</string>
     <string name="enter_name">Введите название:</string>
-    <string name="langitude">Широта: %1$s</string>
-    <string name="longitude">Долгота: %1$s</string>
+    <string name="latitude">Широта</string>
+    <string name="longitude">Долгота</string>
+    <string name="add">Добавить</string>
+    <string name="warning">Внимание!</string>
+    <string name="empty_location_name_error">Название не может быть пустым!</string>
+    <string name="add_with_map">Добавить на карте</string>
+    <string name="menu">Меню</string>
+    <string name="add_with_name">Добавить по названию</string>
+    <string name="current">Текущее</string>
+    <string name="saved">Сохраненные</string>
+    <string name="ok">ОК</string>
+    <string name="enter_city_name">Введите название города</string>
+    <string name="search">Поиск</string>
+    <string name="nothing_found">Ничего не найдено</string>
+    <string name="city_icon">Иконка города</string>
+    <string name="go_forward">Перейти</string>
 </resources>
