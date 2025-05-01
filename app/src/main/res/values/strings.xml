@@ -73,4 +73,11 @@
     <string name="sunrise">Восход</string>
     <string name="sunset">Закат</string>
     <string name="weather_picture">Изображение погоды</string>
+
+    <string name="chat_placeholder_weather">Введите вопрос о погоде…</string>
+    <string name="content_description_send">Отправить</string>
+    <string name="content_description_user">Пользователь</string>
+    <string name="content_description_ai">Искусственный интеллект</string>
+    <string name="header_ai_chat">🤖 Погодный AI-чат</string>
+    <string name="content_description_close">Закрыть</string>
 </resources>

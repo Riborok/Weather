@@ -13,8 +13,12 @@ import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.QuestionAnswer
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
@@ -38,6 +42,7 @@ import com.bsuir.weather.presentation.ui.component.main_screen.DailyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.MainInfo
 import com.bsuir.weather.presentation.ui.component.modal.LocationModal
+import com.bsuir.weather.presentation.ui.component.modal.WeatherChatDialog
 import com.bsuir.weather.presentation.viewmodel.CurrentLocationViewModel
 import com.bsuir.weather.presentation.viewmodel.ForecastViewModel
 import com.bsuir.weather.presentation.viewmodel.PickedLocationViewModel
@@ -61,6 +66,9 @@ fun MainScreen(
 
     // Permission
     var permissionGranted by remember { mutableStateOf(false) }
+
+    // Chat modal state
+    var isChatOpen by remember { mutableStateOf(false) }
 
     // Forecast
     val forecastState by forecastViewModel.forecastState.collectAsState()
@@ -121,67 +129,85 @@ fun MainScreen(
             )
         }
     ) {
-        when (forecastState) {
-            is ForecastState.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
+        Box(Modifier.fillMaxSize()) {
+            when (forecastState) {
+                is ForecastState.Loading -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
                 }
-            }
-            is ForecastState.Success -> {
-                val forecast = (forecastState as ForecastState.Success).forecast
-                LazyColumn (
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                ) {
-                    item {
-                        MainInfo(
-                            pickedLocationName = pickedLocation?.address?.formatAddress(),
-                            currentForecastModel = forecast.currentForecastModel,
-                            dailyForecastModel = forecast.dailyForecastModels.first(),
-                            onOpenDrawerClick = { scope.launch { drawerState.open() } },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 52.dp)
-                        )
 
-                        AdditionalInfo(
-                            currentForecastModel = forecast.currentForecastModel,
-                            dailyForecastModel = forecast.dailyForecastModels.first(),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp)
-                        )
+                is ForecastState.Success -> {
+                    val forecast = (forecastState as ForecastState.Success).forecast
+                    LazyColumn(
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        item {
+                            MainInfo(
+                                pickedLocationName = pickedLocation?.address?.formatAddress(),
+                                currentForecastModel = forecast.currentForecastModel,
+                                dailyForecastModel = forecast.dailyForecastModels.first(),
+                                onOpenDrawerClick = { scope.launch { drawerState.open() } },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 52.dp)
+                            )
 
-                        HourlyForecast(
-                            forecast.hourlyForecastModels,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp)
-                        )
+                            AdditionalInfo(
+                                currentForecastModel = forecast.currentForecastModel,
+                                dailyForecastModel = forecast.dailyForecastModels.first(),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 8.dp)
+                            )
 
-                        DailyForecast(
-                            forecast.dailyForecastModels,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp)
+                            HourlyForecast(
+                                forecast.hourlyForecastModels,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 8.dp)
+                            )
+
+                            DailyForecast(
+                                forecast.dailyForecastModels,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 8.dp)
+                            )
+                        }
+                    }
+
+                    FloatingActionButton(
+                        onClick = { isChatOpen = true },
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(24.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.QuestionAnswer,
+                            contentDescription = "AI Chat"
+                        )
+                    }
+
+                    if (isChatOpen) {
+                        WeatherChatDialog(
+                            forecast = forecast,
+                            onDismiss = { isChatOpen = false }
                         )
                     }
                 }
-            }
-            is ForecastState.Error -> {
-                val errorMessage = (forecastState as ForecastState.Error).error.message ?: "Unknown error"
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(text = "Error: $errorMessage", color = Color.Red)
+
+                is ForecastState.Error -> {
+                    val errorMessage = (forecastState as ForecastState.Error).error.message ?: "Unknown error"
+                    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text(text = "Error: $errorMessage", color = Color.Red)
+                        }
                     }
                 }
             }
