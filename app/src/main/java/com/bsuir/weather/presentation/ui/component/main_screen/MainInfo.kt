@@ -13,13 +13,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
+import com.bsuir.weather.domain.model.CurrentForecastModel
+import com.bsuir.weather.domain.model.DailyForecastModel
 
 @Composable
 fun MainInfo (
-    pickedLocationName: String,
+    pickedLocationName: String?,
+    currentForecastModel: CurrentForecastModel,
+    dailyForecastModel: DailyForecastModel,
     onOpenDrawerClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -30,9 +35,12 @@ fun MainInfo (
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.Start
+            ) {
                 Text(
-                    text = pickedLocationName,
+                    text = pickedLocationName ?: stringResource(R.string.loading),
                     style = MaterialTheme.typography.titleLarge,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,
@@ -40,14 +48,21 @@ fun MainInfo (
                         .clickable(onClick = onOpenDrawerClick)
                 )
                 Text(
-                    text = "+14°C",
+                    text = "${currentForecastModel.temperature} " + stringResource(R.string.celsius_degrees),
                     style = MaterialTheme.typography.displayLarge
+                )
+                Text(
+                    text = "${dailyForecastModel.maxTemperature} "
+                            + stringResource(R.string.celsius_degrees)
+                            + " / ${dailyForecastModel.minTemperature} "
+                            + stringResource(R.string.celsius_degrees),
+                    style = MaterialTheme.typography.bodyLarge,
                 )
             }
 
             Image(
-                painter = painterResource(R.drawable.cloud_basic),
-                contentDescription = "Облачно",
+                painter = painterResource(currentForecastModel.iconId),
+                contentDescription = stringResource(R.string.weather_picture),
                 modifier = Modifier.size(128.dp)
             )
         }

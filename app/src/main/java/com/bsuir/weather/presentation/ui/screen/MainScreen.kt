@@ -130,35 +130,40 @@ fun MainScreen(
                 val forecast = (forecastState as ForecastState.Success).forecast
                 LazyColumn (
                     verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
                     item {
                         MainInfo(
-                            pickedLocationName = pickedLocation?.address?.formatAddress() ?: "",
+                            pickedLocationName = pickedLocation?.address?.formatAddress(),
+                            currentForecastModel = forecast.currentForecastModel,
+                            dailyForecastModel = forecast.dailyForecastModels.first(),
                             onOpenDrawerClick = { scope.launch { drawerState.open() } },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp)
+                                .padding(vertical = 52.dp)
                         )
 
                         AdditionalInfo(
+                            currentForecastModel = forecast.currentForecastModel,
+                            dailyForecastModel = forecast.dailyForecastModels.first(),
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp)
+                                .padding(vertical = 8.dp)
                         )
 
                         HourlyForecast(
                             forecast.hourlyForecastModels,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp)
+                                .padding(vertical = 8.dp)
                         )
 
                         DailyForecast(
                             forecast.dailyForecastModels,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp)
+                                .padding(vertical = 8.dp)
                         )
                     }
                 }

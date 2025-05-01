@@ -10,19 +10,19 @@ data class ForecastModel (
 )
 
 data class CurrentForecastModel (
-    val temperature: Double,
-    val apparentTemperature: Double,
+    val temperature: Int,
+    val apparentTemperature: Int,
     val iconId: Int,
     val weatherDescriptionId: Int,
-    val windSpeed: Double,
-    val windDirection: Int,
-    val surfacePressure: Double,
+    val windSpeed: Int,
+    val windDirection: String,
+    val surfacePressure: Int,
     val relativeHumidity: Int,
     val time: LocalDateTime,
 )
 
 data class HourlyForecastModel (
-    val temperature: Double,
+    val temperature: Int,
     val iconId: Int,
     val weatherDescriptionId: Int,
     val time: LocalDateTime,
@@ -31,8 +31,8 @@ data class HourlyForecastModel (
 data class DailyForecastModel(
     val iconId: Int,
     val weatherDescriptionId: Int,
-    val minTemperature: Double,
-    val maxTemperature: Double,
+    val minTemperature: Int,
+    val maxTemperature: Int,
     val sunrise: LocalDateTime,
     val sunset: LocalDateTime,
     val date: LocalDate,

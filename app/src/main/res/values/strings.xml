@@ -53,4 +53,24 @@
     <string name="nothing_found">Ничего не найдено</string>
     <string name="city_icon">Иконка города</string>
     <string name="go_forward">Перейти</string>
+    <string name="loading">Загрузка</string>
+    <string name="celsius_degrees">°C</string>
+    <string name="kilometers_per_hour">км/ч</string>
+    <string name="percent">%</string>
+    <string name="hectopascal">гПа</string>
+    <string name="north_abb">С</string>
+    <string name="north_east_abb">С-В</string>
+    <string name="east_abb">В</string>
+    <string name="south_east_abb">Ю-В</string>
+    <string name="south_abb">Ю</string>
+    <string name="south_west_abb">Ю-З</string>
+    <string name="west_abb">З</string>
+    <string name="north_west_abb">С-З</string>
+    <string name="felt">Ощущается</string>
+    <string name="wind">Ветер</string>
+    <string name="humidity">Влажность</string>
+    <string name="pressure">Давление</string>
+    <string name="sunrise">Восход</string>
+    <string name="sunset">Закат</string>
+    <string name="weather_picture">Изображение погоды</string>
 </resources>

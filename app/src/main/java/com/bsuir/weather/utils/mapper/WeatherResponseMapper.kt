@@ -9,10 +9,11 @@ import com.bsuir.weather.domain.model.DailyForecastModel
 import com.bsuir.weather.domain.model.ForecastModel
 import com.bsuir.weather.domain.model.HourlyForecastModel
 import kotlinx.datetime.LocalDateTime
+import kotlin.math.roundToInt
 
 object WeatherResponseMapper {
     fun WeatherResponse.toModel(): ForecastModel {
-        val sunTimes = SunTimes(daily);
+        val sunTimes = SunTimes(daily)
         return ForecastModel(
             currentForecastModel = current.toModel(sunTimes),
             hourlyForecastModels = hourly.toModels(sunTimes),
@@ -23,13 +24,13 @@ object WeatherResponseMapper {
     private fun Current.toModel(sunTimes: SunTimes): CurrentForecastModel {
         val isDay = sunTimes.isDaytime(time)
         return CurrentForecastModel(
-            temperature = temperature2m,
-            apparentTemperature = apparentTemperature,
+            temperature = temperature2m.roundToInt(),
+            apparentTemperature = apparentTemperature.roundToInt(),
             iconId = WeatherCodeConverter.getWeatherIconId(weatherCode, isDay),
             weatherDescriptionId = WeatherCodeConverter.getWeatherDescriptionId(weatherCode),
-            windSpeed = windSpeed10m,
-            windDirection = windDirection10m,
-            surfacePressure = surfacePressure,
+            windSpeed = windSpeed10m.roundToInt(),
+            windDirection = convertWindDirection(windDirection10m),
+            surfacePressure = surfacePressure.roundToInt(),
             relativeHumidity = relativeHumidity2m,
             time = time
         )
@@ -39,7 +40,7 @@ object WeatherResponseMapper {
         return time.mapIndexed { index, time ->
             val isDay = sunTimes.isDaytime(time)
             HourlyForecastModel(
-                temperature = temperature2m[index],
+                temperature = temperature2m[index].roundToInt(),
                 iconId = WeatherCodeConverter.getWeatherIconId(weatherCode[index], isDay),
                 weatherDescriptionId = WeatherCodeConverter.getWeatherDescriptionId(weatherCode[index]),
                 time = time
@@ -52,8 +53,8 @@ object WeatherResponseMapper {
             DailyForecastModel(
                 iconId = WeatherCodeConverter.getWeatherIconId(weatherCode[index], true),
                 weatherDescriptionId = WeatherCodeConverter.getWeatherDescriptionId(weatherCode[index]),
-                minTemperature = temperature2mMin[index],
-                maxTemperature = temperature2mMax[index],
+                minTemperature = temperature2mMin[index].roundToInt(),
+                maxTemperature = temperature2mMax[index].roundToInt(),
                 sunrise = sunrise[index],
                 sunset = sunset[index],
                 date = date
@@ -71,5 +72,16 @@ object WeatherResponseMapper {
             val (sunrise, sunset) = dailySunTimes[date] ?: return true
             return time > sunrise && time < sunset
         }
+    }
+
+    private val directions = listOf(
+        "С", "С-В", "В", "Ю-В", "Ю", "Ю-З", "З", "С-З"
+    )
+
+    private fun convertWindDirection(directionDegree: Int): String {
+        val sectorSize = 360 / directions.size
+        val halfSectorSize = sectorSize / 2
+        val index = ((directionDegree + halfSectorSize) % 360 / sectorSize).toInt()
+        return directions[index % directions.size]
     }
 }
