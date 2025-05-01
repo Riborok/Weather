@@ -58,11 +58,15 @@ fun MainInfo (
                             + stringResource(R.string.celsius_degrees),
                     style = MaterialTheme.typography.bodyLarge,
                 )
+                Text(
+                    text = stringResource(currentForecastModel.weatherDescriptionId),
+                    style = MaterialTheme.typography.bodyLarge,
+                )
             }
 
             Image(
                 painter = painterResource(currentForecastModel.iconId),
-                contentDescription = stringResource(R.string.weather_picture),
+                contentDescription = stringResource(currentForecastModel.weatherDescriptionId),
                 modifier = Modifier.size(128.dp)
             )
         }

@@ -4,15 +4,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.HourlyForecastModel
+import java.time.LocalTime
 
 @Composable
 fun HourlyForecast (hourlyForecastList: List<HourlyForecastModel>, modifier: Modifier = Modifier) {
@@ -29,16 +31,21 @@ fun HourlyForecast (hourlyForecastList: List<HourlyForecastModel>, modifier: Mod
                 style = MaterialTheme.typography.titleLarge
             )
 
-            LazyRow (
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                items(hourlyForecastList) { hourlyForecastInfo ->
-                    HourlyForecastItem(
-                        hourlyForecastInfo.temperature.toString(),
-                        hourlyForecastInfo.iconId,
-                        hourlyForecastInfo.weatherDescriptionId,
-                        hourlyForecastInfo.time.hour.toString()
-                    )
+            LazyRow {
+                item {
+                    val index = hourlyForecastList.indexOfFirst {
+                        hourlyForecastModel -> hourlyForecastModel.time.hour == LocalTime.now().hour
+                    }
+
+                    hourlyForecastList.slice(index..index + 23).forEach { hourlyForecastInfo ->
+                        HourlyForecastItem(
+                            temperature = "${hourlyForecastInfo.temperature} ${stringResource(R.string.degree)}",
+                            icon = hourlyForecastInfo.iconId,
+                            weatherDescriptionId = hourlyForecastInfo.weatherDescriptionId,
+                            hour = hourlyForecastInfo.time.time.toString(),
+                            modifier = Modifier.padding(horizontal = 4.dp)
+                        )
+                    }
                 }
             }
         }

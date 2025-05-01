@@ -55,6 +55,7 @@
     <string name="go_forward">Перейти</string>
     <string name="loading">Загрузка</string>
     <string name="celsius_degrees">°C</string>
+    <string name="degree">°</string>
     <string name="kilometers_per_hour">км/ч</string>
     <string name="percent">%</string>
     <string name="hectopascal">гПа</string>
