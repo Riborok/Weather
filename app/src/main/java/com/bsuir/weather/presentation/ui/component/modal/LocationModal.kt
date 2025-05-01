@@ -33,6 +33,7 @@ import com.bsuir.weather.utils.Route
 fun LocationModal(
     currentLocation: LocationModel?,
     savedLocations: List<LocationModel>,
+    onLocationClick: (location: LocationModel) -> Unit,
     onNavigate: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -56,6 +57,7 @@ fun LocationModal(
                         LocationGroup(
                             title = stringResource(R.string.current),
                             locations = listOf(currentLocation),
+                            onLocationClick = onLocationClick,
                             modifier = Modifier
                                 .padding(vertical = 12.dp)
                         )
@@ -65,6 +67,7 @@ fun LocationModal(
                         LocationGroup(
                             title = stringResource(R.string.saved),
                             locations = savedLocations,
+                            onLocationClick = onLocationClick,
                             modifier = Modifier
                                 .padding(vertical = 12.dp)
                         )

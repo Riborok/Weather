@@ -19,6 +19,7 @@ import com.bsuir.weather.domain.model.LocationModel
 fun LocationGroup(
     title: String,
     locations: List<LocationModel>,
+    onLocationClick: (location: LocationModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column (
@@ -40,19 +41,39 @@ fun LocationGroup(
                 Card (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable(onClick = {})
+                        .clickable(onClick = { onLocationClick(location) })
                 ) {
-                    Text (
-                        text = location.address.formatAddress(),
-                        style = MaterialTheme.typography.titleLarge,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1,
+                    Column (
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
                         modifier = Modifier
                             .padding(
                                 vertical = 8.dp,
                                 horizontal = 12.dp
                             )
-                    )
+                    ) {
+                        if (location.address.alias != null) {
+                            Text(
+                                text = location.address.alias!!,
+                                style = MaterialTheme.typography.titleLarge,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1
+                            )
+
+                            Text(
+                                text = location.address.formatAddress(),
+                                style = MaterialTheme.typography.bodyLarge,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1
+                            )
+                        } else {
+                            Text(
+                                text = location.address.formatAddress(),
+                                style = MaterialTheme.typography.titleLarge,
+                                overflow = TextOverflow.Ellipsis,
+                                maxLines = 1
+                            )
+                        }
+                    }
                 }
             }
         }

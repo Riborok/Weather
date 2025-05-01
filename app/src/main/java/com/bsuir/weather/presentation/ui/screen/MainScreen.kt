@@ -110,6 +110,10 @@ fun MainScreen(
             LocationModal(
                 currentLocation = currentLocation,
                 savedLocations = savedLocations,
+                onLocationClick = { location ->
+                    pickedLocationViewModel.setPickedLocation(location)
+                    scope.launch { drawerState.close() }
+                },
                 onNavigate = onNavigate,
                 modifier = Modifier
                     .fillMaxHeight()
