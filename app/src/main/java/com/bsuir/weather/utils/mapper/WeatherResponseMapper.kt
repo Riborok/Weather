@@ -17,9 +17,9 @@ object WeatherResponseMapper {
     fun WeatherResponse.toModel(): ForecastModel {
         val sunTimes = SunTimes(daily)
         return ForecastModel(
-            currentForecastModel = current.toModel(sunTimes),
-            hourlyForecastModels = hourly.toModels(sunTimes),
-            dailyForecastModels = daily.toModels()
+            currentForecast = current.toModel(sunTimes),
+            hourlyForecasts = hourly.toModels(sunTimes),
+            dailyForecasts = daily.toModels()
         )
     }
 

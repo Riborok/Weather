@@ -72,7 +72,7 @@ object AddressUtils {
 
             if (latLng != null) {
                 with(addressComponents) {
-                    val addressModel = AddressModel(
+                    val address = AddressModel(
                         countryName = extractAddressComponent("country"),
                         locality = extractAddressComponent("locality"),
                         subLocality = extractAddressComponent("sublocality"),
@@ -81,10 +81,11 @@ object AddressUtils {
                         thoroughfare = extractAddressComponent("route"),
                         subThoroughfare = extractAddressComponent("street_number")
                     )
+
                     onResult(LocationModel(
                         latitude = latLng.latitude,
                         longitude = latLng.longitude,
-                        address = addressModel
+                        address = address
                     ))
                 }
             } else {

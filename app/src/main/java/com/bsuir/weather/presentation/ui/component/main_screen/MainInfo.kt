@@ -23,8 +23,8 @@ import com.bsuir.weather.domain.model.DailyForecastModel
 @Composable
 fun MainInfo (
     pickedLocationName: String,
-    currentForecastModel: CurrentForecastModel,
-    dailyForecastModel: DailyForecastModel,
+    currentForecast: CurrentForecastModel,
+    dailyForecast: DailyForecastModel,
     onOpenDrawerClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -48,25 +48,25 @@ fun MainInfo (
                         .clickable(onClick = onOpenDrawerClick)
                 )
                 Text(
-                    text = "${currentForecastModel.temperature} " + stringResource(R.string.celsius_degrees),
+                    text = "${currentForecast.temperature} " + stringResource(R.string.celsius_degrees),
                     style = MaterialTheme.typography.displayLarge
                 )
                 Text(
-                    text = "${dailyForecastModel.maxTemperature} "
+                    text = "${dailyForecast.maxTemperature} "
                             + stringResource(R.string.celsius_degrees)
-                            + " / ${dailyForecastModel.minTemperature} "
+                            + " / ${dailyForecast.minTemperature} "
                             + stringResource(R.string.celsius_degrees),
                     style = MaterialTheme.typography.bodyLarge,
                 )
                 Text(
-                    text = stringResource(currentForecastModel.weatherDescriptionId),
+                    text = stringResource(currentForecast.weatherDescriptionId),
                     style = MaterialTheme.typography.bodyLarge,
                 )
             }
 
             Image(
-                painter = painterResource(currentForecastModel.iconId),
-                contentDescription = stringResource(currentForecastModel.weatherDescriptionId),
+                painter = painterResource(currentForecast.iconId),
+                contentDescription = stringResource(currentForecast.weatherDescriptionId),
                 modifier = Modifier.size(128.dp)
             )
         }

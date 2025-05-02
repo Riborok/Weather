@@ -36,9 +36,9 @@ object AiChatPromptBuilder {
     }
 
     private fun buildForecastSection(forecast: ForecastModel, context: Context): String {
-        val current = forecast.currentForecastModel
-        val hourly = forecast.hourlyForecastModels
-        val daily = forecast.dailyForecastModels
+        val current = forecast.currentForecast
+        val hourly = forecast.hourlyForecasts
+        val daily = forecast.dailyForecasts
 
         return buildString {
             appendLine("Current weather:")

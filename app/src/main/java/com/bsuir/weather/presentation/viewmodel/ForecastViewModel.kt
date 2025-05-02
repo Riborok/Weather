@@ -24,11 +24,12 @@ class ForecastViewModel @Inject constructor(
     fun loadForecast(location: LocationModel) {
         viewModelScope.launch {
             _forecastState.value = try {
-                val forecastModel = getForecastUseCase.execute(
+                val forecast = getForecastUseCase.execute(
                     location.latitude,
                     location.longitude
                 )
-                ForecastState.Success(ForecastLocationModel(forecastModel, location))
+
+                ForecastState.Success(ForecastLocationModel(forecast, location))
             } catch (e: NetworkRequestException) {
                 ForecastState.Error(e)
             }

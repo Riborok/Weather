@@ -154,8 +154,8 @@ fun MainScreen(
                         item {
                             MainInfo(
                                 pickedLocationName = location.address.formatAddress(),
-                                currentForecastModel = forecast.currentForecastModel,
-                                dailyForecastModel = forecast.dailyForecastModels.first(),
+                                currentForecast = forecast.currentForecast,
+                                dailyForecast = forecast.dailyForecasts.first(),
                                 onOpenDrawerClick = { scope.launch { drawerState.open() } },
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -163,22 +163,22 @@ fun MainScreen(
                             )
 
                             AdditionalInfo(
-                                currentForecastModel = forecast.currentForecastModel,
-                                dailyForecastModel = forecast.dailyForecastModels.first(),
+                                currentForecast = forecast.currentForecast,
+                                dailyForecast = forecast.dailyForecasts.first(),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(vertical = 8.dp)
                             )
 
                             HourlyForecast(
-                                forecast.hourlyForecastModels,
+                                forecast.hourlyForecasts,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(vertical = 8.dp)
                             )
 
                             DailyForecast(
-                                forecast.dailyForecastModels,
+                                forecast.dailyForecasts,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(vertical = 8.dp)

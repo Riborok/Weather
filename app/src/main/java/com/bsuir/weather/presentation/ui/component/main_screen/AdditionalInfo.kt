@@ -16,8 +16,8 @@ import com.bsuir.weather.domain.model.DailyForecastModel
 
 @Composable
 fun AdditionalInfo (
-    currentForecastModel: CurrentForecastModel,
-    dailyForecastModel: DailyForecastModel,
+    currentForecast: CurrentForecastModel,
+    dailyForecast: DailyForecastModel,
     modifier: Modifier = Modifier
 ) {
     val itemModifier = Modifier
@@ -33,31 +33,31 @@ fun AdditionalInfo (
         ) {
             AdditionalInfoItem(
                 title = stringResource(R.string.felt),
-                value = "${currentForecastModel.temperature} " + stringResource(R.string.celsius_degrees),
+                value = "${currentForecast.temperature} " + stringResource(R.string.celsius_degrees),
                 modifier = itemModifier)
             AdditionalInfoItem(
                 title = stringResource(R.string.wind),
-                value = "${currentForecastModel.windSpeed} "
+                value = "${currentForecast.windSpeed} "
                         + stringResource(R.string.kilometers_per_hour)
-                        + ", ${stringResource(currentForecastModel.windDirectionId)}",
+                        + ", ${stringResource(currentForecast.windDirectionId)}",
                 modifier = itemModifier)
             AdditionalInfoItem(
                 title = stringResource(R.string.humidity),
-                value = "${currentForecastModel.relativeHumidity} "
+                value = "${currentForecast.relativeHumidity} "
                         + stringResource(R.string.percent),
                 modifier = itemModifier)
             AdditionalInfoItem(
                 title = stringResource(R.string.pressure),
-                value = "${currentForecastModel.surfacePressure} "
+                value = "${currentForecast.surfacePressure} "
                         + stringResource(R.string.hectopascal),
                 modifier = itemModifier)
             AdditionalInfoItem(
                 title = stringResource(R.string.sunrise),
-                value = "${dailyForecastModel.sunrise.time}",
+                value = "${dailyForecast.sunrise.time}",
                 modifier = itemModifier)
             AdditionalInfoItem(
                 title = stringResource(R.string.sunset),
-                value = "${dailyForecastModel.sunset.time}",
+                value = "${dailyForecast.sunset.time}",
                 modifier = itemModifier)
         }
     }

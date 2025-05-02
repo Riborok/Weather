@@ -119,9 +119,9 @@ fun MapScreen(
                             context = context,
                             latitude = selectedCoordinates!!.latitude,
                             longitude = selectedCoordinates!!.longitude,
-                            onResult = { locationModel ->
-                                locationModel.address.alias = userInput
-                                locationViewModel.saveLocation(locationModel)
+                            onResult = { location ->
+                                location.address.alias = userInput
+                                locationViewModel.saveLocation(location)
                             },
                         )
                             onNavigateToMainClick()

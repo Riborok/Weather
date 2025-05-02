@@ -35,7 +35,7 @@ fun HourlyForecast (hourlyForecastList: List<HourlyForecastModel>, modifier: Mod
             LazyRow {
                 item {
                     val index = hourlyForecastList.indexOfFirst {
-                        hourlyForecastModel -> hourlyForecastModel.time.hour == LocalTime.now().hour
+                        hourlyForecast -> hourlyForecast.time.hour == LocalTime.now().hour
                     }
 
                     hourlyForecastList.slice(index..index + 23).forEach { hourlyForecastInfo ->

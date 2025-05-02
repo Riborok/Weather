@@ -4,9 +4,9 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 
 data class ForecastModel (
-    val currentForecastModel: CurrentForecastModel,
-    val hourlyForecastModels: List<HourlyForecastModel>,
-    val dailyForecastModels: List<DailyForecastModel>
+    val currentForecast: CurrentForecastModel,
+    val hourlyForecasts: List<HourlyForecastModel>,
+    val dailyForecasts: List<DailyForecastModel>
 )
 
 data class CurrentForecastModel (
@@ -28,7 +28,7 @@ data class HourlyForecastModel (
     val time: LocalDateTime,
 )
 
-data class DailyForecastModel(
+data class DailyForecastModel (
     val iconId: Int,
     val weatherDescriptionId: Int,
     val minTemperature: Int,
