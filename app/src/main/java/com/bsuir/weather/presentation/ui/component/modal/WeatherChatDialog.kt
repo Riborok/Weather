@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.bsuir.weather.domain.model.WeatherLocationModel
+import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.presentation.ui.component.main_screen.weather_chat.ChatInputField
 import com.bsuir.weather.presentation.ui.component.main_screen.weather_chat.ChatMessageList
 import com.bsuir.weather.presentation.ui.component.main_screen.weather_chat.HeaderSection
@@ -31,7 +31,7 @@ import com.bsuir.weather.presentation.viewmodel.WeatherChatViewModel
 
 @Composable
 fun WeatherChatDialog(
-    weatherLocation: WeatherLocationModel,
+    forecastLocation: ForecastLocationModel,
     onDismiss: () -> Unit,
     weatherChatViewModel: WeatherChatViewModel = hiltViewModel()
 ) {
@@ -61,7 +61,7 @@ fun WeatherChatDialog(
                     Spacer(modifier = Modifier.height(12.dp))
 
                     PopularQuestionsSection { question ->
-                        weatherChatViewModel.addMessage(question, weatherLocation)
+                        weatherChatViewModel.addMessage(question, forecastLocation)
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))
@@ -71,7 +71,7 @@ fun WeatherChatDialog(
                         onMessageChange = { userMessage = it },
                         onSendMessage = {
                             if (userMessage.isNotBlank()) {
-                                weatherChatViewModel.addMessage(userMessage, weatherLocation)
+                                weatherChatViewModel.addMessage(userMessage, forecastLocation)
                                 userMessage = ""
                             }
                         }

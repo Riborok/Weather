@@ -3,14 +3,14 @@ package com.bsuir.weather.data.source.network.chat.utils
 import android.content.Context
 import com.bsuir.weather.domain.model.ForecastModel
 import com.bsuir.weather.domain.model.LocationModel
-import com.bsuir.weather.domain.model.WeatherLocationModel
+import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.utils.LocaleUtils.currentLocale
 import java.util.Locale
 
 object AiChatPromptBuilder {
-    fun buildWeatherPrompt(weatherLocation: WeatherLocationModel, context: Context): String {
-        val forecast = weatherLocation.forecast
-        val location = weatherLocation.location
+    fun buildWeatherPrompt(forecastLocation: ForecastLocationModel, context: Context): String {
+        val forecast = forecastLocation.forecast
+        val location = forecastLocation.location
         val locale = context.currentLocale
 
         return buildString {

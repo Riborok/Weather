@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.bsuir.weather.R
-import com.bsuir.weather.domain.model.WeatherLocationModel
+import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.domain.usecase.AskAiChatUseCase
 import com.bsuir.weather.utils.weatherAppContext
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +24,7 @@ class WeatherChatViewModel @Inject constructor(
     private val _chatMessages = MutableStateFlow<List<ChatMessage>>(emptyList())
     val chatMessages: StateFlow<List<ChatMessage>> = _chatMessages
 
-    fun addMessage(question: String, weatherLocation: WeatherLocationModel) {
+    fun addMessage(question: String, forecastLocation: ForecastLocationModel) {
         val initialMessage = ChatMessage(question, response = null)
         _chatMessages.update { currentMessages ->
             currentMessages + initialMessage
@@ -32,7 +32,7 @@ class WeatherChatViewModel @Inject constructor(
 
         viewModelScope.launch {
             try {
-                val response = askAiChatUseCase.askWeatherAI(weatherLocation, question)
+                val response = askAiChatUseCase.askWeatherAI(forecastLocation, question)
                 updateChatMessage(initialMessage, response)
             } catch (exception: Exception) {
                 val context = getApplication<Application>().weatherAppContext

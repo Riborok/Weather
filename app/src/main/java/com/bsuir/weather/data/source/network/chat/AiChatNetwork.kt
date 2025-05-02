@@ -7,7 +7,7 @@ import com.bsuir.weather.data.dto.chat.ChatMessageRequest
 import com.bsuir.weather.data.dto.chat.ChatRequest
 import com.bsuir.weather.data.dto.chat.ChatResponse
 import com.bsuir.weather.data.source.network.chat.utils.AiChatPromptBuilder
-import com.bsuir.weather.domain.model.WeatherLocationModel
+import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.exception.NetworkRequestException
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -23,13 +23,13 @@ class AiChatNetwork @Inject constructor(
     private val http: HttpClient,
     private val context: Context
 ) {
-    suspend fun askWeatherAI(weatherLocation: WeatherLocationModel, userRequest: String): ChatResponse {
-        val response = makeAIRequest(weatherLocation, userRequest)
+    suspend fun askWeatherAI(forecastLocation: ForecastLocationModel, userRequest: String): ChatResponse {
+        val response = makeAIRequest(forecastLocation, userRequest)
         return handleAIResponse(response)
     }
 
-    private suspend fun makeAIRequest(weatherLocation: WeatherLocationModel, userRequest: String): HttpResponse {
-        val systemPrompt = AiChatPromptBuilder.buildWeatherPrompt(weatherLocation, context)
+    private suspend fun makeAIRequest(forecastLocation: ForecastLocationModel, userRequest: String): HttpResponse {
+        val systemPrompt = AiChatPromptBuilder.buildWeatherPrompt(forecastLocation, context)
         return http.post("https://api.aimlapi.com/v1/chat/completions") {
             contentType(ContentType.Application.Json)
 

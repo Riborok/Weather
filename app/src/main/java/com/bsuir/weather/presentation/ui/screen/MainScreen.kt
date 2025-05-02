@@ -143,9 +143,9 @@ fun MainScreen(
                 }
 
                 is ForecastState.Success -> {
-                    val weatherLocation = (forecastState as ForecastState.Success).weatherLocation
-                    val location = weatherLocation.location
-                    val forecast = weatherLocation.forecast
+                    val forecastLocation = (forecastState as ForecastState.Success).forecastLocation
+                    val location = forecastLocation.location
+                    val forecast = forecastLocation.forecast
                     LazyColumn(
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -200,7 +200,7 @@ fun MainScreen(
 
                     if (isChatOpen) {
                         WeatherChatDialog(
-                            weatherLocation = weatherLocation,
+                            forecastLocation = forecastLocation,
                             onDismiss = { isChatOpen = false }
                         )
                     }

@@ -3,7 +3,7 @@ package com.bsuir.weather.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bsuir.weather.domain.model.LocationModel
-import com.bsuir.weather.domain.model.WeatherLocationModel
+import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.domain.usecase.GetForecastUseCase
 import com.bsuir.weather.exception.NetworkRequestException
 import com.bsuir.weather.presentation.state.ForecastState
@@ -28,7 +28,7 @@ class ForecastViewModel @Inject constructor(
                     location.latitude,
                     location.longitude
                 )
-                ForecastState.Success(WeatherLocationModel(forecastModel, location))
+                ForecastState.Success(ForecastLocationModel(forecastModel, location))
             } catch (e: NetworkRequestException) {
                 ForecastState.Error(e)
             }
