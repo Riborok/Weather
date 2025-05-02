@@ -92,11 +92,16 @@
     <string name="wind_direction_w">З</string>
     <string name="wind_direction_nw">С-З</string>
 
+    <string name="content_description_ai_chat">AI Чат</string>
+
+    <string name="unknown_error">Неизвестная ошибка</string>
+    <string name="error_message">Ошибка: %1$s</string>
+
     <string name="chat_placeholder_weather">Введите вопрос о погоде…</string>
     <string name="content_description_send">Отправить</string>
     <string name="content_description_user">Пользователь</string>
     <string name="content_description_ai">Искусственный интеллект</string>
-    <string name="header_ai_chat">🤖 Погодный AI-чат</string>
+    <string name="header_ai_chat">🤖 Погодный AI-ассистент</string>
     <string name="content_description_close">Закрыть</string>
     <string name="thinking_state">Думает</string>
     <string name="ai_request_error">Ошибка при запросе: %1$s</string>

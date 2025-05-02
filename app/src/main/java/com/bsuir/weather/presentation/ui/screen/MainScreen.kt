@@ -33,8 +33,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.bsuir.weather.R
 import com.bsuir.weather.presentation.ui.utils.RequestLocationPermission
 import com.bsuir.weather.presentation.state.ForecastState
 import com.bsuir.weather.presentation.ui.component.main_screen.AdditionalInfo
@@ -193,7 +195,7 @@ fun MainScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Default.QuestionAnswer,
-                            contentDescription = "AI Chat"
+                            contentDescription = stringResource(R.string.content_description_ai_chat)
                         )
                     }
 
@@ -206,10 +208,14 @@ fun MainScreen(
                 }
 
                 is ForecastState.Error -> {
-                    val errorMessage = (forecastState as ForecastState.Error).error.message ?: "Unknown error"
+                    val errorMessage = (forecastState as ForecastState.Error).error.message
+                        ?: stringResource(R.string.unknown_error)
                     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(text = "Error: $errorMessage", color = Color.Red)
+                            Text(
+                                text = stringResource(R.string.error_message, errorMessage),
+                                color = Color.Red
+                            )
                         }
                     }
                 }
