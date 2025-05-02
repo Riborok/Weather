@@ -8,6 +8,8 @@ import com.bsuir.weather.domain.model.CurrentForecastModel
 import com.bsuir.weather.domain.model.DailyForecastModel
 import com.bsuir.weather.domain.model.ForecastModel
 import com.bsuir.weather.domain.model.HourlyForecastModel
+import com.bsuir.weather.utils.converter.WeatherCodeConverter
+import com.bsuir.weather.utils.converter.WeatherWindDirectionConverter
 import kotlinx.datetime.LocalDateTime
 import kotlin.math.roundToInt
 

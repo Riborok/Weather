@@ -1,4 +1,4 @@
-package com.bsuir.weather.utils.mapper
+package com.bsuir.weather.utils.converter
 
 import com.bsuir.weather.R
 
