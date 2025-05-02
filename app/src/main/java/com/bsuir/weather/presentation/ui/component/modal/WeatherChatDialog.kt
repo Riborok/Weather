@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bsuir.weather.domain.model.ForecastModel
 import com.bsuir.weather.presentation.ui.component.main_screen.weather_chat.ChatInputField
 import com.bsuir.weather.presentation.ui.component.main_screen.weather_chat.ChatMessageList
@@ -32,7 +32,7 @@ import com.bsuir.weather.presentation.viewmodel.WeatherChatViewModel
 fun WeatherChatDialog(
     forecast: ForecastModel,
     onDismiss: () -> Unit,
-    weatherChatViewModel: WeatherChatViewModel = viewModel()
+    weatherChatViewModel: WeatherChatViewModel = hiltViewModel()
 ) {
     var userMessage by remember { mutableStateOf("") }
     val messages by weatherChatViewModel.chatMessages.collectAsState()

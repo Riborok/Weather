@@ -81,4 +81,5 @@
     <string name="content_description_ai">Искусственный интеллект</string>
     <string name="header_ai_chat">🤖 Погодный AI-чат</string>
     <string name="content_description_close">Закрыть</string>
+    <string name="thinking_state">Думает</string>
 </resources>

@@ -89,11 +89,15 @@ fun ChatMessageItem(
                             .padding(12.dp)
                             .widthIn(max = 260.dp)
                     ) {
-                        Text(
-                            text = message.response,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface
-                        )
+                        if (message.response == null) {
+                            LoadingAnimation()
+                        } else {
+                            Text(
+                                text = message.response,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                        }
                     }
                 }
             }
