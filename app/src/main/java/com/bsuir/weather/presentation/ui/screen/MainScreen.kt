@@ -35,7 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.bsuir.weather.RequestLocationPermission
+import com.bsuir.weather.presentation.ui.utils.RequestLocationPermission
 import com.bsuir.weather.presentation.state.ForecastState
 import com.bsuir.weather.presentation.ui.component.main_screen.AdditionalInfo
 import com.bsuir.weather.presentation.ui.component.main_screen.DailyForecast
@@ -43,11 +43,11 @@ import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.MainInfo
 import com.bsuir.weather.presentation.ui.component.modal.LocationModal
 import com.bsuir.weather.presentation.ui.component.modal.WeatherChatDialog
+import com.bsuir.weather.presentation.ui.utils.getDefaultLocation
 import com.bsuir.weather.presentation.viewmodel.CurrentLocationViewModel
 import com.bsuir.weather.presentation.viewmodel.ForecastViewModel
 import com.bsuir.weather.presentation.viewmodel.PickedLocationViewModel
 import com.bsuir.weather.presentation.viewmodel.SavedLocationViewModel
-import com.bsuir.weather.utils.defaultLocation
 import kotlinx.coroutines.launch
 
 @Composable
@@ -58,6 +58,8 @@ fun MainScreen(
     pickedLocationViewModel: PickedLocationViewModel = hiltViewModel(),
     savedLocationViewModel: SavedLocationViewModel = hiltViewModel()
 ) {
+    val defaultLocation = getDefaultLocation()
+
     // Drawer
     val drawerState = rememberDrawerState(DrawerValue.Closed)
 

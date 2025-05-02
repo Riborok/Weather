@@ -1,4 +1,4 @@
-package com.bsuir.weather
+package com.bsuir.weather.presentation.ui.utils
 
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
