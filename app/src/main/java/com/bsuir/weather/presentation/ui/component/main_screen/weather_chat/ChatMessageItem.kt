@@ -1,5 +1,6 @@
 package com.bsuir.weather.presentation.ui.component.main_screen.weather_chat
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,6 +31,16 @@ import com.bsuir.weather.presentation.viewmodel.ChatMessage
 fun ChatMessageItem(
     message: ChatMessage
 ) {
+    fun messageBoxModifier(color: Color): Modifier {
+        return Modifier
+            .background(
+                color = color.copy(alpha = 0.1f),
+                shape = RoundedCornerShape(12.dp)
+            )
+            .padding(12.dp)
+            .widthIn(max = 200.dp)
+    }
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -41,13 +52,7 @@ fun ChatMessageItem(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(
-                        modifier = Modifier
-                            .background(
-                                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                                shape = RoundedCornerShape(12.dp)
-                            )
-                            .padding(12.dp)
-                            .widthIn(max = 260.dp)
+                        modifier = messageBoxModifier(MaterialTheme.colorScheme.primary)
                     ) {
                         Text(
                             text = message.question,
@@ -81,13 +86,7 @@ fun ChatMessageItem(
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Box(
-                        modifier = Modifier
-                            .background(
-                                color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f),
-                                shape = RoundedCornerShape(12.dp)
-                            )
-                            .padding(12.dp)
-                            .widthIn(max = 260.dp)
+                        modifier = messageBoxModifier(MaterialTheme.colorScheme.secondary)
                     ) {
                         if (message.response == null) {
                             LoadingAnimation()
