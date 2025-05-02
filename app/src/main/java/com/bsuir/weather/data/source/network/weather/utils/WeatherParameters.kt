@@ -1,4 +1,4 @@
-package com.bsuir.weather.data.source.network.weather
+package com.bsuir.weather.data.source.network.weather.utils
 
 object WeatherParameters {
     val dailyParameters = listOf(

@@ -1,4 +1,4 @@
-package com.bsuir.weather.data.source.network.weather
+package com.bsuir.weather.data.source.network.weather.utils
 
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.parameter

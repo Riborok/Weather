@@ -3,7 +3,8 @@ package com.bsuir.weather.data.source.network.weather
 import android.content.Context
 import com.bsuir.weather.R
 import com.bsuir.weather.data.dto.WeatherResponse
-import com.bsuir.weather.data.source.network.weather.WeatherForecastRequestBuilder.Companion.weatherForecast
+import com.bsuir.weather.data.source.network.weather.utils.WeatherForecastRequestBuilder.Companion.weatherForecast
+import com.bsuir.weather.data.source.network.weather.utils.WeatherParameters
 import com.bsuir.weather.exception.NetworkRequestException
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
