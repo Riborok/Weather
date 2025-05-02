@@ -83,6 +83,15 @@
     <string name="sunset">Закат</string>
     <string name="weather_picture">Изображение погоды</string>
 
+    <string name="wind_direction_n">С</string>
+    <string name="wind_direction_ne">С-В</string>
+    <string name="wind_direction_e">В</string>
+    <string name="wind_direction_se">Ю-В</string>
+    <string name="wind_direction_s">Ю</string>
+    <string name="wind_direction_sw">Ю-З</string>
+    <string name="wind_direction_w">З</string>
+    <string name="wind_direction_nw">С-З</string>
+
     <string name="chat_placeholder_weather">Введите вопрос о погоде…</string>
     <string name="content_description_send">Отправить</string>
     <string name="content_description_user">Пользователь</string>

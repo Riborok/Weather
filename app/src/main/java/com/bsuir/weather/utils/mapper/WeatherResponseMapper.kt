@@ -29,7 +29,7 @@ object WeatherResponseMapper {
             iconId = WeatherCodeConverter.getWeatherIconId(weatherCode, isDay),
             weatherDescriptionId = WeatherCodeConverter.getWeatherDescriptionId(weatherCode),
             windSpeed = windSpeed10m.roundToInt(),
-            windDirection = convertWindDirection(windDirection10m),
+            windDirectionId = WeatherWindDirectionConverter.getWindDirectionId(windDirection10m),
             surfacePressure = surfacePressure.roundToInt(),
             relativeHumidity = relativeHumidity2m,
             time = time
@@ -72,16 +72,5 @@ object WeatherResponseMapper {
             val (sunrise, sunset) = dailySunTimes[date] ?: return true
             return time > sunrise && time < sunset
         }
-    }
-
-    private val directions = listOf(
-        "С", "С-В", "В", "Ю-В", "Ю", "Ю-З", "З", "С-З"
-    )
-
-    private fun convertWindDirection(directionDegree: Int): String {
-        val sectorSize = 360 / directions.size
-        val halfSectorSize = sectorSize / 2
-        val index = ((directionDegree + halfSectorSize) % 360 / sectorSize).toInt()
-        return directions[index % directions.size]
     }
 }

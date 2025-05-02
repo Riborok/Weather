@@ -15,7 +15,7 @@ data class CurrentForecastModel (
     val iconId: Int,
     val weatherDescriptionId: Int,
     val windSpeed: Int,
-    val windDirection: String,
+    val windDirectionId: Int,
     val surfacePressure: Int,
     val relativeHumidity: Int,
     val time: LocalDateTime,

@@ -39,7 +39,7 @@ fun AdditionalInfo (
                 title = stringResource(R.string.wind),
                 value = "${currentForecastModel.windSpeed} "
                         + stringResource(R.string.kilometers_per_hour)
-                        + ", ${currentForecastModel.windDirection}",
+                        + ", ${stringResource(currentForecastModel.windDirectionId)}",
                 modifier = itemModifier)
             AdditionalInfoItem(
                 title = stringResource(R.string.humidity),

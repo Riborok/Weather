@@ -1,6 +1,7 @@
 package com.bsuir.weather.data.source.network
 
 import android.content.Context
+import androidx.compose.ui.res.stringResource
 import com.bsuir.weather.R
 import com.bsuir.weather.data.dto.chat.ChatRequest
 import com.bsuir.weather.data.dto.chat.ChatResponse
@@ -65,6 +66,7 @@ class AiChatNetwork @Inject constructor(
         val current = forecast.currentForecastModel
         val hourly = forecast.hourlyForecastModels
         val daily = forecast.dailyForecastModels
+
         val locale = context.currentLocale
         val languageName = locale.displayLanguage
         val languageCode = locale.language
@@ -76,7 +78,7 @@ class AiChatNetwork @Inject constructor(
             appendLine("Current weather:")
             appendLine("• Temperature: ${current.temperature}°C (feels like ${current.apparentTemperature}°C)")
             appendLine("• Weather description: ${context.getString(current.weatherDescriptionId)}")
-            appendLine("• Wind: ${current.windSpeed} m/s, direction: ${current.windDirection}")
+            appendLine("• Wind: ${current.windSpeed} m/s, direction: ${context.getString(current.windDirectionId)}")
             appendLine("• Pressure: ${current.surfacePressure} hPa")
             appendLine("• Humidity: ${current.relativeHumidity}%")
             appendLine("• Time: ${current.time}")
