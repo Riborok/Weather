@@ -82,4 +82,13 @@
     <string name="header_ai_chat">🤖 Погодный AI-чат</string>
     <string name="content_description_close">Закрыть</string>
     <string name="thinking_state">Думает</string>
+
+    <string name="popular_questions">Популярные вопросы</string>
+    <string-array name="popular_questions">
+        <item>Какая погода сейчас?</item>
+        <item>Будет ли дождь завтра?</item>
+        <item>Какая температура на выходных?</item>
+        <item>Какая вероятность снега на неделю?</item>
+        <item>Какая минимальная температура ночью?</item>
+    </string-array>
 </resources>
