@@ -82,6 +82,7 @@
     <string name="header_ai_chat">🤖 Погодный AI-чат</string>
     <string name="content_description_close">Закрыть</string>
     <string name="thinking_state">Думает</string>
+    <string name="ai_request_error">Ошибка при запросе: %1$s</string>
 
     <string name="popular_questions">Популярные вопросы</string>
     <string-array name="popular_questions">
