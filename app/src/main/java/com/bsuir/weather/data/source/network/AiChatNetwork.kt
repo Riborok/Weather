@@ -17,6 +17,7 @@ import io.ktor.http.ContentType
 import javax.inject.Inject
 import com.bsuir.weather.BuildConfig.AI_API_KEY
 import com.bsuir.weather.data.dto.chat.ChatMessageRequest
+import com.bsuir.weather.utils.LocaleUtils.currentLocale
 
 class AiChatNetwork @Inject constructor(
     private val http: HttpClient,
@@ -64,7 +65,7 @@ class AiChatNetwork @Inject constructor(
         val current = forecast.currentForecastModel
         val hourly = forecast.hourlyForecastModels
         val daily = forecast.dailyForecastModels
-        val locale = context.resources.configuration.locales[0]
+        val locale = context.currentLocale
         val languageName = locale.displayLanguage
         val languageCode = locale.language
 
