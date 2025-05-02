@@ -37,7 +37,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bsuir.weather.R
-import com.bsuir.weather.domain.model.WeatherLocationModel
 import com.bsuir.weather.presentation.ui.utils.RequestLocationPermission
 import com.bsuir.weather.presentation.state.ForecastState
 import com.bsuir.weather.presentation.ui.component.main_screen.AdditionalInfo
@@ -107,12 +106,8 @@ fun MainScreen(
         }
     }
 
-    val forecastLocation = pickedLocation ?: defaultLocation
     LaunchedEffect(pickedLocation) {
-        forecastViewModel.loadForecast(
-            pickedLocation?.latitude ?: defaultLocation.latitude,
-            pickedLocation?.longitude ?: defaultLocation.longitude
-        )
+        forecastViewModel.loadForecast(pickedLocation ?: defaultLocation)
     }
 
     ModalNavigationDrawer(
@@ -148,7 +143,9 @@ fun MainScreen(
                 }
 
                 is ForecastState.Success -> {
-                    val forecast = (forecastState as ForecastState.Success).forecast
+                    val weatherLocation = (forecastState as ForecastState.Success).weatherLocation
+                    val location = weatherLocation.location
+                    val forecast = weatherLocation.forecast
                     LazyColumn(
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -156,7 +153,7 @@ fun MainScreen(
                     ) {
                         item {
                             MainInfo(
-                                pickedLocationName = forecastLocation.address.formatAddress(),
+                                pickedLocationName = location.address.formatAddress(),
                                 currentForecastModel = forecast.currentForecastModel,
                                 dailyForecastModel = forecast.dailyForecastModels.first(),
                                 onOpenDrawerClick = { scope.launch { drawerState.open() } },
@@ -203,7 +200,7 @@ fun MainScreen(
 
                     if (isChatOpen) {
                         WeatherChatDialog(
-                            weatherLocation = WeatherLocationModel(forecast, forecastLocation),
+                            weatherLocation = weatherLocation,
                             onDismiss = { isChatOpen = false }
                         )
                     }
