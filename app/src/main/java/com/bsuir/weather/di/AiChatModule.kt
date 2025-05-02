@@ -2,7 +2,7 @@ package com.bsuir.weather.di
 
 import android.content.Context
 import com.bsuir.weather.data.repository.AiChatRepositoryImpl
-import com.bsuir.weather.data.source.network.AiChatNetwork
+import com.bsuir.weather.data.source.network.chat.AiChatNetwork
 import com.bsuir.weather.domain.repository.AiChatRepository
 import com.bsuir.weather.domain.usecase.AskAiChatUseCase
 import dagger.Module
