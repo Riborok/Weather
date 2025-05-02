@@ -10,7 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.DailyForecastModel
 
 @Composable
@@ -19,15 +21,16 @@ fun DailyForecast (dailyForecastList: List<DailyForecastModel>, modifier: Modifi
         modifier = modifier
     ) {
         Column (
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
             Text (
-                text = "Прогноз на 7 дней",
-                style = MaterialTheme.typography.titleLarge
+                text = stringResource(R.string.forecast_for_7_days),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.secondary
             )
 
             Column(
@@ -38,13 +41,12 @@ fun DailyForecast (dailyForecastList: List<DailyForecastModel>, modifier: Modifi
             ) {
                 dailyForecastList.forEach { dailyForecastInfo ->
                     DailyForecastItem(
-                        dailyForecastInfo.date.dayOfWeek.toString(),
+                        dailyForecastInfo.date.dayOfWeek,
                         dailyForecastInfo.iconId,
                         dailyForecastInfo.weatherDescriptionId,
                         dailyForecastInfo.minTemperature.toString(),
                         dailyForecastInfo.maxTemperature.toString(),
-                        Modifier
-                            .fillMaxWidth()
+                        Modifier.fillMaxWidth()
                     )
                 }
             }

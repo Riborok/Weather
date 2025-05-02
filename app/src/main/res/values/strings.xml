@@ -86,13 +86,18 @@
 
     <string name="popular_questions">Популярные вопросы</string>
     <string-array name="popular_questions">
-        <item>Какая погода сейчас?</item>
-        <item>Будет ли дождь завтра?</item>
-        <item>Какая температура на выходных?</item>
-        <item>Какая вероятность снега на неделю?</item>
-        <item>Какая минимальная температура ночью?</item>
+        <item>Что надеть сегодня по погоде?</item>
+        <item>Нужен ли сегодня зонт?</item>
+        <item>Можно ли сегодня гулять?</item>
+        <item>Можно ли сегодня бегать на улице?</item>
+        <item>Можно ли сегодня кататься на велосипеде?</item>
+        <item>Подходит ли сегодня погода для пикника или велопрогулки?</item>
+        <item>Когда можно будет купаться в водоёмах?</item>
+        <item>Когда лучше ехать на дачу?</item>
     </string-array>
 
     <string name="open_meteo_error">Ошибка Open Meteo API: %1$s</string>
     <string name="ai_api_error">Ошибка AI API: %1$s</string>
+    <string name="forecast_for_24_hour">Прогноз на 24 часа</string>
+    <string name="forecast_for_7_days">Прогноз на 7 дней</string>
 </resources>

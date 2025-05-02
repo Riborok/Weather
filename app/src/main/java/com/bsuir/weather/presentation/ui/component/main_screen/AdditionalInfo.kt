@@ -29,10 +29,7 @@ fun AdditionalInfo (
         Column (
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(
-                vertical = 16.dp,
-                horizontal = 16.dp
-            )
+            modifier = Modifier.padding(16.dp)
         ) {
             AdditionalInfoItem(
                 title = stringResource(R.string.felt),

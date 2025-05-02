@@ -27,8 +27,9 @@ fun HourlyForecast (hourlyForecastList: List<HourlyForecastModel>, modifier: Mod
             modifier = Modifier.padding(16.dp)
         ) {
             Text (
-                text = "Прогноз на 24 часа",
-                style = MaterialTheme.typography.titleLarge
+                text = stringResource(R.string.forecast_for_24_hour),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.secondary
             )
 
             LazyRow {
