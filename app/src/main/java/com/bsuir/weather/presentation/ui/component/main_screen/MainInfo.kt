@@ -22,7 +22,7 @@ import com.bsuir.weather.domain.model.DailyForecastModel
 
 @Composable
 fun MainInfo (
-    pickedLocationName: String?,
+    pickedLocationName: String,
     currentForecastModel: CurrentForecastModel,
     dailyForecastModel: DailyForecastModel,
     onOpenDrawerClick: () -> Unit,
@@ -40,7 +40,7 @@ fun MainInfo (
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
-                    text = pickedLocationName ?: stringResource(R.string.loading),
+                    text = pickedLocationName,
                     style = MaterialTheme.typography.titleLarge,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1,

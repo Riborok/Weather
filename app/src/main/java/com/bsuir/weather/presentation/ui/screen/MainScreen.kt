@@ -149,7 +149,8 @@ fun MainScreen(
                     ) {
                         item {
                             MainInfo(
-                                pickedLocationName = pickedLocation?.address?.formatAddress(),
+                                pickedLocationName =
+                                    (pickedLocation ?: defaultLocation).address.formatAddress(),
                                 currentForecastModel = forecast.currentForecastModel,
                                 dailyForecastModel = forecast.dailyForecastModels.first(),
                                 onOpenDrawerClick = { scope.launch { drawerState.open() } },
