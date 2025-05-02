@@ -23,4 +23,16 @@ data class AddressModel(
     fun formatAddress(): String {
         return locality ?: subLocality ?: ""
     }
+
+    fun getFullAddress(): String {
+        return listOfNotNull(
+            subThoroughfare,
+            thoroughfare,
+            subLocality,
+            locality,
+            subAdminArea,
+            adminArea,
+            countryName
+        ).joinToString(", ")
+    }
 }

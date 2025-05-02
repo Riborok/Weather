@@ -37,6 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bsuir.weather.R
+import com.bsuir.weather.domain.model.WeatherLocationModel
 import com.bsuir.weather.presentation.ui.utils.RequestLocationPermission
 import com.bsuir.weather.presentation.state.ForecastState
 import com.bsuir.weather.presentation.ui.component.main_screen.AdditionalInfo
@@ -60,6 +61,7 @@ fun MainScreen(
     pickedLocationViewModel: PickedLocationViewModel = hiltViewModel(),
     savedLocationViewModel: SavedLocationViewModel = hiltViewModel()
 ) {
+    // Default location
     val defaultLocation = getDefaultLocation()
 
     // Drawer
@@ -105,6 +107,7 @@ fun MainScreen(
         }
     }
 
+    val forecastLocation = pickedLocation ?: defaultLocation
     LaunchedEffect(pickedLocation) {
         forecastViewModel.loadForecast(
             pickedLocation?.latitude ?: defaultLocation.latitude,
@@ -153,8 +156,7 @@ fun MainScreen(
                     ) {
                         item {
                             MainInfo(
-                                pickedLocationName =
-                                    (pickedLocation ?: defaultLocation).address.formatAddress(),
+                                pickedLocationName = forecastLocation.address.formatAddress(),
                                 currentForecastModel = forecast.currentForecastModel,
                                 dailyForecastModel = forecast.dailyForecastModels.first(),
                                 onOpenDrawerClick = { scope.launch { drawerState.open() } },
@@ -201,7 +203,7 @@ fun MainScreen(
 
                     if (isChatOpen) {
                         WeatherChatDialog(
-                            forecast = forecast,
+                            weatherLocation = WeatherLocationModel(forecast, forecastLocation),
                             onDismiss = { isChatOpen = false }
                         )
                     }

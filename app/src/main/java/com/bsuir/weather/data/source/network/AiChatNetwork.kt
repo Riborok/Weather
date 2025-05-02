@@ -1,40 +1,39 @@
 package com.bsuir.weather.data.source.network
 
 import android.content.Context
-import androidx.compose.ui.res.stringResource
+import com.bsuir.weather.BuildConfig
 import com.bsuir.weather.R
+import com.bsuir.weather.data.dto.chat.ChatMessageRequest
 import com.bsuir.weather.data.dto.chat.ChatRequest
 import com.bsuir.weather.data.dto.chat.ChatResponse
-import com.bsuir.weather.domain.model.ForecastModel
+import com.bsuir.weather.domain.model.WeatherLocationModel
 import com.bsuir.weather.exception.NetworkRequestException
+import com.bsuir.weather.utils.LocaleUtils.currentLocale
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
+import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
-import io.ktor.http.ContentType
 import javax.inject.Inject
-import com.bsuir.weather.BuildConfig.AI_API_KEY
-import com.bsuir.weather.data.dto.chat.ChatMessageRequest
-import com.bsuir.weather.utils.LocaleUtils.currentLocale
 
 class AiChatNetwork @Inject constructor(
     private val http: HttpClient,
     private val context: Context
 ) {
-    suspend fun askWeatherAI(forecast: ForecastModel, userRequest: String): ChatResponse {
-        val response = makeAIRequest(forecast, userRequest)
+    suspend fun askWeatherAI(weatherLocation: WeatherLocationModel, userRequest: String): ChatResponse {
+        val response = makeAIRequest(weatherLocation, userRequest)
         return handleAIResponse(response)
     }
 
-    private suspend fun makeAIRequest(forecast: ForecastModel, userRequest: String): HttpResponse {
-        val systemPrompt = buildWeatherPrompt(forecast)
+    private suspend fun makeAIRequest(weatherLocation: WeatherLocationModel, userRequest: String): HttpResponse {
+        val systemPrompt = buildWeatherPrompt(weatherLocation)
         return http.post("https://api.aimlapi.com/v1/chat/completions") {
             contentType(ContentType.Application.Json)
 
-            headers.append("Authorization", "Bearer $AI_API_KEY")
+            headers.append("Authorization", "Bearer ${BuildConfig.AI_API_KEY}")
 
             setBody(
                 ChatRequest(
@@ -62,10 +61,14 @@ class AiChatNetwork @Inject constructor(
         return response.body()
     }
 
-    private fun buildWeatherPrompt(forecast: ForecastModel): String {
+    private fun buildWeatherPrompt(weatherLocation: WeatherLocationModel): String {
+        val forecast = weatherLocation.forecast
         val current = forecast.currentForecastModel
         val hourly = forecast.hourlyForecastModels
         val daily = forecast.dailyForecastModels
+
+        val location = weatherLocation.location
+        val address = location.address
 
         val locale = context.currentLocale
         val languageName = locale.displayLanguage
@@ -74,6 +77,13 @@ class AiChatNetwork @Inject constructor(
         return buildString {
             appendLine("You are a weather expert. Answer questions using complete information about the weather forecast.")
             appendLine("Below are the data provided to assist you in answering:")
+
+            appendLine()
+            appendLine("Location details:")
+            appendLine("• Latitude: ${location.latitude}")
+            appendLine("• Longitude: ${location.longitude}")
+            appendLine("• Address: ${address.getFullAddress()}")
+            appendLine()
 
             appendLine("Current weather:")
             appendLine("• Temperature: ${current.temperature}°C (feels like ${current.apparentTemperature}°C)")
