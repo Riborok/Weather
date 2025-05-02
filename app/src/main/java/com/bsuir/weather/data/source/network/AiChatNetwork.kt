@@ -1,7 +1,7 @@
 package com.bsuir.weather.data.source.network
 
 import android.content.Context
-import android.util.Log
+import com.bsuir.weather.R
 import com.bsuir.weather.data.dto.chat.ChatRequest
 import com.bsuir.weather.data.dto.chat.ChatResponse
 import com.bsuir.weather.domain.model.ForecastModel
@@ -11,14 +11,12 @@ import io.ktor.client.call.body
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.client.statement.HttpResponse
-import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
 import io.ktor.http.ContentType
 import javax.inject.Inject
 import com.bsuir.weather.BuildConfig.AI_API_KEY
 import com.bsuir.weather.data.dto.chat.ChatMessageRequest
-import io.ktor.client.statement.bodyAsText
 
 class AiChatNetwork @Inject constructor(
     private val http: HttpClient,
@@ -54,10 +52,11 @@ class AiChatNetwork @Inject constructor(
     }
 
     private suspend fun handleAIResponse(response: HttpResponse): ChatResponse {
-        if (!response.status.isSuccess()) {
-            throw NetworkRequestException("AI API error", response.status)
+        val status = response.status
+        if (!status.isSuccess()) {
+            val errorMessage = context.getString(R.string.ai_api_error, status.value.toString())
+            throw NetworkRequestException(errorMessage, status)
         }
-
         return response.body()
     }
 

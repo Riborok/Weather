@@ -1,5 +1,7 @@
 package com.bsuir.weather.data.source.network.weather
 
+import android.content.Context
+import com.bsuir.weather.R
 import com.bsuir.weather.data.dto.WeatherResponse
 import com.bsuir.weather.data.source.network.weather.WeatherForecastRequestBuilder.Companion.weatherForecast
 import com.bsuir.weather.exception.NetworkRequestException
@@ -12,7 +14,8 @@ import io.ktor.http.isSuccess
 import javax.inject.Inject
 
 class WeatherForecastNetwork @Inject constructor(
-    private val http: HttpClient
+    private val http: HttpClient,
+    private val context: Context
 ) {
     suspend fun getForecastList(
         latitude: Double,
@@ -53,7 +56,8 @@ class WeatherForecastNetwork @Inject constructor(
     private suspend fun handleWeatherForecastResponse(response: HttpResponse): WeatherResponse {
         val status = response.status
         if (!status.isSuccess()) {
-            throw NetworkRequestException("Server returned an error", status)
+            val errorMessage = context.getString(R.string.open_meteo_error, status.value.toString())
+            throw NetworkRequestException(errorMessage, status)
         }
         return response.body()
     }

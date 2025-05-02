@@ -92,4 +92,7 @@
         <item>Какая вероятность снега на неделю?</item>
         <item>Какая минимальная температура ночью?</item>
     </string-array>
+
+    <string name="open_meteo_error">Ошибка Open Meteo API: %1$s</string>
+    <string name="ai_api_error">Ошибка AI API: %1$s</string>
 </resources>

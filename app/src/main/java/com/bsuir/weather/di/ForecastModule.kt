@@ -1,5 +1,6 @@
 package com.bsuir.weather.di
 
+import android.content.Context
 import com.bsuir.weather.data.repository.ForecastRepositoryImpl
 import com.bsuir.weather.data.source.network.weather.WeatherForecastNetwork
 import com.bsuir.weather.domain.repository.ForecastRepository
@@ -7,6 +8,7 @@ import com.bsuir.weather.domain.usecase.GetForecastUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import javax.inject.Singleton
@@ -17,8 +19,8 @@ object ForecastModule {
 
     @Provides
     @Singleton
-    fun provideWeatherForecastNetwork(http: HttpClient): WeatherForecastNetwork {
-        return WeatherForecastNetwork(http)
+    fun provideWeatherForecastNetwork(http: HttpClient, @ApplicationContext context: Context): WeatherForecastNetwork {
+        return WeatherForecastNetwork(http, context)
     }
 
     @Provides
