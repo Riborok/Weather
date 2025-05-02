@@ -7,6 +7,7 @@ import com.bsuir.weather.domain.usecase.AskAiChatUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,31 +22,33 @@ class WeatherChatViewModel @Inject constructor(
 
     fun addMessage(question: String, forecast: ForecastModel) {
         val initialMessage = ChatMessage(question, response = null)
-        _chatMessages.value = _chatMessages.value + initialMessage
+        _chatMessages.update { currentMessages ->
+            currentMessages + initialMessage
+        }
 
         viewModelScope.launch {
             try {
                 val response = askAiChatUseCase.askWeatherAI(forecast, question)
 
-                val updatedMessages = _chatMessages.value.map { message ->
-                    if (message == initialMessage) {
-                        message.copy(response = response)
-                    } else {
-                        message
+                _chatMessages.update { currentMessages ->
+                    currentMessages.map { message ->
+                        if (message == initialMessage) {
+                            message.copy(response = response)
+                        } else {
+                            message
+                        }
                     }
                 }
-
-                _chatMessages.value = updatedMessages
             } catch (exception: Exception) {
-                val updatedMessages = _chatMessages.value.map { message ->
-                    if (message == initialMessage) {
-                        message.copy(response = "Ошибка при запросе AI: ${exception.message}")
-                    } else {
-                        message
+                _chatMessages.update { currentMessages ->
+                    currentMessages.map { message ->
+                        if (message == initialMessage) {
+                            message.copy(response = "Ошибка при запросе AI: ${exception.message}")
+                        } else {
+                            message
+                        }
                     }
                 }
-
-                _chatMessages.value = updatedMessages
             }
         }
     }
