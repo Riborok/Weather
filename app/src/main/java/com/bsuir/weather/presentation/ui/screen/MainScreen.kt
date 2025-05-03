@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
@@ -36,7 +38,14 @@ import com.bsuir.weather.presentation.viewmodel.ForecastViewModel
 import com.bsuir.weather.presentation.viewmodel.PickedLocationViewModel
 import com.bsuir.weather.presentation.viewmodel.SavedLocationViewModel
 import kotlinx.coroutines.launch
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MainScreen(
     onNavigate: (String) -> Unit,
@@ -60,6 +69,9 @@ fun MainScreen(
     // Forecast
     val forecastState by forecastViewModel.forecastState.collectAsState()
 
+    // Loading state
+    var isRefreshing by remember { mutableStateOf(false) }
+
     // Location
     val currentLocation by currentLocationViewModel.currentLocation.collectAsState()
     val pickedLocation by pickedLocationViewModel.pickedLocation.collectAsState()
@@ -80,16 +92,27 @@ fun MainScreen(
             pickedLocationViewModel.setPickedLocation(currentLocation)
         } else {
             pickedLocationViewModel.setPickedLocation(
-                if (savedLocations.isNotEmpty())
-                    savedLocations[0]
-                else
-                    null
+                savedLocations.firstOrNull()
             )
         }
     }
 
     LaunchedEffect(pickedLocation) {
         forecastViewModel.loadForecast(pickedLocation ?: defaultLocation)
+    }
+
+    val pullRefreshState = rememberPullRefreshState(
+        refreshing = isRefreshing,
+        onRefresh = {
+            isRefreshing = true
+            forecastViewModel.loadForecast(pickedLocation ?: defaultLocation)
+        }
+    )
+
+    LaunchedEffect(forecastState) {
+        if (isRefreshing && forecastState !is ForecastState.Loading) {
+            isRefreshing = false
+        }
     }
 
     ModalNavigationDrawer(
@@ -116,7 +139,11 @@ fun MainScreen(
             )
         }
     ) {
-        Box(Modifier.fillMaxSize()) {
+        Box(
+            Modifier
+                .fillMaxSize()
+                .pullRefresh(pullRefreshState)
+        ) {
             when (forecastState) {
                 is ForecastState.Loading -> LoadingContent()
                 is ForecastState.Success -> ForecastSuccessContent(
@@ -128,6 +155,16 @@ fun MainScreen(
                         ?: stringResource(R.string.unknown_error)
                 )
             }
+
+            PullRefreshIndicator(
+                refreshing = isRefreshing,
+                state = pullRefreshState,
+                backgroundColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.16f),
+                contentColor    = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 16.dp)
+            )
         }
     }
 }

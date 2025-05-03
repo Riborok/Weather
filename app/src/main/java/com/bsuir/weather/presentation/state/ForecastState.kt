@@ -5,6 +5,10 @@ import com.bsuir.weather.exception.NetworkRequestException
 
 sealed class ForecastState {
     object Loading : ForecastState()
-    data class Success(val forecastLocation: ForecastLocationModel) : ForecastState()
-    data class Error(val error: NetworkRequestException) : ForecastState()
+
+    // Not data class to enforce reference comparison
+    class Success(val forecastLocation: ForecastLocationModel) : ForecastState()
+
+    // Not data class to enforce reference comparison
+    class Error(val error: NetworkRequestException) : ForecastState()
 }

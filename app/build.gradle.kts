@@ -72,6 +72,7 @@ dependencies {
     implementation(libs.androidx.material.icons.core)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.material)
 
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.okhttp)
