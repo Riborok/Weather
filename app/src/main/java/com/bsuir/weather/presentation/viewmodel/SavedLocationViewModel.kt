@@ -33,4 +33,10 @@ class SavedLocationViewModel @Inject constructor(
             locationUseCase.saveLocation(location)
         }
     }
+
+    fun removeLocation(location: LocationModel) {
+        viewModelScope.launch {
+            locationUseCase.removeLocation(location)
+        }
+    }
 }

@@ -21,4 +21,8 @@ class LocationRepositoryImpl @Inject constructor(
     override suspend fun saveLocation(location: LocationModel) {
         locationDataStore.addLocation(location.toDTO())
     }
+
+    override suspend fun removeLocation(location: LocationModel) {
+        locationDataStore.removeLocation(location.toDTO())
+    }
 }

@@ -23,6 +23,14 @@ class LocationDataStore(private val context: Context) {
         }
     }
 
+    suspend fun removeLocation(location: LocationDTO) {
+        val json = location.toJson()
+        context.locationDataStore.edit { preferences ->
+            val currentSet = preferences[SAVED_LOCATIONS_KEY] ?: emptySet()
+            preferences[SAVED_LOCATIONS_KEY] = currentSet - json
+        }
+    }
+
     val savedLocations: Flow<List<LocationDTO>> = context.locationDataStore.data
         .map { preferences ->
             preferences[SAVED_LOCATIONS_KEY]?.map { LocationDTO.fromJson(it) } ?: emptyList()
