@@ -43,7 +43,7 @@ import com.bsuir.weather.presentation.ui.component.main_screen.AdditionalInfo
 import com.bsuir.weather.presentation.ui.component.main_screen.DailyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.MainInfo
-import com.bsuir.weather.presentation.ui.component.modal.LocationModal
+import com.bsuir.weather.presentation.ui.component.modal.location.LocationModal
 import com.bsuir.weather.presentation.ui.component.modal.WeatherChatDialog
 import com.bsuir.weather.presentation.ui.utils.getDefaultLocation
 import com.bsuir.weather.presentation.viewmodel.CurrentLocationViewModel

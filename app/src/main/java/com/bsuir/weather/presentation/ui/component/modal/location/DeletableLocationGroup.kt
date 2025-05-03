@@ -1,4 +1,4 @@
-package com.bsuir.weather.presentation.ui.component.modal
+package com.bsuir.weather.presentation.ui.component.modal.location
 
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
