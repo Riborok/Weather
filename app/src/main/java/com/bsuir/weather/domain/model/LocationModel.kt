@@ -20,8 +20,16 @@ data class AddressModel(
             field = if (value.isNullOrBlank()) null else value
         }
 
-    fun formatAddress(): String {
-        return locality ?: subLocality ?: ""
+    fun formatAddress(): String? {
+        return when {
+            thoroughfare != null && subThoroughfare != null -> "$thoroughfare $subThoroughfare"
+            thoroughfare != null -> thoroughfare
+            else -> subLocality
+                ?: locality
+                ?: subAdminArea
+                ?: adminArea
+                ?: countryName
+        }
     }
 
     fun getFullAddress(): String {

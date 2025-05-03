@@ -41,8 +41,13 @@
     <string name="weather_thunderstorm">Гроза</string>
     <string name="weather_thunderstorm_light_hail">Гроза с мелким градом</string>
     <string name="weather_thunderstorm_heavy_hail">Гроза с сильным градом</string>
+
+    <string name="delete_location_title">Удалить локацию</string>
+    <string name="delete_location_message">Вы уверены, что хотите удалить локацию \"%1$s\"?</string>
+
     <string name="next">Далее</string>
     <string name="save">Сохранить</string>
+    <string name="delete">Удалить</string>
     <string name="cancel">Отмена</string>
     <string name="enter_name">Введите название:</string>
     <string name="latitude">Широта</string>
@@ -67,14 +72,6 @@
     <string name="kilometers_per_hour">км/ч</string>
     <string name="percent">%</string>
     <string name="hectopascal">гПа</string>
-    <string name="north_abb">С</string>
-    <string name="north_east_abb">С-В</string>
-    <string name="east_abb">В</string>
-    <string name="south_east_abb">Ю-В</string>
-    <string name="south_abb">Ю</string>
-    <string name="south_west_abb">Ю-З</string>
-    <string name="west_abb">З</string>
-    <string name="north_west_abb">С-З</string>
     <string name="felt">Ощущается</string>
     <string name="wind">Ветер</string>
     <string name="humidity">Влажность</string>
@@ -122,4 +119,6 @@
     <string name="ai_api_error">Ошибка AI API: %1$s</string>
     <string name="forecast_for_24_hour">Прогноз на 24 часа</string>
     <string name="forecast_for_7_days">Прогноз на 7 дней</string>
+
+    <string name="unknown_address">Неизвестный адрес</string>
 </resources>

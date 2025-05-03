@@ -1,6 +1,6 @@
 package com.bsuir.weather.presentation.ui.component.modal
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,8 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.LocationModel
 
 @Composable
@@ -21,6 +23,7 @@ fun LocationGroup(
     locations: List<LocationModel>,
     onLocationClick: (location: LocationModel) -> Unit,
     modifier: Modifier = Modifier,
+    onLocationLongClick: ((location: LocationModel) -> Unit)? = null,
 ) {
     Column (
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -41,38 +44,36 @@ fun LocationGroup(
                 Card (
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable(onClick = { onLocationClick(location) })
+                        .combinedClickable(
+                            onClick = { onLocationClick(location) },
+                            onLongClick = onLocationLongClick?.let { { it(location) } }
+                        )
                 ) {
-                    Column (
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        modifier = Modifier
-                            .padding(
-                                vertical = 8.dp,
-                                horizontal = 12.dp
-                            )
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                        modifier = Modifier.padding(12.dp)
                     ) {
-                        if (location.address.alias != null) {
+                        location.address.alias?.let { alias ->
                             Text(
-                                text = location.address.alias!!,
+                                text = alias,
                                 style = MaterialTheme.typography.titleLarge,
-                                overflow = TextOverflow.Ellipsis,
-                                maxLines = 1
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
-
                             Text(
-                                text = location.address.formatAddress(),
-                                style = MaterialTheme.typography.bodyLarge,
-                                overflow = TextOverflow.Ellipsis,
-                                maxLines = 1
+                                text = location.address.formatAddress()
+                                    ?: stringResource(R.string.unknown_address),
+                                style = MaterialTheme.typography.bodyMedium,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
                             )
-                        } else {
-                            Text(
-                                text = location.address.formatAddress(),
-                                style = MaterialTheme.typography.titleLarge,
-                                overflow = TextOverflow.Ellipsis,
-                                maxLines = 1
-                            )
-                        }
+                        } ?: Text(
+                            text = location.address.formatAddress()
+                                ?: stringResource(R.string.unknown_address),
+                            style = MaterialTheme.typography.titleLarge,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
                     }
                 }
             }

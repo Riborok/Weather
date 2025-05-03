@@ -124,6 +124,9 @@ fun MainScreen(
                     pickedLocationViewModel.setPickedLocation(location)
                     scope.launch { drawerState.close() }
                 },
+                onLocationDelete = { location ->
+                    savedLocationViewModel.removeLocation(location)
+                },
                 onNavigate = onNavigate,
                 modifier = Modifier
                     .fillMaxHeight()
@@ -153,7 +156,8 @@ fun MainScreen(
                     ) {
                         item {
                             MainInfo(
-                                pickedLocationName = location.address.formatAddress(),
+                                pickedLocationName = location.address.formatAddress()
+                                    ?: stringResource(R.string.unknown_address),
                                 currentForecast = forecast.currentForecast,
                                 dailyForecast = forecast.dailyForecasts.first(),
                                 onOpenDrawerClick = { scope.launch { drawerState.open() } },
