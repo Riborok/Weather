@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -40,6 +38,8 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
@@ -52,7 +52,6 @@ fun MapScreen(
 
     var permissionGranted by remember { mutableStateOf(false) }
     var userInput by remember { mutableStateOf("") }
-    var showEmptyNameDialog by remember { mutableStateOf(false) }
 
     var selectedCoordinates by remember { mutableStateOf<LatLng?>(null) }
 
@@ -71,10 +70,9 @@ fun MapScreen(
         }
     }
 
-    if (currentLocation != null) {
+    currentLocation?.let {
         cameraPositionState.position = CameraPosition.fromLatLngZoom(
-            LatLng(currentLocation!!.latitude, currentLocation!!.longitude),
-            mapZoom
+            LatLng(it.latitude, it.longitude), mapZoom
         )
     }
 
@@ -83,18 +81,14 @@ fun MapScreen(
             .fillMaxSize()
     ) {
         Surface(
+            tonalElevation = 4.dp,
             modifier = Modifier
-                .weight(0.3f)
+                .fillMaxWidth()
+                .padding(bottom = 8.dp)
         ) {
-            Column (
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.Start,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        vertical = 8.dp,
-                        horizontal = 16.dp
-                    )
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(16.dp)
             ) {
                 Row (
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -129,22 +123,15 @@ fun MapScreen(
                     ) {
                         Icon(
                             Icons.Default.Done,
-                            contentDescription = stringResource(R.string.cancel)
+                            contentDescription = stringResource(R.string.done)
                         )
                     }
                 }
-                Text(
-                    text = stringResource(R.string.latitude) + ": " + (selectedCoordinates?.latitude ?: ""),
-                    style = MaterialTheme.typography.bodyLarge
-                )
-                Text(
-                    text = stringResource(R.string.longitude) + ": " + (selectedCoordinates?.longitude ?: ""),
-                    style = MaterialTheme.typography.bodyLarge
-                )
+
                 OutlinedTextField(
                     value = userInput,
                     onValueChange = { userInput = it },
-                    label = { Text(stringResource(R.string.enter_name)) },
+                    label = { Text(stringResource(R.string.enter_alias)) },
                     modifier = Modifier
                         .fillMaxWidth()
                 )
@@ -158,20 +145,15 @@ fun MapScreen(
                 selectedCoordinates = latLng
             },
             modifier = Modifier
+                .fillMaxSize()
                 .weight(1f)
-        ) { }
-    }
-
-    if (showEmptyNameDialog) {
-        AlertDialog(
-            onDismissRequest = { showEmptyNameDialog = false },
-            title = { Text( text = stringResource(R.string.warning)) },
-            text = { Text( text = stringResource(R.string.empty_location_name_error)) },
-            confirmButton = {
-                Button(onClick = { showEmptyNameDialog = false }) {
-                    Text(stringResource(R.string.ok))
-                }
+        ) {
+            selectedCoordinates?.let {
+                Marker(
+                    state = MarkerState(position = it),
+                    title = userInput.ifBlank { stringResource(R.string.selected_point) }
+                )
             }
-        )
+        }
     }
 }
