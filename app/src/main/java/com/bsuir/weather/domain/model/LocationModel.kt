@@ -20,6 +20,16 @@ data class AddressModel(
             field = if (value.isNullOrBlank()) null else value
         }
 
+    fun aliasWidthFormatAddress(): String? {
+        return alias?.let { aliasName ->
+
+            formatAddress()?.let { formatAddress ->
+                "$aliasName ($formatAddress)"
+            } ?: aliasName
+
+        } ?: formatAddress()
+    }
+
     fun formatAddress(): String? {
         return when {
             thoroughfare != null && subThoroughfare != null -> "$thoroughfare $subThoroughfare"
@@ -32,7 +42,7 @@ data class AddressModel(
         }
     }
 
-    fun getFullAddress(): String {
+    fun fullAddress(): String {
         return listOfNotNull(
             subThoroughfare,
             thoroughfare,

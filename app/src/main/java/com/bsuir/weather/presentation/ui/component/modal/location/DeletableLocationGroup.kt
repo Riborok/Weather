@@ -33,7 +33,7 @@ fun DeletableLocationGroup(
                 title = { Text(text = stringResource(R.string.delete_location_title)) },
                 text = { Text(
                     text = stringResource(R.string.delete_location_message,
-                        address.formatAddress() ?: stringResource(R.string.unknown_address)
+                        address.aliasWidthFormatAddress() ?: stringResource(R.string.unknown_address)
                 )) },
                 confirmButton = {
                     TextButton(onClick = {

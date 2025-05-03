@@ -31,7 +31,7 @@ object AiChatPromptBuilder {
             appendLine("Location details:")
             appendLine("• Latitude: ${location.latitude}")
             appendLine("• Longitude: ${location.longitude}")
-            appendLine("• Address: ${location.address.getFullAddress()}")
+            appendLine("• Address: ${location.address.fullAddress()}")
         }
     }
 
