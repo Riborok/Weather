@@ -31,7 +31,7 @@ object AddressUtils {
 
             val request = FindAutocompletePredictionsRequest.builder()
                 .setQuery(query)
-                .setTypesFilter(listOf(PlaceTypes.CITIES))
+                .setTypesFilter(listOf(PlaceTypes.ADDRESS))
                 .setSessionToken(sessionToken)
                 .build()
 
