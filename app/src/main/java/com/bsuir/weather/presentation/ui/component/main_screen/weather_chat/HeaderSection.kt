@@ -54,7 +54,7 @@ fun HeaderSection(onDismiss: () -> Unit) {
             IconButton(onClick = onDismiss) {
                 Icon(
                     imageVector = Icons.Default.Close,
-                    contentDescription = stringResource(id = R.string.content_description_close),
+                    contentDescription = stringResource(id = R.string.close),
                     tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }

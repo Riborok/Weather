@@ -49,6 +49,7 @@
     <string name="save">Сохранить</string>
     <string name="delete">Удалить</string>
     <string name="cancel">Отмена</string>
+    <string name="close">Закрыть</string>
     <string name="done">Готово</string>
     <string name="selected_point">Выбранная точка</string>
     <string name="enter_alias">Введите название места:</string>
@@ -105,7 +106,6 @@
     <string name="content_description_user">Пользователь</string>
     <string name="content_description_ai">Искусственный интеллект</string>
     <string name="header_ai_chat">🤖 Погодный AI-ассистент</string>
-    <string name="content_description_close">Закрыть</string>
     <string name="thinking_state">Думает</string>
     <string name="ai_request_error">Ошибка при запросе: %1$s</string>
 
