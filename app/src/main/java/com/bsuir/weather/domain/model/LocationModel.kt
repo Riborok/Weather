@@ -17,7 +17,10 @@ data class AddressModel(
 ) {
     var alias: String? = null
         set(value) {
-            field = if (value.isNullOrBlank()) null else value
+            field = value
+                ?.trim()
+                ?.replace(Regex("\\s+"), " ")
+                ?.takeIf { it.isNotBlank() }
         }
 
     fun aliasWidthFormatAddress(): String? {
