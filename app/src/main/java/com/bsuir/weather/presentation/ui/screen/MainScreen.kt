@@ -1,15 +1,10 @@
 package com.bsuir.weather.presentation.ui.screen
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.union
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
@@ -49,6 +44,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun MainScreen(
     onNavigate: (String) -> Unit,
+    modifier: Modifier = Modifier,
     forecastViewModel: ForecastViewModel = hiltViewModel(),
     currentLocationViewModel: CurrentLocationViewModel = hiltViewModel(),
     pickedLocationViewModel: PickedLocationViewModel = hiltViewModel(),
@@ -116,10 +112,7 @@ fun MainScreen(
     }
 
     ModalNavigationDrawer(
-        modifier = Modifier
-            .windowInsetsPadding(
-                WindowInsets.statusBars.union(WindowInsets.navigationBars)
-            ),
+        modifier = modifier,
         drawerState = drawerState,
         drawerContent = {
             LocationModal(

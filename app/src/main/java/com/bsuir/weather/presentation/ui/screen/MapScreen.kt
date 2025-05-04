@@ -44,9 +44,10 @@ import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 fun MapScreen(
+    onNavigateToMainClick: () -> Unit,
+    modifier: Modifier = Modifier,
     currentLocationViewModel: CurrentLocationViewModel = hiltViewModel(),
     locationViewModel: SavedLocationViewModel = hiltViewModel(),
-    onNavigateToMainClick: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -77,8 +78,7 @@ fun MapScreen(
     }
 
     Column (
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
     ) {
         Surface(
             tonalElevation = 4.dp,

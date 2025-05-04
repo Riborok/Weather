@@ -33,7 +33,7 @@ fun Navigation() {
         ) {
             composable(route = Route.Main.name) {
                 MainScreen(
-                    onNavigate = { navController.navigate(it)}
+                    onNavigate = { navController.navigate(it) }
                 )
             }
 
