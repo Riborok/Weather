@@ -33,7 +33,7 @@ import com.bsuir.weather.presentation.ui.utils.RequestLocationPermission
 import com.bsuir.weather.presentation.viewmodel.CurrentLocationViewModel
 import com.bsuir.weather.presentation.viewmodel.SavedLocationViewModel
 import com.bsuir.weather.utils.AddressUtils.fetchLocationModelFromCoordinates
-import com.bsuir.weather.utils.mapZoom
+import com.bsuir.weather.utils.constants.mapZoom
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap

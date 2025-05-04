@@ -1,4 +1,4 @@
-package com.bsuir.weather.utils
+package com.bsuir.weather.utils.constants
 
 enum class Route {
     Main,

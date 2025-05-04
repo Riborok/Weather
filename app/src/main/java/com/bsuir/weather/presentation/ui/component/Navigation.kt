@@ -15,7 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.bsuir.weather.presentation.ui.screen.AddressSearchScreen
 import com.bsuir.weather.presentation.ui.screen.MainScreen
 import com.bsuir.weather.presentation.ui.screen.MapScreen
-import com.bsuir.weather.utils.Route
+import com.bsuir.weather.utils.constants.Route
 
 @Composable
 fun Navigation() {
