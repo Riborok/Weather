@@ -32,14 +32,14 @@ data class AddressModel(
 
     fun formatAddress(): String? {
         return when {
-            thoroughfare != null && subThoroughfare != null -> "$thoroughfare $subThoroughfare"
+            thoroughfare != null && subThoroughfare != null -> "$thoroughfare, $subThoroughfare"
             thoroughfare != null -> thoroughfare
             else -> subLocality
                 ?: locality
                 ?: subAdminArea
                 ?: adminArea
                 ?: countryName
-        }
+        }?.replaceFirstChar { it.uppercase() }
     }
 
     fun fullAddress(): String {

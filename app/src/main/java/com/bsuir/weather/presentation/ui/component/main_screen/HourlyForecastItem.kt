@@ -1,6 +1,5 @@
 package com.bsuir.weather.presentation.ui.component.main_screen
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,13 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.bsuir.weather.R
+import com.bsuir.weather.domain.model.HourlyForecastModel
 
 @Composable
 fun HourlyForecastItem(
-    temperature: String,
-    @DrawableRes icon: Int,
-    weatherDescriptionId: Int,
-    hour: String,
+    hourlyForecastModel: HourlyForecastModel,
     modifier: Modifier = Modifier
 ) {
     Column (
@@ -28,19 +26,19 @@ fun HourlyForecastItem(
         modifier = modifier
     ) {
         Text (
-            text = temperature,
+            text = "${hourlyForecastModel.temperature} ${stringResource(R.string.degree)}",
             style = MaterialTheme.typography.bodyLarge
         )
 
         Image (
-            painter = painterResource(icon),
-            contentDescription = stringResource(weatherDescriptionId),
+            painter = painterResource(hourlyForecastModel.iconId),
+            contentDescription = stringResource(hourlyForecastModel.weatherDescriptionId),
             modifier = Modifier
                 .size(42.dp)
         )
 
         Text (
-            text = hour,
+            text = hourlyForecastModel.time.time.toString(),
             style = MaterialTheme.typography.bodyLarge
         )
     }

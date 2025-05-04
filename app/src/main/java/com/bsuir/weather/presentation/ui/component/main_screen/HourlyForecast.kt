@@ -38,12 +38,9 @@ fun HourlyForecast (hourlyForecastList: List<HourlyForecastModel>, modifier: Mod
                         hourlyForecast -> hourlyForecast.time.hour == LocalTime.now().hour
                     }
 
-                    hourlyForecastList.slice(index..index + 23).forEach { hourlyForecastInfo ->
+                    hourlyForecastList.slice(index..index + 23).forEach { hourlyForecastModel ->
                         HourlyForecastItem(
-                            temperature = "${hourlyForecastInfo.temperature} ${stringResource(R.string.degree)}",
-                            icon = hourlyForecastInfo.iconId,
-                            weatherDescriptionId = hourlyForecastInfo.weatherDescriptionId,
-                            hour = hourlyForecastInfo.time.time.toString(),
+                            hourlyForecastModel = hourlyForecastModel,
                             modifier = Modifier.padding(horizontal = 4.dp)
                         )
                     }
