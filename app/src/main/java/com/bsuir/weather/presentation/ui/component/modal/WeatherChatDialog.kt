@@ -36,7 +36,7 @@ fun WeatherChatDialog(
     weatherChatViewModel: WeatherChatViewModel = hiltViewModel()
 ) {
     var userMessage by remember { mutableStateOf("") }
-    val messages by weatherChatViewModel.chatMessages.collectAsState()
+    val messages by weatherChatViewModel.getMessagesForLocation(forecastLocation).collectAsState()
 
     Dialog(onDismissRequest = onDismiss) {
         Surface(
