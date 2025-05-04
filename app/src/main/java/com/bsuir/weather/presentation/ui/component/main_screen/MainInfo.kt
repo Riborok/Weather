@@ -32,18 +32,18 @@ fun MainInfo (
         modifier = modifier
     ) {
         Row(
-            horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.Start
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier.weight(1f)
             ) {
                 Text(
                     text = pickedLocationName,
                     style = MaterialTheme.typography.titleLarge,
                     overflow = TextOverflow.Ellipsis,
-                    maxLines = 1,
+                    maxLines = 2,
                     modifier = Modifier
                         .clickable(onClick = onOpenDrawerClick)
                 )
@@ -67,7 +67,9 @@ fun MainInfo (
             Image(
                 painter = painterResource(currentForecast.iconId),
                 contentDescription = stringResource(currentForecast.weatherDescriptionId),
-                modifier = Modifier.size(128.dp)
+                modifier = Modifier
+                    .size(128.dp)
+                    .weight(1f)
             )
         }
     }
