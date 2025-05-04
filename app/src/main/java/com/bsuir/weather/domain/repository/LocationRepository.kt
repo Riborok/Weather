@@ -7,4 +7,5 @@ interface LocationRepository {
     fun getSavedLocations(): Flow<List<LocationModel>>
     suspend fun saveLocation(location: LocationModel)
     suspend fun removeLocation(location: LocationModel)
+    suspend fun updateLocation(oldLocation: LocationModel, newLocation: LocationModel)
 }

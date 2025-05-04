@@ -28,6 +28,10 @@ class LocationUseCase @Inject constructor(
         locationRepository.removeLocation(location)
     }
 
+    suspend fun updateLocation(oldLocation: LocationModel, newLocation: LocationModel) {
+        locationRepository.updateLocation(oldLocation, newLocation)
+    }
+
     fun fetchCurrentLocation(
         context: Context,
         setCurrentLocationCallback: (LocationModel?) -> Unit

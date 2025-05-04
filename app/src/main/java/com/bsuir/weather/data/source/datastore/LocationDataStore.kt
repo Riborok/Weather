@@ -15,6 +15,11 @@ class LocationDataStore(private val context: Context) {
         private val SAVED_LOCATIONS_KEY = stringSetPreferencesKey("saved_locations")
     }
 
+    val savedLocations: Flow<List<LocationDTO>> = context.locationDataStore.data
+        .map { preferences ->
+            preferences[SAVED_LOCATIONS_KEY]?.map { LocationDTO.fromJson(it) } ?: emptyList()
+        }
+
     suspend fun addLocation(location: LocationDTO) {
         val json = location.toJson()
         context.locationDataStore.edit { preferences ->
@@ -31,8 +36,14 @@ class LocationDataStore(private val context: Context) {
         }
     }
 
-    val savedLocations: Flow<List<LocationDTO>> = context.locationDataStore.data
-        .map { preferences ->
-            preferences[SAVED_LOCATIONS_KEY]?.map { LocationDTO.fromJson(it) } ?: emptyList()
+    suspend fun updateLocation(oldLocation: LocationDTO, newLocation: LocationDTO) {
+        val oldJson = oldLocation.toJson()
+        val newJson = newLocation.toJson()
+        context.locationDataStore.edit { preferences ->
+            val currentSet = preferences[SAVED_LOCATIONS_KEY] ?: emptySet()
+            if (currentSet.contains(oldJson)) {
+                preferences[SAVED_LOCATIONS_KEY] = currentSet - oldJson + newJson
+            }
         }
+    }
 }

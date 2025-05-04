@@ -39,4 +39,12 @@ class SavedLocationViewModel @Inject constructor(
             locationUseCase.removeLocation(location)
         }
     }
+
+    fun updateLocation(oldLocation: LocationModel, newLocation: LocationModel) {
+        if (oldLocation != newLocation) {
+            viewModelScope.launch {
+                locationUseCase.updateLocation(oldLocation, newLocation)
+            }
+        }
+    }
 }
