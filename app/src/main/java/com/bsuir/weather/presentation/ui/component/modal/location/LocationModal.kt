@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.outlined.Map
@@ -27,7 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.LocationModel
-import com.bsuir.weather.presentation.ui.component.main_screen.location.EditableLocationGroup
+import com.bsuir.weather.presentation.ui.component.main_screen.location.EditableLocationGroupWithDialog
 import com.bsuir.weather.presentation.ui.component.main_screen.location.LocationGroup
 import com.bsuir.weather.utils.constants.Route
 
@@ -50,34 +49,32 @@ fun LocationModal(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            LazyColumn(
+            Column(
                 verticalArrangement = Arrangement.Top,
                 modifier = Modifier
                     .padding(16.dp)
                     .align(Alignment.TopStart)
             ) {
-                item {
-                    if (currentLocation != null) {
-                        LocationGroup(
-                            title = stringResource(R.string.current),
-                            locations = listOf(currentLocation),
-                            onLocationClick = onLocationClick,
-                            modifier = Modifier
-                                .padding(vertical = 12.dp)
-                        )
-                    }
+                if (currentLocation != null) {
+                    LocationGroup(
+                        title = stringResource(R.string.current),
+                        locations = listOf(currentLocation),
+                        onLocationClick = onLocationClick,
+                        modifier = Modifier
+                            .padding(vertical = 12.dp)
+                    )
+                }
 
-                    if (savedLocations.isNotEmpty()) {
-                        EditableLocationGroup(
-                            title = stringResource(R.string.saved),
-                            locations = savedLocations,
-                            onLocationClick = onLocationClick,
-                            onLocationRename = onLocationRename,
-                            onLocationDelete = onLocationDelete,
-                            modifier = Modifier
-                                .padding(vertical = 12.dp)
-                        )
-                    }
+                if (savedLocations.isNotEmpty()) {
+                    EditableLocationGroupWithDialog(
+                        title = stringResource(R.string.saved),
+                        locations = savedLocations,
+                        onLocationClick = onLocationClick,
+                        onLocationRename = onLocationRename,
+                        onLocationDelete = onLocationDelete,
+                        modifier = Modifier
+                            .padding(vertical = 12.dp)
+                    )
                 }
             }
 

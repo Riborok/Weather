@@ -51,6 +51,8 @@
     <string name="cancel">Отмена</string>
     <string name="close">Закрыть</string>
     <string name="done">Готово</string>
+    <string name="edit">Редактировать</string>
+
     <string name="selected_point">Выбранная точка</string>
     <string name="enter_alias">Введите название места:</string>
     <string name="latitude">Широта</string>
