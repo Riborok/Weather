@@ -109,17 +109,21 @@ fun MapScreen(
                         style = MaterialTheme.typography.titleLarge
                     )
                     IconButton (
-                        onClick = { fetchLocationModelFromCoordinates(
-                            context = context,
-                            latitude = selectedCoordinates!!.latitude,
-                            longitude = selectedCoordinates!!.longitude,
-                            onResult = { location ->
-                                location.address.alias = userInput
-                                locationViewModel.saveLocation(location)
-                            },
-                        )
-                            onNavigateToMainClick()
-                        }
+                        onClick = {
+                            selectedCoordinates?.let { selectedCoordinates ->
+                                fetchLocationModelFromCoordinates(
+                                    context = context,
+                                    latitude = selectedCoordinates.latitude,
+                                    longitude = selectedCoordinates.longitude,
+                                    onResult = { location ->
+                                        location.address.alias = userInput
+                                        locationViewModel.saveLocation(location)
+                                    }
+                                )
+                                onNavigateToMainClick()
+                            }
+                        },
+                        enabled = selectedCoordinates != null
                     ) {
                         Icon(
                             Icons.Default.Done,
