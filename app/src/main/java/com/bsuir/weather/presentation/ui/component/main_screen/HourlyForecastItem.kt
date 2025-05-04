@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,6 +37,14 @@ fun HourlyForecastItem(
             modifier = Modifier
                 .size(42.dp)
         )
+
+        Text (
+            text = "${hourlyForecastModel.windSpeed10m} | " +
+                    stringResource(hourlyForecastModel.windDirectionId10m),
+            style = MaterialTheme.typography.bodyLarge
+        )
+
+        HorizontalDivider(thickness = 1.dp)
 
         Text (
             text = hourlyForecastModel.time.time.toString(),

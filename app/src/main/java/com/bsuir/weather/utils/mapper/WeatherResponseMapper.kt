@@ -45,6 +45,41 @@ object WeatherResponseMapper {
                 temperature = temperature2m[index].roundToInt(),
                 iconId = WeatherCodeConverter.getWeatherIconId(weatherCode[index], isDay[index] == 1),
                 weatherDescriptionId = WeatherCodeConverter.getWeatherDescriptionId(weatherCode[index]),
+                relativeHumidity = relativeHumidity2m[index],
+                apparentTemperature = apparentTemperature[index].roundToInt(),
+                precipitationProbability = precipitationProbability[index],
+                surfacePressure = surfacePressure[index].roundToInt(),
+                cloudCover = cloudCover[index],
+                visibility = visibility[index].roundToInt(),
+                windSpeed10m = windSpeed10m[index].roundToInt(),
+                windDirectionId10m =
+                    WeatherWindDirectionConverter.getWindDirectionId(windDirection10m[index]),
+                windGusts10m = windGusts10m[index].roundToInt(),
+                uvIndex = uvIndex[index],
+                uvIndexClearSky = uvIndexClearSky[index],
+                pressureMsl = pressureMsl[index].roundToInt(),
+                precipitation = precipitation[index].roundToInt(),
+                windSpeed80m = windSpeed80m[index].roundToInt(),
+                windSpeed120m = windSpeed120m[index].roundToInt(),
+                windSpeed180m = windSpeed180m[index].roundToInt(),
+                windDirectionId80m =
+                    WeatherWindDirectionConverter.getWindDirectionId(windDirection80m[index]),
+                windDirectionId120m =
+                    WeatherWindDirectionConverter.getWindDirectionId(windDirection120m[index]),
+                windDirectionId180m =
+                    WeatherWindDirectionConverter.getWindDirectionId(windDirection180m[index]),
+                temperature80m = temperature80m[index].roundToInt(),
+                temperature120m = temperature120m[index].roundToInt(),
+                temperature180m = temperature180m[index].roundToInt(),
+                soilTemperature0cm = soilTemperature0cm[index].roundToInt(),
+                soilTemperature6cm = soilTemperature6cm[index].roundToInt(),
+                soilTemperature18cm = soilTemperature18cm[index].roundToInt(),
+                soilTemperature54cm = soilTemperature54cm[index].roundToInt(),
+                soilMoisture0to1cm = soilMoisture0to1cm[index],
+                soilMoisture1to3cm = soilMoisture1to3cm[index],
+                soilMoisture3to9cm = soilMoisture3to9cm[index],
+                soilMoisture9to27cm = soilMoisture9to27cm[index],
+                soilMoisture27to81cm = soilMoisture27to81cm[index],
                 time = time
             )
         }
