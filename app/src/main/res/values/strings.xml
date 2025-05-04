@@ -73,10 +73,14 @@
     <string name="degree">°</string>
     <string name="kilometers_per_hour">км/ч</string>
     <string name="percent">%</string>
+    <string name="millimeters">мм</string>
     <string name="hectopascal">гПа</string>
     <string name="felt">Ощущается</string>
     <string name="wind">Ветер</string>
+    <string name="wind_gusts">Порывы до</string>
     <string name="humidity">Влажность</string>
+    <string name="precipitation">Осадки</string>
+    <string name="cloud_cover">Облака</string>
     <string name="pressure">Давление</string>
     <string name="sunrise">Восход</string>
     <string name="sunset">Закат</string>

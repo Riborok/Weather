@@ -25,12 +25,16 @@ object WeatherResponseMapper {
         return CurrentForecastModel(
             temperature = temperature2m.roundToInt(),
             apparentTemperature = apparentTemperature.roundToInt(),
+            relativeHumidity = relativeHumidity2m,
+            precipitation = precipitation.roundToInt(),
+            cloudCover = cloudCover,
             iconId = WeatherCodeConverter.getWeatherIconId(weatherCode, isDay == 1),
             weatherDescriptionId = WeatherCodeConverter.getWeatherDescriptionId(weatherCode),
+            surfacePressure = surfacePressure.roundToInt(),
+            pressureMSL = pressureMsl.roundToInt(),
             windSpeed = windSpeed10m.roundToInt(),
             windDirectionId = WeatherWindDirectionConverter.getWindDirectionId(windDirection10m),
-            surfacePressure = surfacePressure.roundToInt(),
-            relativeHumidity = relativeHumidity2m,
+            windGusts = windGusts10m.roundToInt(),
             time = time
         )
     }

@@ -12,12 +12,16 @@ data class ForecastModel (
 data class CurrentForecastModel (
     val temperature: Int,
     val apparentTemperature: Int,
+    val relativeHumidity: Int,
+    val precipitation: Int,
+    val cloudCover: Int,
     val iconId: Int,
     val weatherDescriptionId: Int,
+    val surfacePressure: Int,
+    val pressureMSL: Int,
     val windSpeed: Int,
     val windDirectionId: Int,
-    val surfacePressure: Int,
-    val relativeHumidity: Int,
+    val windGusts: Int,
     val time: LocalDateTime,
 )
 

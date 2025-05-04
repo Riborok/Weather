@@ -33,7 +33,8 @@ fun AdditionalInfo (
         ) {
             AdditionalInfoItem(
                 title = stringResource(R.string.felt),
-                value = "${currentForecast.temperature} " + stringResource(R.string.celsius_degrees),
+                value = "${currentForecast.temperature} "
+                        + stringResource(R.string.celsius_degrees),
                 modifier = itemModifier)
             AdditionalInfoItem(
                 title = stringResource(R.string.wind),
@@ -42,13 +43,28 @@ fun AdditionalInfo (
                         + ", ${stringResource(currentForecast.windDirectionId)}",
                 modifier = itemModifier)
             AdditionalInfoItem(
+                title = stringResource(R.string.wind_gusts),
+                value = "${currentForecast.windGusts} "
+                        + stringResource(R.string.kilometers_per_hour),
+                modifier = itemModifier)
+            AdditionalInfoItem(
                 title = stringResource(R.string.humidity),
                 value = "${currentForecast.relativeHumidity} "
                         + stringResource(R.string.percent),
                 modifier = itemModifier)
             AdditionalInfoItem(
+                title = stringResource(R.string.precipitation),
+                value = "${currentForecast.precipitation} "
+                        + stringResource(R.string.millimeters),
+                modifier = itemModifier)
+            AdditionalInfoItem(
+                title = stringResource(R.string.cloud_cover),
+                value = "${currentForecast.cloudCover} "
+                        + stringResource(R.string.percent),
+                modifier = itemModifier)
+            AdditionalInfoItem(
                 title = stringResource(R.string.pressure),
-                value = "${currentForecast.surfacePressure} "
+                value = "${currentForecast.pressureMSL} "
                         + stringResource(R.string.hectopascal),
                 modifier = itemModifier)
             AdditionalInfoItem(
