@@ -38,6 +38,7 @@ fun LocationGroup(
                         .clickable(
                             onClick = { onLocationClick(location) },
                         )
+                        .padding(horizontal = 2.dp)
                 ) {
                     Card(
                         modifier = Modifier

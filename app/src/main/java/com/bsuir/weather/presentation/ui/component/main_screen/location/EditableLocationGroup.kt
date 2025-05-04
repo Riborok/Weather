@@ -89,7 +89,8 @@ fun EditableLocationGroup(
                         .animateContentSize()
                         .graphicsLayer {
                             translationX = if (isLongPressed) shakeOffset else 0f
-                        },
+                        }
+                        .padding(horizontal = 2.dp),
                 ) {
                     Row(
                         modifier = Modifier
