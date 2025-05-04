@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bsuir.weather.R
 import com.bsuir.weather.presentation.state.ForecastState
-import com.bsuir.weather.presentation.ui.component.main_screen.content.ForecastErrorContent
+import com.bsuir.weather.presentation.ui.component.main_screen.content.ErrorContent
 import com.bsuir.weather.presentation.ui.component.main_screen.content.ForecastSuccessContent
 import com.bsuir.weather.presentation.ui.component.main_screen.content.LoadingContent
 import com.bsuir.weather.presentation.ui.component.modal.location.LocationModal
@@ -45,6 +45,7 @@ import com.bsuir.weather.utils.ext.deepCopy
 @Composable
 fun MainScreen(
     onNavigate: (String) -> Unit,
+    onNavigateToDayForecast: (Int, Double, Double) -> Unit,
     modifier: Modifier = Modifier,
     forecastViewModel: ForecastViewModel = hiltViewModel(),
     currentLocationViewModel: CurrentLocationViewModel = hiltViewModel(),
@@ -146,9 +147,10 @@ fun MainScreen(
                 is ForecastState.Loading -> LoadingContent()
                 is ForecastState.Success -> ForecastSuccessContent(
                     forecastLocation = (forecastState as ForecastState.Success).forecastLocation,
+                    onNavigateToDayForecast = onNavigateToDayForecast,
                     onOpenDrawer = { scope.launch { drawerState.open() } }
                 )
-                is ForecastState.Error -> ForecastErrorContent(
+                is ForecastState.Error -> ErrorContent(
                     errorMessage = (forecastState as ForecastState.Error).error.message
                         ?: stringResource(R.string.unknown_error)
                 )

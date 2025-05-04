@@ -1,5 +1,6 @@
 package com.bsuir.weather.presentation.ui.component.main_screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +17,11 @@ import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.DailyForecastModel
 
 @Composable
-fun DailyForecast (dailyForecastList: List<DailyForecastModel>, modifier: Modifier = Modifier) {
+fun DailyForecast (
+    dailyForecastList: List<DailyForecastModel>,
+    onNavigateToDayForecast: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Card (
         modifier = modifier
     ) {
@@ -39,14 +44,16 @@ fun DailyForecast (dailyForecastList: List<DailyForecastModel>, modifier: Modifi
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                dailyForecastList.forEach { dailyForecastInfo ->
+                dailyForecastList.forEachIndexed { index, dailyForecastModel ->
                     DailyForecastItem(
-                        dailyForecastInfo.date.dayOfWeek,
-                        dailyForecastInfo.iconId,
-                        dailyForecastInfo.weatherDescriptionId,
-                        dailyForecastInfo.minTemperature.toString(),
-                        dailyForecastInfo.maxTemperature.toString(),
-                        Modifier.fillMaxWidth()
+                        dailyForecastModel.date.dayOfWeek,
+                        dailyForecastModel.iconId,
+                        dailyForecastModel.weatherDescriptionId,
+                        dailyForecastModel.minTemperature.toString(),
+                        dailyForecastModel.maxTemperature.toString(),
+                        Modifier
+                            .fillMaxWidth()
+                            .clickable { onNavigateToDayForecast(index) }
                     )
                 }
             }

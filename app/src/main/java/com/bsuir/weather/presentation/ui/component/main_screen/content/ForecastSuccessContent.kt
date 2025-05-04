@@ -32,6 +32,7 @@ import com.bsuir.weather.utils.ext.formatAddress
 fun ForecastSuccessContent(
     forecastLocation: ForecastLocationModel,
     onOpenDrawer: () -> Unit,
+    onNavigateToDayForecast: (Int, Double, Double) -> Unit,
 ) {
     var isChatOpen by remember { mutableStateOf(false) }
 
@@ -67,7 +68,7 @@ fun ForecastSuccessContent(
             }
             item {
                 HourlyForecast(
-                    forecast.hourlyForecasts,
+                    hourlyForecastList = forecast.hourlyForecasts,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)
@@ -75,7 +76,10 @@ fun ForecastSuccessContent(
             }
             item {
                 DailyForecast(
-                    forecast.dailyForecasts,
+                    dailyForecastList = forecast.dailyForecasts,
+                    onNavigateToDayForecast = { index ->
+                        onNavigateToDayForecast(index, location.latitude, location.longitude)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)

@@ -130,4 +130,6 @@
 
     <string name="edit_location">Редактировать место</string>
     <string name="enter_new_name">Новое название</string>
+    <string name="back">Назад</string>
+    <string name="wrong_daily_forecast_index_error">Неправильный индекс для списка подневной погоды!</string>
 </resources>

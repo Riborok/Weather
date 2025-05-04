@@ -12,7 +12,7 @@ import androidx.compose.ui.res.stringResource
 import com.bsuir.weather.R
 
 @Composable
-fun ForecastErrorContent(errorMessage: String) {
+fun ErrorContent(errorMessage: String) {
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(

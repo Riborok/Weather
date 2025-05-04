@@ -4,4 +4,5 @@ enum class Route {
     Main,
     Map,
     AddressSearch,
+    DayForecast
 }
