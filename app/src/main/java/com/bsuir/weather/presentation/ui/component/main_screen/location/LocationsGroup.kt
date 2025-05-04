@@ -1,4 +1,4 @@
-package com.bsuir.weather.presentation.ui.component.modal.location
+package com.bsuir.weather.presentation.ui.component.main_screen.location
 
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement

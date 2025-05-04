@@ -27,6 +27,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.LocationModel
+import com.bsuir.weather.presentation.ui.component.main_screen.location.EditableLocationGroup
+import com.bsuir.weather.presentation.ui.component.main_screen.location.LocationGroup
 import com.bsuir.weather.utils.Route
 
 @Composable
