@@ -34,6 +34,7 @@ fun LocationModal(
     currentLocation: LocationModel?,
     savedLocations: List<LocationModel>,
     onLocationClick: (location: LocationModel) -> Unit,
+    onLocationRename: (location: LocationModel, newAlias: String) -> Unit,
     onLocationDelete: (location: LocationModel) -> Unit,
     onNavigate: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -65,10 +66,11 @@ fun LocationModal(
                     }
 
                     if (savedLocations.isNotEmpty()) {
-                        DeletableLocationGroup(
+                        EditableLocationGroup(
                             title = stringResource(R.string.saved),
                             locations = savedLocations,
                             onLocationClick = onLocationClick,
+                            onLocationRename = onLocationRename,
                             onLocationDelete = onLocationDelete,
                             modifier = Modifier
                                 .padding(vertical = 12.dp)

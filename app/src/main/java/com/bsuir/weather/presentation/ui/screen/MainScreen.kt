@@ -39,6 +39,7 @@ import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
+import com.bsuir.weather.utils.deepCopy
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -121,6 +122,10 @@ fun MainScreen(
                 onLocationClick = { location ->
                     pickedLocationViewModel.setPickedLocation(location)
                     scope.launch { drawerState.close() }
+                },
+                onLocationRename = { location, newAlias ->
+                    val newLocation = location.deepCopy().also { it.address.alias = newAlias }
+                    savedLocationViewModel.updateLocation(location, newLocation)
                 },
                 onLocationDelete = { location ->
                     savedLocationViewModel.removeLocation(location)

@@ -127,4 +127,7 @@
     <string name="forecast_for_7_days">Прогноз на 7 дней</string>
 
     <string name="unknown_address">Неизвестный адрес</string>
+
+    <string name="edit_location">Редактировать место</string>
+    <string name="enter_new_name">Новое название</string>
 </resources>
