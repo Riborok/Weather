@@ -32,18 +32,25 @@ fun HourlyForecast (hourlyForecastList: List<HourlyForecastModel>, modifier: Mod
                 color = MaterialTheme.colorScheme.secondary
             )
 
-            LazyRow {
-                item {
-                    val index = hourlyForecastList.indexOfFirst {
-                        hourlyForecast -> hourlyForecast.time.hour == LocalTime.now().hour
-                    }
+            val currentHour = LocalTime.now().hour
+            val startIndex = hourlyForecastList.indexOfFirst {
+                it.time.hour == currentHour
+            }.coerceAtLeast(0)
 
-                    hourlyForecastList.slice(index..index + 23).forEach { hourlyForecastModel ->
-                        HourlyForecastItem(
-                            hourlyForecastModel = hourlyForecastModel,
-                            modifier = Modifier.padding(horizontal = 4.dp)
-                        )
-                    }
+            val limitedList = hourlyForecastList.subList(
+                startIndex,
+                (startIndex + 24).coerceAtMost(hourlyForecastList.size)
+            )
+
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(limitedList.size) { index ->
+                    val hourlyForecastModel = limitedList[index]
+                    HourlyForecastItem(
+                        hourlyForecastModel = hourlyForecastModel,
+                        modifier = Modifier.padding(horizontal = 4.dp)
+                    )
                 }
             }
         }

@@ -45,7 +45,7 @@ fun ForecastSuccessContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(horizontal = 16.dp)
         ) {
-            item {
+            item(key = "main_info") {
                 MainInfo(
                     pickedLocationName = location.address.formatAddress()
                         ?: stringResource(R.string.unknown_address),
@@ -57,7 +57,7 @@ fun ForecastSuccessContent(
                         .padding(vertical = 52.dp)
                 )
             }
-            item {
+            item(key = "additional_info") {
                 AdditionalInfo(
                     currentForecast = forecast.currentForecast,
                     dailyForecast = forecast.dailyForecasts.first(),
@@ -66,7 +66,7 @@ fun ForecastSuccessContent(
                         .padding(vertical = 8.dp)
                 )
             }
-            item {
+            item(key = "hourly_forecast") {
                 HourlyForecast(
                     hourlyForecastList = forecast.hourlyForecasts,
                     modifier = Modifier
@@ -74,7 +74,7 @@ fun ForecastSuccessContent(
                         .padding(vertical = 8.dp)
                 )
             }
-            item {
+            item(key = "daily_forecast") {
                 DailyForecast(
                     dailyForecastList = forecast.dailyForecasts,
                     onNavigateToDayForecast = { index ->
