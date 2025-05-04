@@ -99,11 +99,15 @@ fun EditableLocationGroup(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        LocationItem(location)
+                        LocationItem(
+                            location = location,
+                            modifier = Modifier.weight(1f)
+                        )
 
                         if (isLongPressed) {
                             Row(
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                modifier = Modifier.padding(start = 8.dp)
                             ) {
                                 IconButton(onClick = {
                                     isLongPressed = false
