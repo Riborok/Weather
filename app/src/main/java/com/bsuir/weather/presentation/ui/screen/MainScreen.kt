@@ -39,7 +39,7 @@ import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
-import com.bsuir.weather.utils.deepCopy
+import com.bsuir.weather.utils.ext.deepCopy
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

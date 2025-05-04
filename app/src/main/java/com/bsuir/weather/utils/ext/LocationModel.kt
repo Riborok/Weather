@@ -1,4 +1,4 @@
-package com.bsuir.weather.utils
+package com.bsuir.weather.utils.ext
 
 import com.bsuir.weather.domain.model.LocationModel
 
