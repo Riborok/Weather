@@ -26,6 +26,7 @@ import com.bsuir.weather.presentation.ui.component.main_screen.DailyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.MainInfo
 import com.bsuir.weather.presentation.ui.component.modal.WeatherChatDialog
+import com.bsuir.weather.utils.ext.formatAddress
 
 @Composable
 fun ForecastSuccessContent(

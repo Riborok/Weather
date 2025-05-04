@@ -14,16 +14,16 @@ data class AddressModel(
     val subAdminArea: String? = null,
     val thoroughfare: String? = null,
     val subThoroughfare: String? = null,
-    private var aliasName: String? = null
+    private var _alias: String? = null
 ) {
     init {
-        aliasName = processAlias(aliasName)
+        _alias = processAlias(_alias)
     }
 
     var alias: String?
-        get() = aliasName
+        get() = _alias
         set(value) {
-            aliasName = processAlias(value)
+            _alias = processAlias(value)
         }
 
     private fun processAlias(value: String?): String? {
@@ -31,39 +31,5 @@ data class AddressModel(
             ?.trim()
             ?.replace(Regex("\\s+"), " ")
             ?.takeIf { it.isNotBlank() }
-    }
-
-    fun aliasWithFormatAddress(): String? {
-        return alias?.let { aliasName ->
-
-            formatAddress()?.let { formatAddress ->
-                "$aliasName ($formatAddress)"
-            } ?: aliasName
-
-        } ?: formatAddress()
-    }
-
-    fun formatAddress(): String? {
-        return when {
-            thoroughfare != null && subThoroughfare != null -> "$thoroughfare, $subThoroughfare"
-            thoroughfare != null -> thoroughfare
-            else -> subLocality
-                ?: locality
-                ?: subAdminArea
-                ?: adminArea
-                ?: countryName
-        }?.replaceFirstChar { it.uppercase() }
-    }
-
-    fun fullAddress(): String {
-        return listOfNotNull(
-            subThoroughfare,
-            thoroughfare,
-            subLocality,
-            locality,
-            subAdminArea,
-            adminArea,
-            countryName
-        ).joinToString(", ")
     }
 }

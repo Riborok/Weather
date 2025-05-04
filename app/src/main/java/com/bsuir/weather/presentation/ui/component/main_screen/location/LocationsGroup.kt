@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.LocationModel
+import com.bsuir.weather.utils.ext.formatAddress
 
 @Composable
 fun LocationGroup(
