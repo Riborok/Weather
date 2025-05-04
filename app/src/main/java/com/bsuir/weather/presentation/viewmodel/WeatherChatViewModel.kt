@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.domain.usecase.AskAiChatUseCase
-import com.bsuir.weather.utils.weatherAppContext
+import com.bsuir.weather.utils.ext.weatherAppContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

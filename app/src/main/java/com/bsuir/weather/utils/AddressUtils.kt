@@ -6,6 +6,7 @@ import android.location.Geocoder.GeocodeListener
 import android.os.Build
 import com.bsuir.weather.domain.model.AddressModel
 import com.bsuir.weather.domain.model.LocationModel
+import com.bsuir.weather.utils.ext.weatherAppContext
 import com.bsuir.weather.utils.mapper.LocationMapper.toModel
 import com.google.android.libraries.places.api.model.AddressComponent
 import com.google.android.libraries.places.api.model.AutocompletePrediction

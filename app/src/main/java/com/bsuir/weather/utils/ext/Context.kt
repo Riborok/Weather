@@ -1,9 +1,19 @@
-package com.bsuir.weather.utils
+package com.bsuir.weather.utils.ext
 
 import android.content.Context
 import com.bsuir.weather.R
+import com.bsuir.weather.WeatherApplication
 import com.bsuir.weather.domain.model.AddressModel
 import com.bsuir.weather.domain.model.LocationModel
+import java.util.Locale
+
+val Context.weatherAppContext: WeatherApplication
+    get() = this.applicationContext as WeatherApplication
+
+val Context.currentLocale: Locale
+    get() {
+        return resources.configuration.locales[0]
+    }
 
 val Context.defaultLocation: LocationModel
     get() = LocationModel(

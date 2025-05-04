@@ -10,7 +10,7 @@ import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import com.bsuir.weather.utils.weatherAppContext
+import com.bsuir.weather.utils.ext.weatherAppContext
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.bsuir.weather.utils.LocaleUtils.currentLocale
+import com.bsuir.weather.utils.ext.currentLocale
 import kotlinx.datetime.DayOfWeek
 import java.time.format.TextStyle
 

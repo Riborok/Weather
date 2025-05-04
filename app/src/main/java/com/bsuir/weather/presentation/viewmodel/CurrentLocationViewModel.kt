@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.domain.usecase.LocationUseCase
-import com.bsuir.weather.utils.weatherAppContext
+import com.bsuir.weather.utils.ext.weatherAppContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

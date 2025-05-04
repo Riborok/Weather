@@ -5,8 +5,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.key
 import androidx.compose.ui.platform.LocalContext
 import com.bsuir.weather.domain.model.LocationModel
-import com.bsuir.weather.utils.LocaleUtils.currentLocale
-import com.bsuir.weather.utils.defaultLocation
+import com.bsuir.weather.utils.ext.currentLocale
+import com.bsuir.weather.utils.ext.defaultLocation
 
 @Composable
 fun getDefaultLocation(): LocationModel {
