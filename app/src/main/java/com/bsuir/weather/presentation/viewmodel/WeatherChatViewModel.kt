@@ -15,10 +15,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import javax.inject.Inject
 import kotlin.collections.orEmpty
 
-data class ChatMessage(val question: String, val response: String?)
+data class Message(val content: String, val time: LocalDateTime = LocalDateTime.now())
+data class ChatMessage(val question: Message, val response: Message?)
 
 @HiltViewModel
 class WeatherChatViewModel @Inject constructor(
@@ -33,7 +35,7 @@ class WeatherChatViewModel @Inject constructor(
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     fun addMessage(question: String, forecastLocation: ForecastLocationModel) {
-        val initialMessage = ChatMessage(question, response = null)
+        val initialMessage = ChatMessage(Message(question), response = null)
 
         _messagesByLocation.update { currentMap ->
             val currentMessages = currentMap[forecastLocation].orEmpty()
@@ -57,7 +59,7 @@ class WeatherChatViewModel @Inject constructor(
             val currentMessages = currentMap[forecastLocation].orEmpty()
             val updatedMessages = currentMessages.map { message ->
                 if (message == initialMessage) {
-                    message.copy(response = response)
+                    message.copy(response = Message(response))
                 } else {
                     message
                 }

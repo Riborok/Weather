@@ -8,15 +8,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.presentation.viewmodel.ChatMessage
+import androidx.compose.foundation.lazy.items
+import com.bsuir.weather.utils.ext.toEpochMillisUTC
 
 @Composable
 fun ColumnScope.ChatMessageList(
@@ -36,9 +36,10 @@ fun ColumnScope.ChatMessageList(
                 .fillMaxSize()
                 .padding(top = 46.dp)
         ) {
-            items(messageList.size) { i ->
-                val reversedIndex = messageList.size - 1 - i
-                val message = messageList[reversedIndex]
+            items(
+                items = messageList.asReversed(),
+                key = { it.question.time.toEpochMillisUTC() }
+            ) { message ->
                 ChatMessageItem(message)
             }
         }

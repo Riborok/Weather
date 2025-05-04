@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
+import androidx.compose.foundation.lazy.items
 
 @Composable
 fun PopularQuestionsSection(
@@ -34,8 +35,10 @@ fun PopularQuestionsSection(
                 .heightIn(max = 60.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(questions.size) { index ->
-                val question = questions[index]
+            items(
+                items = questions,
+                key = { it }
+            ) { question ->
                 PopularQuestionChip(text = question, onClick = { onQuestionClick(question) })
             }
         }

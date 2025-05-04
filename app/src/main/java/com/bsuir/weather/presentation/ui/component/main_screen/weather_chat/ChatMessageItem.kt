@@ -55,7 +55,7 @@ fun ChatMessageItem(
                         modifier = messageBoxModifier(MaterialTheme.colorScheme.primary)
                     ) {
                         Text(
-                            text = message.question,
+                            text = message.question.content,
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface
                         )
@@ -92,7 +92,7 @@ fun ChatMessageItem(
                             LoadingAnimation()
                         } else {
                             Text(
-                                text = message.response,
+                                text = message.response.content,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onSurface
                             )

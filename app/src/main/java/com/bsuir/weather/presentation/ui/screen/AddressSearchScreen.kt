@@ -64,13 +64,16 @@ fun AddressSearchScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.fillMaxSize()
         ) {
-            items(cityResults) { autocompletePrediction ->
-                val cityName = autocompletePrediction.getFullText(null).toString()
+            items(
+                items = cityResults,
+                key = { it.placeId }
+            ) { prediction ->
+                val cityName = prediction.getFullText(null).toString()
                 AddressSearchItem(
                     city = cityName,
                     onClick = {
                         addressSearchViewModel.onCitySelected(
-                            placeId = autocompletePrediction.placeId,
+                            placeId = prediction.placeId,
                             onResult = { location ->
                                 locationViewModel.saveLocation(location)
                             },

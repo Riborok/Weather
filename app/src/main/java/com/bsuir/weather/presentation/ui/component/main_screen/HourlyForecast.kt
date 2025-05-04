@@ -15,6 +15,9 @@ import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.HourlyForecastModel
 import java.time.LocalTime
+import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.remember
+import com.bsuir.weather.utils.ext.toEpochMillisUTC
 
 @Composable
 fun HourlyForecast (hourlyForecastList: List<HourlyForecastModel>, modifier: Modifier = Modifier) {
@@ -32,23 +35,27 @@ fun HourlyForecast (hourlyForecastList: List<HourlyForecastModel>, modifier: Mod
                 color = MaterialTheme.colorScheme.secondary
             )
 
-            val currentHour = LocalTime.now().hour
-            val startIndex = hourlyForecastList.indexOfFirst {
-                it.time.hour == currentHour
-            }.coerceAtLeast(0)
+            val limitedList = remember(hourlyForecastList) {
+                val currentHour = LocalTime.now().hour
+                val startIndex = hourlyForecastList.indexOfFirst {
+                    it.time.hour == currentHour
+                }.coerceAtLeast(0)
 
-            val limitedList = hourlyForecastList.subList(
-                startIndex,
-                (startIndex + 24).coerceAtMost(hourlyForecastList.size)
-            )
+                hourlyForecastList.subList(
+                    startIndex,
+                    (startIndex + 24).coerceAtMost(hourlyForecastList.size)
+                )
+            }
 
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(limitedList.size) { index ->
-                    val hourlyForecastModel = limitedList[index]
+                items(
+                    items = limitedList,
+                    key = { it.time.toEpochMillisUTC() }
+                ) { hourlyForecast ->
                     HourlyForecastItem(
-                        hourlyForecastModel = hourlyForecastModel,
+                        hourlyForecastModel = hourlyForecast,
                         modifier = Modifier.padding(horizontal = 4.dp)
                     )
                 }
