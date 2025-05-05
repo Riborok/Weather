@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.ForecastLocationModel
+import com.bsuir.weather.domain.model.HourlyForecastModel
 import com.bsuir.weather.presentation.ui.component.main_screen.AdditionalInfo
 import com.bsuir.weather.presentation.ui.component.main_screen.DailyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecast
@@ -87,9 +88,9 @@ fun ForecastSuccessContent(
                 )
             }
             item(key = "hourly_forecast") {
-                HourlyForecast(
+                HourlyForecast<HourlyForecastModel> (
                     title = stringResource(R.string.forecast_for_24_hour),
-                    hourlyForecastList = limitedHourlyForecastList,
+                    items = limitedHourlyForecastList,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)

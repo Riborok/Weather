@@ -2,17 +2,18 @@ package com.bsuir.weather.utils.ext
 
 import com.bsuir.weather.domain.model.HourlyForecastModel
 import com.bsuir.weather.utils.constants.ProfileField
-import com.bsuir.weather.utils.constants.WeatherProfile
 
-fun HourlyForecastModel.extractForProfile(
-    profile: WeatherProfile
-): List<Pair<ProfileField, Any>> = profile.fields.mapNotNull { field ->
-    fieldExtractors[field]?.let { extractor ->
-        field to extractor(this)
-    }
+fun List<HourlyForecastModel>.extractFieldValues(
+    field: ProfileField
+): List<Any> {
+    val extractor = fieldExtractors[field] ?: return emptyList()
+    return this.map { extractor(it) }
 }
 
 private val fieldExtractors: Map<ProfileField, HourlyForecastModel.() -> Any> = mapOf(
+    // Time
+    ProfileField.TIME                      to { time.time.toString() },
+
     // Temperature-related
     ProfileField.TEMPERATURE               to { temperature },
     ProfileField.APPARENT_TEMPERATURE      to { apparentTemperature },
@@ -59,7 +60,4 @@ private val fieldExtractors: Map<ProfileField, HourlyForecastModel.() -> Any> = 
     ProfileField.SOIL_MOISTURE_9TO27CM     to { soilMoisture9to27cm },
     ProfileField.SOIL_MOISTURE_27TO81CM    to { soilMoisture27to81cm },
 
-    // Icon/description
-    ProfileField.ICON_ID                   to { iconId },
-    ProfileField.WEATHER_DESCRIPTION_ID   to { weatherDescriptionId }
 )

@@ -11,20 +11,20 @@ enum class WeatherProfile(
     GENERAL(
         R.string.profile_main,
         listOf(
+            ProfileField.TIME,
             ProfileField.TEMPERATURE,
             ProfileField.APPARENT_TEMPERATURE,
             ProfileField.RELATIVE_HUMIDITY,
             ProfileField.PRECIPITATION,
             ProfileField.CLOUD_COVER,
-            ProfileField.UV_INDEX,
-            ProfileField.WEATHER_DESCRIPTION_ID,
-            ProfileField.ICON_ID
+            ProfileField.UV_INDEX
         )
     ),
 
     DRIVER(
         R.string.profile_driver,
         listOf(
+            ProfileField.TIME,
             ProfileField.TEMPERATURE,
             ProfileField.PRECIPITATION,
             ProfileField.VISIBILITY,
@@ -39,6 +39,7 @@ enum class WeatherProfile(
     AGRONOMIST(
         R.string.profile_agronomist,
         listOf(
+            ProfileField.TIME,
             ProfileField.TEMPERATURE,
             ProfileField.RELATIVE_HUMIDITY,
             ProfileField.CLOUD_COVER,
@@ -59,6 +60,7 @@ enum class WeatherProfile(
     TOURIST(
         R.string.profile_tourist,
         listOf(
+            ProfileField.TIME,
             ProfileField.TEMPERATURE,
             ProfileField.APPARENT_TEMPERATURE,
             ProfileField.PRECIPITATION,
@@ -74,6 +76,7 @@ enum class WeatherProfile(
     ROOFER(
         R.string.profile_roofer,
         listOf(
+            ProfileField.TIME,
             ProfileField.TEMPERATURE_80M,
             ProfileField.TEMPERATURE_120M,
             ProfileField.TEMPERATURE_180M,

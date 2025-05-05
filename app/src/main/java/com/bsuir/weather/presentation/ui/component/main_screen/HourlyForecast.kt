@@ -12,16 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.bsuir.weather.domain.model.HourlyForecastModel
 import androidx.compose.foundation.lazy.items
-import com.bsuir.weather.utils.ext.toEpochMillisUTC
 
 @Composable
-fun HourlyForecast (
+fun <T> HourlyForecast (
     title: String,
-    hourlyForecastList: List<HourlyForecastModel>,
+    items: List<T>,
     modifier: Modifier = Modifier,
-    itemContent: @Composable (ColumnScope.(HourlyForecastModel) -> Unit),
+    itemContent: @Composable (ColumnScope.(T) -> Unit),
 ) {
     Card (
         modifier = modifier
@@ -38,11 +36,11 @@ fun HourlyForecast (
             )
 
             LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                items(
-                    items = hourlyForecastList,
-                    key = { it.time.toEpochMillisUTC() }
+                this.items(
+                    items = items
                 ) { hourlyForecast ->
                     itemContent(hourlyForecast)
                 }

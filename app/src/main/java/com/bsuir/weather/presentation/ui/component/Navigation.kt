@@ -74,8 +74,8 @@ fun Navigation() {
             ) { backStackEntry ->
                 DayForecastScreen(
                     dailyForecastModelIndex = backStackEntry.arguments?.getInt("dayIndex") ?: -1,
-                    latitude = backStackEntry.arguments?.getInt("latitude")?.toDouble(),
-                    longitude = backStackEntry.arguments?.getInt("longitude")?.toDouble(),
+                    latitude = backStackEntry.arguments?.getString("latitude")?.toDouble(),
+                    longitude = backStackEntry.arguments?.getString("longitude")?.toDouble(),
                     onNavigateToMainClick = {
                         navController.popBackStack()
                         navController.navigate(Route.Main.name)
