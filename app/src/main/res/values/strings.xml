@@ -13,6 +13,7 @@
     <string name="default_thoroughfare">улица Гикало</string>
     <string name="default_sub_thoroughfare">24/1</string>
 
+    <string name="weather_icon">Иконка погоды</string>
     <string name="weather_clear_sky">Ясно</string>
     <string name="weather_mainly_clear">Облачно</string>
     <string name="weather_partly_cloudy">Облачно</string>
@@ -73,8 +74,10 @@
     <string name="go_forward">Перейти</string>
     <string name="loading">Загрузка</string>
 
+    <string name="feels_like">Ощущается как %1$s</string>
+    <string name="degree">%1$d°</string>
+
     <string name="celsius_degrees">°C</string>
-    <string name="degree">°</string>
     <string name="kilometers_per_hour">км/ч</string>
     <string name="kilometers">км</string>
     <string name="percent">%</string>
