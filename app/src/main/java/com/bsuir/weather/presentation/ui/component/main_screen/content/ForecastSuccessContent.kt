@@ -1,15 +1,19 @@
 package com.bsuir.weather.presentation.ui.component.main_screen.content
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.QuestionAnswer
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
@@ -24,9 +29,11 @@ import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.presentation.ui.component.main_screen.AdditionalInfo
 import com.bsuir.weather.presentation.ui.component.main_screen.DailyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecast
+import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecastItem
 import com.bsuir.weather.presentation.ui.component.main_screen.MainInfo
 import com.bsuir.weather.presentation.ui.component.modal.WeatherChatDialog
 import com.bsuir.weather.utils.ext.formatAddress
+import java.time.LocalTime
 
 @Composable
 fun ForecastSuccessContent(
@@ -38,6 +45,19 @@ fun ForecastSuccessContent(
 
     val location = forecastLocation.location
     val forecast = forecastLocation.forecast
+
+    val hourlyForecastList = forecast.hourlyForecasts
+    val limitedHourlyForecastList = remember(hourlyForecastList) {
+        val currentHour = LocalTime.now().hour
+        val startIndex = hourlyForecastList.indexOfFirst {
+            it.time.hour == currentHour
+        }.coerceAtLeast(0)
+
+        hourlyForecastList.subList(
+            startIndex,
+            (startIndex + 24).coerceAtMost(hourlyForecastList.size)
+        )
+    }
 
     Box(Modifier.fillMaxSize()) {
         LazyColumn(
@@ -68,11 +88,29 @@ fun ForecastSuccessContent(
             }
             item(key = "hourly_forecast") {
                 HourlyForecast(
-                    hourlyForecastList = forecast.hourlyForecasts,
+                    title = stringResource(R.string.forecast_for_24_hour),
+                    hourlyForecastList = limitedHourlyForecastList,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)
-                )
+                ) { hourlyForecast ->
+                    HourlyForecastItem(
+                        time = hourlyForecast.time.time.toString(),
+                        modifier = Modifier.padding(horizontal = 4.dp)
+                    ) {
+                        Image (
+                            painter = painterResource(hourlyForecast.iconId),
+                            contentDescription = stringResource(hourlyForecast.weatherDescriptionId),
+                            modifier = Modifier
+                                .size(42.dp)
+                        )
+
+                        Text (
+                            text = "${hourlyForecast.temperature} ${stringResource(R.string.celsius_degrees)}",
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                    }
+                }
             }
             item(key = "daily_forecast") {
                 DailyForecast(
