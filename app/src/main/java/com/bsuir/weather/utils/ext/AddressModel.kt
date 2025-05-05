@@ -1,5 +1,7 @@
 package com.bsuir.weather.utils.ext
 
+import android.content.Context
+import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.AddressModel
 
 fun AddressModel.aliasWithFormatAddress(): String? {
@@ -10,6 +12,11 @@ fun AddressModel.aliasWithFormatAddress(): String? {
         } ?: aliasName
 
     } ?: formatAddress()
+}
+
+fun AddressModel.formattedOrUnknown(context: Context): String {
+    return this.formatAddress()
+        ?: context.getString(R.string.unknown_address)
 }
 
 fun AddressModel.formatAddress(): String? {

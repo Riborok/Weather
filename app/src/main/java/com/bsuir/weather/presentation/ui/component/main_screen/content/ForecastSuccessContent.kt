@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -34,6 +35,7 @@ import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecastIte
 import com.bsuir.weather.presentation.ui.component.main_screen.MainInfo
 import com.bsuir.weather.presentation.ui.component.modal.WeatherChatDialog
 import com.bsuir.weather.utils.ext.formatAddress
+import com.bsuir.weather.utils.ext.formattedOrUnknown
 import java.time.LocalTime
 
 @Composable
@@ -68,8 +70,7 @@ fun ForecastSuccessContent(
         ) {
             item(key = "main_info") {
                 MainInfo(
-                    pickedLocationName = location.address.formatAddress()
-                        ?: stringResource(R.string.unknown_address),
+                    pickedLocationName = location.address.formattedOrUnknown(LocalContext.current),
                     currentForecast = forecast.currentForecast,
                     dailyForecast = forecast.dailyForecasts.first(),
                     onOpenDrawerClick = onOpenDrawer,

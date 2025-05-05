@@ -6,12 +6,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.utils.ext.formatAddress
+import com.bsuir.weather.utils.ext.formattedOrUnknown
 
 @Composable
 fun LocationItem(
@@ -22,6 +24,7 @@ fun LocationItem(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
+        val context = LocalContext.current
         location.address.alias?.let { alias ->
             Text(
                 text = alias,
@@ -30,15 +33,13 @@ fun LocationItem(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = location.address.formatAddress()
-                    ?: stringResource(R.string.unknown_address),
+                text = location.address.formattedOrUnknown(context),
                 style = MaterialTheme.typography.bodyMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
         } ?: Text(
-            text = location.address.formatAddress()
-                ?: stringResource(R.string.unknown_address),
+            text = location.address.formattedOrUnknown(context),
             style = MaterialTheme.typography.titleLarge,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
