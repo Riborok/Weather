@@ -13,19 +13,17 @@ import com.bsuir.weather.R
 @Composable
 fun TemperatureRange (minTemperature: String, maxTemperature: String, modifier: Modifier = Modifier) {
     Row (
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
         Text (
-            text = minTemperature + " ${stringResource(R.string.celsius_degrees)}",
+            text = minTemperature + stringResource(R.string.celsius_degrees),
             style = MaterialTheme.typography.titleLarge
         )
 
-        Text (text = "  |  ")
-
         Text (
-            text = maxTemperature + " ${stringResource(R.string.celsius_degrees)}",
+            text = maxTemperature + stringResource(R.string.celsius_degrees),
             style = MaterialTheme.typography.titleLarge
         )
     }
