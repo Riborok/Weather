@@ -45,7 +45,7 @@ import com.bsuir.weather.utils.ext.deepCopy
 @Composable
 fun MainScreen(
     onNavigate: (String) -> Unit,
-    onNavigateToDayForecast: (Int, Double, Double) -> Unit,
+    onNavigateToDayForecast: (Int) -> Unit,
     modifier: Modifier = Modifier,
     forecastViewModel: ForecastViewModel = hiltViewModel(),
     currentLocationViewModel: CurrentLocationViewModel = hiltViewModel(),

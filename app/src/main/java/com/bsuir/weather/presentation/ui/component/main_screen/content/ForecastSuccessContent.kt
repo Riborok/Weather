@@ -34,7 +34,6 @@ import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecastItem
 import com.bsuir.weather.presentation.ui.component.main_screen.MainInfo
 import com.bsuir.weather.presentation.ui.component.modal.WeatherChatDialog
-import com.bsuir.weather.utils.ext.formatAddress
 import com.bsuir.weather.utils.ext.formattedOrUnknown
 import java.time.LocalTime
 
@@ -42,7 +41,7 @@ import java.time.LocalTime
 fun ForecastSuccessContent(
     forecastLocation: ForecastLocationModel,
     onOpenDrawer: () -> Unit,
-    onNavigateToDayForecast: (Int, Double, Double) -> Unit,
+    onNavigateToDayForecast: (Int) -> Unit,
 ) {
     var isChatOpen by remember { mutableStateOf(false) }
 
@@ -118,7 +117,7 @@ fun ForecastSuccessContent(
                 DailyForecast(
                     dailyForecastList = forecast.dailyForecasts,
                     onNavigateToDayForecast = { index ->
-                        onNavigateToDayForecast(index, location.latitude, location.longitude)
+                        onNavigateToDayForecast(index)
                     },
                     modifier = Modifier
                         .fillMaxWidth()

@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,6 +20,7 @@ import com.bsuir.weather.presentation.ui.screen.AddressSearchScreen
 import com.bsuir.weather.presentation.ui.screen.DayForecastScreen
 import com.bsuir.weather.presentation.ui.screen.MainScreen
 import com.bsuir.weather.presentation.ui.screen.MapScreen
+import com.bsuir.weather.presentation.viewmodel.ForecastViewModel
 import com.bsuir.weather.utils.constants.Route
 
 @Composable
@@ -35,14 +38,15 @@ fun Navigation() {
                 )
         ) {
             composable(route = Route.Main.name) {
+                val forecastViewModel: ForecastViewModel = hiltViewModel()
                 MainScreen(
                     onNavigate = { navController.navigate(it) },
-                    onNavigateToDayForecast = { dailyForecastModelIndex, latitude, longitude ->
+                    onNavigateToDayForecast = { dailyForecastModelIndex ->
                         navController.navigate(
-                            route = Route.DayForecast.name
-                                    + "/$dailyForecastModelIndex/$latitude/$longitude"
+                            route = Route.DayForecast.name + "/$dailyForecastModelIndex"
                         )
-                    }
+                    },
+                    forecastViewModel = forecastViewModel
                 )
             }
 
@@ -65,21 +69,20 @@ fun Navigation() {
             }
 
             composable(
-                route = Route.DayForecast.name + "/{dayIndex}/{latitude}/{longitude}",
-                arguments = listOf (
-                    navArgument("dayIndex") { type = NavType.IntType },
-                    navArgument("latitude") { type = NavType.StringType },
-                    navArgument("longitude") { type = NavType.StringType }
-                )
+                route = Route.DayForecast.name + "/{dayIndex}",
+                arguments = listOf (navArgument("dayIndex") { type = NavType.IntType })
             ) { backStackEntry ->
+                val parentEntry = remember(backStackEntry) {
+                    navController.getBackStackEntry(Route.Main.name)
+                }
+                val forecastViewModel: ForecastViewModel = hiltViewModel(parentEntry)
                 DayForecastScreen(
                     dailyForecastModelIndex = backStackEntry.arguments?.getInt("dayIndex") ?: -1,
-                    latitude = backStackEntry.arguments?.getString("latitude")?.toDouble(),
-                    longitude = backStackEntry.arguments?.getString("longitude")?.toDouble(),
                     onNavigateToMainClick = {
                         navController.popBackStack()
                         navController.navigate(Route.Main.name)
-                    }
+                    },
+                    forecastViewModel = forecastViewModel
                 )
             }
         }

@@ -22,7 +22,7 @@ import com.bsuir.weather.presentation.ui.component.main_screen.DayForecastTopBar
 import com.bsuir.weather.utils.constants.WeatherProfile
 
 @Composable
-fun DayForecastSuccessContent(
+fun DayForecastContent(
     dailyForecastModelIndex: Int,
     forecastLocation: ForecastLocationModel,
     onNavigateToMainClick: () -> Unit,
