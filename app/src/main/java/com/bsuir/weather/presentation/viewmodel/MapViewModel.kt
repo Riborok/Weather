@@ -1,15 +1,11 @@
 package com.bsuir.weather.presentation.viewmodel
 
 import android.app.Application
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bsuir.weather.domain.usecase.LocationUseCase
-import com.bsuir.weather.utils.AddressUtils.fetchLocationModelFromCoordinates
 import com.bsuir.weather.utils.ext.weatherAppContext
+import com.bsuir.weather.utils.location.LocationUtils.fetchLocationFromCoordinates
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,7 +38,7 @@ class MapViewModel @Inject constructor(
         viewModelScope.launch {
             _selectedCoordinates.value?.let { coords ->
                 val context = getApplication<Application>().weatherAppContext
-                val location = fetchLocationModelFromCoordinates(
+                val location = fetchLocationFromCoordinates(
                     context = context,
                     latitude = coords.latitude,
                     longitude = coords.longitude

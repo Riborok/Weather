@@ -1,4 +1,4 @@
-package com.bsuir.weather.utils
+package com.bsuir.weather.utils.location
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -6,14 +6,14 @@ import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import com.bsuir.weather.domain.model.LocationModel
-import com.bsuir.weather.utils.AddressUtils.fetchLocationModelFromCoordinates
 import com.bsuir.weather.utils.ext.weatherAppContext
+import com.bsuir.weather.utils.location.LocationUtils.fetchLocationFromCoordinates
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import kotlinx.coroutines.suspendCancellableCoroutine
 
-object LocationUtils {
+object CurrentLocationUtils {
     suspend fun fetchCurrentLocation(context: Context): LocationModel? =
         suspendCancellableCoroutine { cont ->
             val cts = CancellationTokenSource()
@@ -32,11 +32,11 @@ object LocationUtils {
         ct: CancellationToken,
         setCurrentLocationCallback: (LocationModel?) -> Unit,
     ) {
-        if (!hasLocationPermission(context)) {
+        if (hasLocationPermission(context)) {
+            requestCurrentLocation(context, ct, setCurrentLocationCallback)
+        } else if (!ct.isCancellationRequested) {
             setCurrentLocationCallback(null)
-            return
         }
-        requestLastKnownLocation(context, ct, setCurrentLocationCallback)
     }
 
     private fun hasLocationPermission(context: Context): Boolean {
@@ -54,7 +54,7 @@ object LocationUtils {
     }
 
     @SuppressLint("MissingPermission")
-    private fun requestLastKnownLocation(
+    private fun requestCurrentLocation(
         context: Context,
         ct: CancellationToken,
         setCurrentLocationCallback: (LocationModel?) -> Unit
@@ -66,7 +66,7 @@ object LocationUtils {
         )
             .addOnSuccessListener { location ->
                 if (location != null) {
-                    fetchLocationModelFromCoordinates(
+                    fetchLocationFromCoordinates(
                         context = context,
                         latitude = location.latitude,
                         longitude = location.longitude,

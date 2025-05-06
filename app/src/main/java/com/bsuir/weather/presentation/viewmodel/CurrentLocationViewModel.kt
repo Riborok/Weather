@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.bsuir.weather.domain.model.LocationModel
-import com.bsuir.weather.utils.LocationUtils
+import com.bsuir.weather.utils.location.CurrentLocationUtils.fetchCurrentLocation
 import com.bsuir.weather.utils.ext.weatherAppContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,7 +23,7 @@ class CurrentLocationViewModel @Inject constructor(
     fun fetchCurrentLocation() {
         viewModelScope.launch {
             val context = getApplication<Application>().weatherAppContext
-            _currentLocation.value = LocationUtils.fetchCurrentLocation(context);
+            _currentLocation.value = fetchCurrentLocation(context);
         }
     }
 }
