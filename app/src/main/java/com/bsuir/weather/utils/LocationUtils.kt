@@ -8,17 +8,35 @@ import androidx.core.app.ActivityCompat
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.utils.AddressUtils.fetchLocationModelFromCoordinates
 import com.bsuir.weather.utils.ext.weatherAppContext
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationToken
+import com.google.android.gms.tasks.CancellationTokenSource
+import kotlinx.coroutines.suspendCancellableCoroutine
 
-object LocationUtility {
+object LocationUtils {
+    suspend fun fetchCurrentLocation(context: Context): LocationModel? =
+        suspendCancellableCoroutine { cont ->
+            val cts = CancellationTokenSource()
+            fetchCurrentLocation(context, cts.token) { location ->
+                if (cont.isActive) {
+                    cont.resume(location) {}
+                }
+            }
+            cont.invokeOnCancellation {
+                cts.cancel()
+            }
+        }
+
     fun fetchCurrentLocation(
         context: Context,
-        setCurrentLocationCallback: (LocationModel?) -> Unit
+        ct: CancellationToken,
+        setCurrentLocationCallback: (LocationModel?) -> Unit,
     ) {
         if (!hasLocationPermission(context)) {
             setCurrentLocationCallback(null)
             return
         }
-        requestLastKnownLocation(context, setCurrentLocationCallback)
+        requestLastKnownLocation(context, ct, setCurrentLocationCallback)
     }
 
     private fun hasLocationPermission(context: Context): Boolean {
@@ -38,10 +56,14 @@ object LocationUtility {
     @SuppressLint("MissingPermission")
     private fun requestLastKnownLocation(
         context: Context,
+        ct: CancellationToken,
         setCurrentLocationCallback: (LocationModel?) -> Unit
     ) {
-        val fusedLocationClient = context.weatherAppContext.fusedLocationClient
-        fusedLocationClient.lastLocation
+        val fusedClient = context.weatherAppContext.fusedLocationClient
+        fusedClient.getCurrentLocation(
+            Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+            ct
+        )
             .addOnSuccessListener { location ->
                 if (location != null) {
                     fetchLocationModelFromCoordinates(
@@ -49,6 +71,7 @@ object LocationUtility {
                         latitude = location.latitude,
                         longitude = location.longitude,
                         onResult = setCurrentLocationCallback,
+                        ct = ct
                     )
                 } else {
                     setCurrentLocationCallback(null)

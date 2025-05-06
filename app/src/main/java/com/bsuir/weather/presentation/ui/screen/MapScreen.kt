@@ -21,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +42,7 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import kotlinx.coroutines.launch
 
 @Composable
 fun MapScreen(
@@ -50,6 +52,7 @@ fun MapScreen(
     locationViewModel: SavedLocationViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
 
     var permissionGranted by remember { mutableStateOf(false) }
     var userInput by remember { mutableStateOf("") }
@@ -110,16 +113,16 @@ fun MapScreen(
                     )
                     IconButton (
                         onClick = {
-                            selectedCoordinates?.let { selectedCoordinates ->
-                                fetchLocationModelFromCoordinates(
-                                    context = context,
-                                    latitude = selectedCoordinates.latitude,
-                                    longitude = selectedCoordinates.longitude,
-                                    onResult = { location ->
-                                        location.address.alias = userInput
-                                        locationViewModel.saveLocation(location)
-                                    }
-                                )
+                            selectedCoordinates?.let { coords ->
+                                coroutineScope.launch {
+                                    val location = fetchLocationModelFromCoordinates(
+                                        context = context,
+                                        latitude = coords.latitude,
+                                        longitude = coords.longitude
+                                    )
+                                    location.address.alias = userInput
+                                    locationViewModel.saveLocation(location)
+                                }
                                 onNavigateToMainClick()
                             }
                         },

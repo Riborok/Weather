@@ -8,6 +8,8 @@ import com.bsuir.weather.domain.model.AddressModel
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.utils.ext.weatherAppContext
 import com.bsuir.weather.utils.mapper.LocationMapper.toModel
+import com.google.android.gms.tasks.CancellationToken
+import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.libraries.places.api.model.AddressComponent
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
@@ -16,6 +18,7 @@ import com.google.android.libraries.places.api.model.PlaceTypes
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
@@ -105,26 +108,55 @@ object AddressUtils {
             ?.name
     }
 
+    suspend fun fetchLocationModelFromCoordinates(
+        context: Context,
+        latitude: Double,
+        longitude: Double
+    ): LocationModel = suspendCancellableCoroutine { cont ->
+        val cts = CancellationTokenSource()
+
+        fetchLocationModelFromCoordinates(
+            context   = context,
+            latitude  = latitude,
+            longitude = longitude,
+            ct        = cts.token
+        ) { model ->
+            if (cont.isActive) {
+                cont.resume(model) {}
+            }
+        }
+
+        cont.invokeOnCancellation {
+            cts.cancel()
+        }
+    }
+
     fun fetchLocationModelFromCoordinates(
         context: Context,
         latitude: Double,
         longitude: Double,
+        ct: CancellationToken,
         onResult: (LocationModel) -> Unit
     ) {
+        if (ct.isCancellationRequested) return
         fetchAddressByCoordinates(
             context = context,
             latitude = latitude,
             longitude = longitude,
             onResult = { address ->
-                onResult(address?.toModel() ?: LocationModel(latitude, longitude))
+                if (!ct.isCancellationRequested) {
+                    onResult(address?.toModel() ?: LocationModel(latitude, longitude))
+                }
             },
             onError = {
-                onResult(LocationModel(latitude, longitude))
-            }
+                if (!ct.isCancellationRequested) {
+                    onResult(LocationModel(latitude, longitude))
+                }
+            },
         )
     }
 
-    fun fetchAddressByCoordinates(
+    private fun fetchAddressByCoordinates(
         context: Context,
         latitude: Double,
         longitude: Double,
