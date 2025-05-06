@@ -13,6 +13,7 @@ import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.CurrentForecastModel
 import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.domain.model.HourlyForecastModel
+import com.bsuir.weather.utils.forecast.ForecastUtils.getHourlyForecastSubset
 
 class WeatherNotifier(private val context: Context) {
 
@@ -94,7 +95,7 @@ class WeatherNotifier(private val context: Context) {
         expanded.setImageViewResource(R.id.iv_current_icon, current.iconId)
 
         expanded.removeAllViews(R.id.hourly_container)
-        hourlyForecasts.take(6).forEach { hour ->
+        getHourlyForecastSubset(hourlyForecasts, 6).forEach { hour ->
             val item = RemoteViews(packageName, R.layout.notification_hourly_item)
             item.setTextViewText(R.id.tv_hour, formatter.formatHour(hour.time))
             item.setTextViewText(R.id.tv_temp, formatter.formatTemperature(hour.temperature))

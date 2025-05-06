@@ -35,6 +35,7 @@ import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecastIte
 import com.bsuir.weather.presentation.ui.component.main_screen.MainInfo
 import com.bsuir.weather.presentation.ui.component.modal.WeatherChatDialog
 import com.bsuir.weather.utils.ext.formattedOrUnknown
+import com.bsuir.weather.utils.forecast.ForecastUtils.getHourlyForecastSubset
 import java.time.LocalTime
 
 @Composable
@@ -50,15 +51,7 @@ fun ForecastSuccessContent(
 
     val hourlyForecastList = forecast.hourlyForecasts
     val limitedHourlyForecastList = remember(hourlyForecastList) {
-        val currentHour = LocalTime.now().hour
-        val startIndex = hourlyForecastList.indexOfFirst {
-            it.time.hour == currentHour
-        }.coerceAtLeast(0)
-
-        hourlyForecastList.subList(
-            startIndex,
-            (startIndex + 24).coerceAtMost(hourlyForecastList.size)
-        )
+        getHourlyForecastSubset(hourlyForecastList, 24)
     }
 
     Box(Modifier.fillMaxSize()) {
