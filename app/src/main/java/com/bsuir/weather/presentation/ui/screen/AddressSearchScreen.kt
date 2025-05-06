@@ -19,14 +19,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bsuir.weather.R
 import com.bsuir.weather.presentation.viewmodel.AddressSearchViewModel
-import com.bsuir.weather.presentation.viewmodel.SavedLocationViewModel
 
 @Composable
 fun AddressSearchScreen(
     onNavigateToMainClick: () -> Unit,
     modifier: Modifier = Modifier,
     addressSearchViewModel: AddressSearchViewModel = hiltViewModel(),
-    locationViewModel: SavedLocationViewModel = hiltViewModel(),
 ) {
     val searchText by addressSearchViewModel.searchText.collectAsState()
     val cityResults by addressSearchViewModel.cityResults.collectAsState()
@@ -72,15 +70,7 @@ fun AddressSearchScreen(
                 AddressSearchItem(
                     city = cityName,
                     onClick = {
-                        addressSearchViewModel.onCitySelected(
-                            placeId = prediction.placeId,
-                            onResult = { location ->
-                                locationViewModel.saveLocation(location)
-                            },
-                            onError = {
-
-                            }
-                        )
+                        addressSearchViewModel.saveLocation(prediction.placeId)
                         onNavigateToMainClick()
                     }
                 )

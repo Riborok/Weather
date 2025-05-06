@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.bsuir.weather.domain.model.LocationModel
+import com.bsuir.weather.domain.usecase.LocationUseCase
 import com.bsuir.weather.utils.AddressUtils.fetchAddressSuggestions
 import com.bsuir.weather.utils.AddressUtils.fetchLocationDetailsByPlaceId
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddressSearchViewModel @Inject constructor(
-    application: Application
+    application: Application,
+    private val locationUseCase: LocationUseCase
 ) : AndroidViewModel(application) {
     private val _searchText = MutableStateFlow("")
     val searchText: StateFlow<String> = _searchText.asStateFlow()
@@ -54,9 +56,8 @@ class AddressSearchViewModel @Inject constructor(
         }
     }
 
-    fun onCitySelected(
+    fun saveLocation(
         placeId: String,
-        onResult: (LocationModel) -> Unit,
         onError: (Exception) -> Unit = {}
     ) {
         val context = getApplication<Application>().weatherAppContext
@@ -64,7 +65,7 @@ class AddressSearchViewModel @Inject constructor(
             fetchLocationDetailsByPlaceId(
                 context = context,
                 placeId = placeId,
-                onResult = onResult,
+                onResult = { viewModelScope.launch { locationUseCase.saveLocation(it) } },
                 onError = onError
             )
         }
