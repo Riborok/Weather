@@ -1,0 +1,26 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_hour"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:contentDescription="@string/weather_icon"/>
+
+    <TextView
+        android:id="@+id/tv_temp"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
