@@ -14,7 +14,7 @@ class SavedLocationViewModel @Inject constructor(
     private val locationUseCase: LocationUseCase
 ) : ViewModel() {
     private var _savedLocations = MutableStateFlow<List<LocationModel>>(emptyList())
-    val savedLocations: StateFlow<List<LocationModel>> = _savedLocations
+    val savedLocations: StateFlow<List<LocationModel>> = _savedLocations.asStateFlow()
 
     init {
         observeLocations()

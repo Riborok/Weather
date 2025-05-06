@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import com.bsuir.weather.utils.ext.weatherAppContext
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,10 +21,10 @@ class AddressSearchViewModel @Inject constructor(
     application: Application
 ) : AndroidViewModel(application) {
     private val _searchText = MutableStateFlow("")
-    val searchText: StateFlow<String> = _searchText
+    val searchText: StateFlow<String> = _searchText.asStateFlow()
 
     private val _cityResults = MutableStateFlow<List<AutocompletePrediction>>(emptyList())
-    val cityResults: StateFlow<List<AutocompletePrediction>> = _cityResults
+    val cityResults: StateFlow<List<AutocompletePrediction>> = _cityResults.asStateFlow()
 
     private val sessionToken = AutocompleteSessionToken.newInstance()
 

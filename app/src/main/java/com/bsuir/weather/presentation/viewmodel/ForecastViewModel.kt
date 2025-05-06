@@ -10,6 +10,7 @@ import com.bsuir.weather.presentation.state.ForecastState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +20,7 @@ class ForecastViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _forecastState = MutableStateFlow<ForecastState>(ForecastState.Loading)
-    val forecastState: StateFlow<ForecastState> = _forecastState
+    val forecastState: StateFlow<ForecastState> = _forecastState.asStateFlow()
 
     fun loadForecast(location: LocationModel) {
         viewModelScope.launch {
