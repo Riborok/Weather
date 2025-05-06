@@ -3,15 +3,14 @@ package com.bsuir.weather.presentation.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.domain.usecase.LocationUseCase
-import com.bsuir.weather.utils.AddressUtils.fetchAddressSuggestions
-import com.bsuir.weather.utils.AddressUtils.fetchLocationDetailsByPlaceId
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import com.bsuir.weather.utils.ext.weatherAppContext
+import com.bsuir.weather.utils.location.LocationSuggestionUtils.fetchAddressSuggestions
+import com.bsuir.weather.utils.location.LocationSuggestionUtils.fetchLocationByPlaceId
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,16 +38,10 @@ class AddressSearchViewModel @Inject constructor(
         val context = getApplication<Application>().weatherAppContext
         if (query.isNotBlank()) {
             viewModelScope.launch {
-                fetchAddressSuggestions(
+                _cityResults.value = fetchAddressSuggestions(
                     context = context,
                     query = query,
-                    sessionToken = sessionToken,
-                    onResult = { addresses ->
-                        _cityResults.value = addresses
-                    },
-                    onError = {
-                        _cityResults.value = emptyList()
-                    }
+                    sessionToken = sessionToken
                 )
             }
         } else {
@@ -57,17 +50,15 @@ class AddressSearchViewModel @Inject constructor(
     }
 
     fun saveLocation(
-        placeId: String,
-        onError: (Exception) -> Unit = {}
+        placeId: String
     ) {
         val context = getApplication<Application>().weatherAppContext
         viewModelScope.launch {
-            fetchLocationDetailsByPlaceId(
+            val location = fetchLocationByPlaceId(
                 context = context,
-                placeId = placeId,
-                onResult = { viewModelScope.launch { locationUseCase.saveLocation(it) } },
-                onError = onError
+                placeId = placeId
             )
+            locationUseCase.saveLocation(location)
         }
     }
 }
