@@ -36,10 +36,10 @@ enum class ProfileField(@StringRes val nameResId: Int, @StringRes val unitId: In
     WIND_GUSTS_10M(R.string.profile_field_wind_gusts_10m, R.string.kilometers_per_hour),
 
     // Wind direction
-    WIND_DIRECTION_ID_10M(R.string.profile_field_wind_direction_id_10m),
-    WIND_DIRECTION_ID_80M(R.string.profile_field_wind_direction_id_80m),
-    WIND_DIRECTION_ID_120M(R.string.profile_field_wind_direction_id_120m),
-    WIND_DIRECTION_ID_180M(R.string.profile_field_wind_direction_id_180m),
+    WIND_DIRECTION_10M(R.string.profile_field_wind_direction_id_10m),
+    WIND_DIRECTION_80M(R.string.profile_field_wind_direction_id_80m),
+    WIND_DIRECTION_120M(R.string.profile_field_wind_direction_id_120m),
+    WIND_DIRECTION_180M(R.string.profile_field_wind_direction_id_180m),
 
     // Soil temperature
     SOIL_TEMPERATURE_0CM(R.string.profile_field_soil_temperature_0cm, R.string.celsius_degrees),

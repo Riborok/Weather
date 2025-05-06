@@ -1,21 +1,31 @@
 package com.bsuir.weather.utils.constants
 
 import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Business
+import androidx.compose.material.icons.filled.DirectionsCar
+import androidx.compose.material.icons.filled.EnergySavingsLeaf
+import androidx.compose.material.icons.filled.TravelExplore
+import androidx.compose.material.icons.filled.WbSunny
+import androidx.compose.ui.graphics.vector.ImageVector
 import com.bsuir.weather.R
 
 enum class WeatherProfile(
     @StringRes val nameResId: Int,
+    val icon: ImageVector,
     val fields: List<ProfileField>
 ) {
 
     GENERAL(
         R.string.profile_main,
+        Icons.Default.WbSunny,
         listOf(
-            ProfileField.TIME,
             ProfileField.TEMPERATURE,
             ProfileField.APPARENT_TEMPERATURE,
             ProfileField.RELATIVE_HUMIDITY,
-            ProfileField.PRECIPITATION,
+            ProfileField.WIND_SPEED_10M,
+            ProfileField.WIND_GUSTS_10M,
+            ProfileField.WIND_DIRECTION_10M,
             ProfileField.CLOUD_COVER,
             ProfileField.UV_INDEX
         )
@@ -23,14 +33,14 @@ enum class WeatherProfile(
 
     DRIVER(
         R.string.profile_driver,
+        Icons.Default.DirectionsCar,
         listOf(
-            ProfileField.TIME,
             ProfileField.TEMPERATURE,
             ProfileField.PRECIPITATION,
             ProfileField.VISIBILITY,
             ProfileField.WIND_SPEED_10M,
             ProfileField.WIND_GUSTS_10M,
-            ProfileField.WIND_DIRECTION_ID_10M,
+            ProfileField.WIND_DIRECTION_10M,
             ProfileField.SURFACE_PRESSURE,
             ProfileField.PRESSURE_MSL
         )
@@ -38,8 +48,8 @@ enum class WeatherProfile(
 
     AGRONOMIST(
         R.string.profile_agronomist,
+        Icons.Default.EnergySavingsLeaf,
         listOf(
-            ProfileField.TIME,
             ProfileField.TEMPERATURE,
             ProfileField.RELATIVE_HUMIDITY,
             ProfileField.CLOUD_COVER,
@@ -59,8 +69,8 @@ enum class WeatherProfile(
 
     TOURIST(
         R.string.profile_tourist,
+        Icons.Default.TravelExplore,
         listOf(
-            ProfileField.TIME,
             ProfileField.TEMPERATURE,
             ProfileField.APPARENT_TEMPERATURE,
             ProfileField.PRECIPITATION,
@@ -75,17 +85,17 @@ enum class WeatherProfile(
 
     ROOFER(
         R.string.profile_roofer,
+        Icons.Default.Business,
         listOf(
-            ProfileField.TIME,
             ProfileField.TEMPERATURE_80M,
             ProfileField.TEMPERATURE_120M,
             ProfileField.TEMPERATURE_180M,
             ProfileField.WIND_SPEED_80M,
             ProfileField.WIND_SPEED_120M,
             ProfileField.WIND_SPEED_180M,
-            ProfileField.WIND_DIRECTION_ID_80M,
-            ProfileField.WIND_DIRECTION_ID_120M,
-            ProfileField.WIND_DIRECTION_ID_180M
+            ProfileField.WIND_DIRECTION_80M,
+            ProfileField.WIND_DIRECTION_120M,
+            ProfileField.WIND_DIRECTION_180M
         )
     )
 }

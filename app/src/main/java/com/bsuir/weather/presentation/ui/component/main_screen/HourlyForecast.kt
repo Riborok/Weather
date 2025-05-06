@@ -3,7 +3,9 @@ package com.bsuir.weather.presentation.ui.component.main_screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
@@ -13,12 +15,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 
 @Composable
 fun <T> HourlyForecast (
     title: String,
     items: List<T>,
     modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(16.dp),
+    lazyListState: LazyListState = rememberLazyListState(),
     itemContent: @Composable (ColumnScope.(T) -> Unit),
 ) {
     Card (
@@ -27,7 +32,7 @@ fun <T> HourlyForecast (
         Column (
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(contentPadding)
         ) {
             Text (
                 text = title,
@@ -37,11 +42,10 @@ fun <T> HourlyForecast (
 
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                state = lazyListState
             ) {
-                this.items(
-                    items = items
-                ) { hourlyForecast ->
+                items(items) { hourlyForecast ->
                     itemContent(hourlyForecast)
                 }
             }

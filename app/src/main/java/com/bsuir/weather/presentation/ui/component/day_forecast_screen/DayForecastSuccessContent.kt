@@ -1,14 +1,21 @@
 package com.bsuir.weather.presentation.ui.component.day_forecast_screen
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.presentation.ui.component.main_screen.DayForecastTopBar
@@ -41,6 +48,8 @@ fun DayForecastSuccessContent(
             )
         }
 
+        var pickedProfile by remember { mutableStateOf(WeatherProfile.GENERAL) }
+
         Scaffold (
             topBar = {
                 DayForecastTopBar(
@@ -51,11 +60,25 @@ fun DayForecastSuccessContent(
             },
             modifier = modifier
         ) { innerPadding ->
-            HourlyProfileView(
-                hourlyForecastList = limitedHourlyForecastList,
-                profile = WeatherProfile.GENERAL,
-                modifier = Modifier.padding(innerPadding)
-            )
+            Column (
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                ProfilePickView(
+                    pickedProfile = pickedProfile,
+                    onProfilePick = { profile -> pickedProfile = profile },
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .padding(horizontal = 16.dp)
+                )
+
+                HourlyProfileView(
+                    hourlyForecastList = limitedHourlyForecastList,
+                    profile = pickedProfile,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                )
+            }
         }
     }
 }

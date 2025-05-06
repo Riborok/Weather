@@ -1,16 +1,19 @@
 package com.bsuir.weather.utils.ext
 
+import android.content.Context
 import com.bsuir.weather.domain.model.HourlyForecastModel
 import com.bsuir.weather.utils.constants.ProfileField
+import kotlin.math.roundToInt
 
 fun List<HourlyForecastModel>.extractFieldValues(
-    field: ProfileField
+    field: ProfileField,
+    context: Context
 ): List<Any> {
     val extractor = fieldExtractors[field] ?: return emptyList()
-    return this.map { extractor(it) }
+    return this.map { extractor(it, context) }
 }
 
-private val fieldExtractors: Map<ProfileField, HourlyForecastModel.() -> Any> = mapOf(
+private val fieldExtractors: Map<ProfileField, HourlyForecastModel.(Context) -> Any> = mapOf(
     // Time
     ProfileField.TIME                      to { time.time.toString() },
 
@@ -34,7 +37,7 @@ private val fieldExtractors: Map<ProfileField, HourlyForecastModel.() -> Any> = 
     // UV & visibility
     ProfileField.UV_INDEX                  to { uvIndex },
     ProfileField.UV_INDEX_CLEAR_SKY        to { uvIndexClearSky },
-    ProfileField.VISIBILITY                to { visibility },
+    ProfileField.VISIBILITY                to { (visibility.toDouble() / 1000).roundToInt() },
 
     // Wind speeds
     ProfileField.WIND_SPEED_10M            to { windSpeed10m },
@@ -44,10 +47,10 @@ private val fieldExtractors: Map<ProfileField, HourlyForecastModel.() -> Any> = 
 
     // Gusts & directions
     ProfileField.WIND_GUSTS_10M            to { windGusts10m },
-    ProfileField.WIND_DIRECTION_ID_10M     to { windDirectionId10m },
-    ProfileField.WIND_DIRECTION_ID_80M     to { windDirectionId80m },
-    ProfileField.WIND_DIRECTION_ID_120M    to { windDirectionId120m },
-    ProfileField.WIND_DIRECTION_ID_180M    to { windDirectionId180m },
+    ProfileField.WIND_DIRECTION_10M     to { context -> context.getString(windDirectionId10m) },
+    ProfileField.WIND_DIRECTION_80M     to { context -> context.getString(windDirectionId80m) },
+    ProfileField.WIND_DIRECTION_120M    to { context -> context.getString(windDirectionId120m) },
+    ProfileField.WIND_DIRECTION_180M    to { context -> context.getString(windDirectionId180m) },
 
     // Soil temperature & moisture
     ProfileField.SOIL_TEMPERATURE_0CM      to { soilTemperature0cm },
