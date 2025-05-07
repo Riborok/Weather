@@ -17,13 +17,13 @@ class ForecastLocationDataStore(private val context: Context) {
         private val FORECAST_KEY = stringPreferencesKey("saved_forecast_locations")
     }
 
-    val currentForecast: Flow<ForecastLocationDTO?> = context.forecastDataStore.data
+    val forecastLocation: Flow<ForecastLocationDTO?> = context.forecastDataStore.data
         .map { preferences ->
             preferences[FORECAST_KEY]?.let { Json.decodeFromString(serializer(), it) }
         }
 
-    suspend fun updateForecast(forecast: ForecastLocationDTO) {
-        val json = Json.encodeToString(serializer(), forecast)
+    suspend fun updateForecastLocation(forecastLocation: ForecastLocationDTO) {
+        val json = Json.encodeToString(serializer(), forecastLocation)
         context.forecastDataStore.edit { preferences ->
             preferences[FORECAST_KEY] = json
         }
