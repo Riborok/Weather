@@ -50,8 +50,11 @@ secrets {
 }
 
 dependencies {
+    // AndroidX Core & Lifecycle
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+
+    // Activity & Compose
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
@@ -59,10 +62,45 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.material.icons.core)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.material)
+    implementation(libs.ui)
+
+    // Hilt & DI
     implementation(libs.androidx.hilt.common)
-    implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.hilt.work)
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.androidx.hilt.compiler)
+    kapt(libs.hilt.android.compiler)
+
+    // WorkManager
+    implementation(libs.androidx.work.runtime.ktx)
+
+    // Ktor & Serialization
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.datetime)
+
+    // Google Maps & Location
+    implementation(libs.maps.compose)
+    implementation(libs.maps.compose.utils)
+    implementation(libs.maps.compose.widgets)
+    implementation(libs.places)
+    implementation(libs.play.services.location)
+
+    // DataStore
+    implementation(libs.androidx.datastore.preferences)
+
+    // Material
+    implementation(libs.material)
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -71,33 +109,6 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-    implementation(libs.ui)
-    implementation(libs.androidx.material.icons.core)
-    implementation(libs.androidx.material.icons.extended)
-    implementation(libs.androidx.material3.android)
-    implementation(libs.androidx.material)
-
-    implementation(libs.ktor.client.core)
-    implementation(libs.ktor.client.okhttp)
-    implementation(libs.ktor.client.content.negotiation)
-    implementation(libs.ktor.serialization.kotlinx.json)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.kotlinx.datetime)
-
-    implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
-    kapt(libs.hilt.android.compiler)
-
-    implementation(libs.places)
-    implementation(libs.material)
-    implementation(libs.maps.compose)
-    implementation(libs.maps.compose.utils)
-    implementation(libs.maps.compose.widgets)
-
-    implementation(libs.play.services.location)
-
-    implementation(libs.androidx.datastore.preferences)
 }
 
 kapt {
