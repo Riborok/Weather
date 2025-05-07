@@ -26,13 +26,15 @@ class WeatherWidgetProvider : AppWidgetProvider() {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
         scope.launch {
             val forecastLocation = forecastLocationUseCase.getForecastLocation().firstOrNull()
             forecastLocation?.let { forecastLocation ->
-                appWidgetIds.forEach { appWidgetId ->
-                    updateAppWidget(context, appWidgetManager, appWidgetId, forecastLocation)
-                }
+                updateAppWidgets(context, appWidgetManager, appWidgetIds, forecastLocation)
             }
         }
     }
@@ -43,12 +45,16 @@ class WeatherWidgetProvider : AppWidgetProvider() {
     }
 
     companion object {
-        fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int,
-                            forecastLocation: ForecastLocationModel) {
+        fun updateAppWidgets(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetIds: IntArray,
+            forecastLocation: ForecastLocationModel
+        ) {
             val view = ViewBuilder(context).createView(forecastLocation)
                 .withPadding(4)
                 .withClickAction(context.createMainActivityPendingIntent())
-            appWidgetManager.updateAppWidget(appWidgetId, view)
+            appWidgetIds.forEach { id -> appWidgetManager.updateAppWidget(id, view) }
         }
     }
 }
