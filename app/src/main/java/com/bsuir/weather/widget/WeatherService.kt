@@ -47,7 +47,7 @@ class WeatherService
             while (isActive) {
                 val wasSuccessful = getCurrentForecastLocationUseCase.fetchCurrentForecast()?.let {
                     forecastLocationUseCase.updateForecastLocation(it)
-                    showForegroundNotification(it)
+                    updateForegroundNotification(it)
                     updateAllWidgets(it)
                 } != null
                 val nextDelay = calculateNextDelay(wasSuccessful)
@@ -56,7 +56,7 @@ class WeatherService
         }
     }
 
-    private fun showForegroundNotification(forecastLocation: ForecastLocationModel) {
+    private fun updateForegroundNotification(forecastLocation: ForecastLocationModel) {
         val notification = WeatherNotificationBuilder(this).createNotification(
             forecastLocation = forecastLocation,
             forForeground = true
