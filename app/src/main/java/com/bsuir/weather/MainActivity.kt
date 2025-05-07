@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        // TODO: СДЕЛАТЬ ВКЛЮЧЕНИЕ/ВЫКЛЮЧЕНИЕ СЕРВИСА
         startWeatherService()
     }
 
