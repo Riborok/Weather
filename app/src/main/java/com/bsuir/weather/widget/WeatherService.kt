@@ -3,19 +3,13 @@ package com.bsuir.weather.widget
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.bsuir.weather.domain.model.ForecastLocationModel
-import com.bsuir.weather.domain.model.ForecastModel
-import com.bsuir.weather.domain.model.LocationModel
-import com.bsuir.weather.domain.usecase.GetForecastUseCase
-import com.bsuir.weather.utils.location.CurrentLocationUtils.fetchCurrentLocation
+import com.bsuir.weather.domain.usecase.GetCurrentForecastLocationUseCase
 import com.bsuir.weather.widget.utils.notification.WeatherNotificationBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,7 +19,7 @@ class WeatherService
     : Service(), CoroutineScope by CoroutineScope(Dispatchers.IO) {
 
     @Inject
-    lateinit var getForecastUseCase: GetForecastUseCase
+    lateinit var getCurrentForecastLocationUseCase: GetCurrentForecastLocationUseCase
 
     private companion object {
         private const val HOUR_MILLIS   = 60 * 60 * 1_000L
@@ -44,32 +38,23 @@ class WeatherService
     private fun beginPeriodicUpdates() {
         launch {
             while (isActive) {
-                val wasSuccessful = updateAndNotify()
+                val wasSuccessful = showForegroundNotification()
                 val nextDelay = calculateNextDelay(wasSuccessful)
                 delay(nextDelay)
             }
         }
     }
 
-    private suspend fun updateAndNotify(): Boolean {
-        val location = fetchCurrentLocation(this) ?: return false
-        return try {
-            val forecast = getForecastUseCase.execute(location.latitude, location.longitude)
-            showForegroundNotification(forecast, location)
-            true
-        } catch (e: Exception) {
-            currentCoroutineContext().ensureActive()
-            e.printStackTrace()
-            false
-        }
-    }
+    private suspend fun showForegroundNotification(): Boolean {
+        val forecastLocation = getCurrentForecastLocationUseCase.fetchCurrentForecast()
+            ?: return false
 
-    private fun showForegroundNotification(forecast: ForecastModel, location: LocationModel) {
         val notification = WeatherNotificationBuilder(this).createNotification(
-            forecastLocation = ForecastLocationModel(forecast, location),
+            forecastLocation = forecastLocation,
             forForeground = true
         )
         startForeground(NOTIFICATION_ID, notification)
+        return true
     }
 
     override fun onDestroy() {
