@@ -1,6 +1,9 @@
 package com.bsuir.weather.utils.ext
 
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
+import com.bsuir.weather.MainActivity
 import com.bsuir.weather.R
 import com.bsuir.weather.WeatherApplication
 import com.bsuir.weather.domain.model.AddressModel
@@ -29,3 +32,13 @@ val Context.defaultLocation: LocationModel
             subThoroughfare = getString(R.string.default_sub_thoroughfare)
         )
     )
+
+fun Context.createMainActivityPendingIntent(): PendingIntent {
+    val intent = Intent(this, MainActivity::class.java)
+    return PendingIntent.getActivity(
+        this,
+        0,
+        intent,
+        PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+}

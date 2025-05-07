@@ -1,4 +1,4 @@
-package com.bsuir.weather.service
+package com.bsuir.weather.widget
 
 import android.app.Service
 import android.content.Intent
@@ -7,8 +7,8 @@ import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.domain.model.ForecastModel
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.domain.usecase.GetForecastUseCase
-import com.bsuir.weather.notification.WeatherNotifier
 import com.bsuir.weather.utils.location.CurrentLocationUtils.fetchCurrentLocation
+import com.bsuir.weather.widget.utils.notification.WeatherNotificationBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +30,10 @@ class WeatherService
     private companion object {
         private const val HOUR_MILLIS   = 60 * 60 * 1_000L
         private const val RETRY_MILLIS  = 5 * 60 * 1_000L
+        private const val NOTIFICATION_ID = 1
+
+        private fun calculateNextDelay(wasSuccessful: Boolean): Long =
+            if (wasSuccessful) HOUR_MILLIS else RETRY_MILLIS
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -61,16 +65,12 @@ class WeatherService
     }
 
     private fun showForegroundNotification(forecast: ForecastModel, location: LocationModel) {
-        val weatherNotifier = WeatherNotifier(this)
-        val notification = weatherNotifier.createNotification(
+        val notification = WeatherNotificationBuilder(this).createNotification(
             forecastLocation = ForecastLocationModel(forecast, location),
             forForeground = true
         )
-        startForeground(WeatherNotifier.NOTIFICATION_ID, notification)
+        startForeground(NOTIFICATION_ID, notification)
     }
-
-    private fun calculateNextDelay(wasSuccessful: Boolean): Long =
-        if (wasSuccessful) HOUR_MILLIS else RETRY_MILLIS
 
     override fun onDestroy() {
         super.onDestroy()

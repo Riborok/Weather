@@ -184,4 +184,6 @@
     <string name="back">Назад</string>
     <string name="wrong_daily_forecast_index_error">Неправильный индекс для списка подневной погоды!</string>
     <string name="time">Время</string>
+
+    <string name="wind_info">Ветер: %1$d %3$s (порывы до %2$d %3$s)</string>
 </resources>

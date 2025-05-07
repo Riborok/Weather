@@ -1,4 +1,4 @@
-package com.bsuir.weather.notification
+package com.bsuir.weather.widget.utils
 
 import android.content.Context
 import com.bsuir.weather.R
@@ -8,7 +8,7 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toJavaLocalDateTime
 import java.time.format.DateTimeFormatter
 
-class WeatherNotifierStringFormatter(private val context: Context) {
+class WeatherStringFormatter(private val context: Context) {
 
     fun formatLocation(address: AddressModel): String {
         return address.formattedOrUnknown(context)
@@ -36,6 +36,15 @@ class WeatherNotifierStringFormatter(private val context: Context) {
 
     fun formatDescription(descriptionId: Int): String {
         return context.getString(descriptionId)
+    }
+
+    fun formatWindInfo(windSpeed: Int, windGusts: Int): String {
+        return str(
+            R.string.wind_info,
+            windSpeed,
+            windGusts,
+            str(R.string.kilometers_per_hour)
+        )
     }
 
     private fun str(resId: Int, vararg args: Any): String {
