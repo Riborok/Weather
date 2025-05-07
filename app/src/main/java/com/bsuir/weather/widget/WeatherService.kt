@@ -1,8 +1,12 @@
 package com.bsuir.weather.widget
 
 import android.app.Service
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
 import android.content.Intent
 import android.os.IBinder
+import com.bsuir.weather.domain.model.ForecastLocationModel
+import com.bsuir.weather.domain.usecase.ForecastLocationUseCase
 import com.bsuir.weather.domain.usecase.GetCurrentForecastLocationUseCase
 import com.bsuir.weather.widget.utils.notification.WeatherNotificationBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +25,10 @@ class WeatherService
     @Inject
     lateinit var getCurrentForecastLocationUseCase: GetCurrentForecastLocationUseCase
 
-    private companion object {
+    @Inject
+    lateinit var forecastLocationUseCase: ForecastLocationUseCase
+
+    companion object {
         private const val HOUR_MILLIS   = 60 * 60 * 1_000L
         private const val RETRY_MILLIS  = 5 * 60 * 1_000L
         private const val NOTIFICATION_ID = 1
@@ -38,23 +45,33 @@ class WeatherService
     private fun beginPeriodicUpdates() {
         launch {
             while (isActive) {
-                val wasSuccessful = showForegroundNotification()
+                val wasSuccessful = getCurrentForecastLocationUseCase.fetchCurrentForecast()?.let {
+                    forecastLocationUseCase.updateForecastLocation(it)
+                    showForegroundNotification(it)
+                    updateAllWidgets(it)
+                } != null
                 val nextDelay = calculateNextDelay(wasSuccessful)
                 delay(nextDelay)
             }
         }
     }
 
-    private suspend fun showForegroundNotification(): Boolean {
-        val forecastLocation = getCurrentForecastLocationUseCase.fetchCurrentForecast()
-            ?: return false
-
+    private fun showForegroundNotification(forecastLocation: ForecastLocationModel) {
         val notification = WeatherNotificationBuilder(this).createNotification(
             forecastLocation = forecastLocation,
             forForeground = true
         )
         startForeground(NOTIFICATION_ID, notification)
-        return true
+    }
+
+    private fun updateAllWidgets(forecastLocation: ForecastLocationModel) {
+        val mgr = AppWidgetManager.getInstance(this)
+        val ids = mgr.getAppWidgetIds(
+            ComponentName(this, WeatherWidgetProvider::class.java)
+        )
+        ids.forEach { appWidgetId ->
+            WeatherWidgetProvider.updateAppWidget(this, mgr, appWidgetId, forecastLocation)
+        }
     }
 
     override fun onDestroy() {
