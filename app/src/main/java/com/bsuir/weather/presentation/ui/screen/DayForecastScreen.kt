@@ -14,6 +14,7 @@ import com.bsuir.weather.presentation.state.ForecastState
 import com.bsuir.weather.presentation.ui.component.day_forecast_screen.DayForecastContent
 import com.bsuir.weather.presentation.ui.component.main_screen.content.ErrorContent
 import com.bsuir.weather.presentation.ui.component.main_screen.content.LoadingContent
+import com.bsuir.weather.presentation.ui.component.main_screen.content.NoContent
 import com.bsuir.weather.presentation.viewmodel.ForecastViewModel
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -31,6 +32,7 @@ fun DayForecastScreen(
             .fillMaxSize()
     ) {
         when (forecastState) {
+            is ForecastState.NoContent -> NoContent()
             is ForecastState.Loading -> LoadingContent()
             is ForecastState.Success -> DayForecastContent(
                 dailyForecastModelIndex = dailyForecastModelIndex,

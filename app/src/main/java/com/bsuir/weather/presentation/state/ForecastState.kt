@@ -4,6 +4,8 @@ import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.exception.NetworkRequestException
 
 sealed class ForecastState {
+    object NoContent : ForecastState()
+
     object Loading : ForecastState()
 
     // Not data class to enforce reference comparison

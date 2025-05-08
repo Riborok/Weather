@@ -27,7 +27,6 @@ import com.bsuir.weather.presentation.ui.component.main_screen.content.ForecastS
 import com.bsuir.weather.presentation.ui.component.main_screen.content.LoadingContent
 import com.bsuir.weather.presentation.ui.component.modal.location.LocationModal
 import com.bsuir.weather.presentation.ui.utils.RequestLocationPermission
-import com.bsuir.weather.presentation.ui.utils.getDefaultLocation
 import com.bsuir.weather.presentation.viewmodel.CurrentLocationViewModel
 import com.bsuir.weather.presentation.viewmodel.ForecastViewModel
 import com.bsuir.weather.presentation.viewmodel.PickedLocationViewModel
@@ -39,6 +38,7 @@ import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
+import com.bsuir.weather.presentation.ui.component.main_screen.content.NoContent
 import com.bsuir.weather.presentation.ui.utils.RequestNotificationPermission
 import com.bsuir.weather.utils.ext.deepCopy
 
@@ -53,9 +53,6 @@ fun MainScreen(
     pickedLocationViewModel: PickedLocationViewModel = hiltViewModel(),
     savedLocationViewModel: SavedLocationViewModel = hiltViewModel()
 ) {
-    // Default location
-    val defaultLocation = getDefaultLocation()
-
     // Drawer
     val drawerState = rememberDrawerState(DrawerValue.Closed)
 
@@ -98,14 +95,18 @@ fun MainScreen(
     }
 
     LaunchedEffect(pickedLocation) {
-        forecastViewModel.loadForecast(pickedLocation ?: defaultLocation)
+        pickedLocation?.let { pickedLocation ->
+            forecastViewModel.loadForecast(pickedLocation)
+        }
     }
 
     val pullRefreshState = rememberPullRefreshState(
         refreshing = isRefreshing,
         onRefresh = {
-            isRefreshing = true
-            forecastViewModel.loadForecast(pickedLocation ?: defaultLocation)
+            pickedLocation?.let { pickedLocation ->
+                isRefreshing = true
+                forecastViewModel.loadForecast(pickedLocation)
+            }
         }
     )
 
@@ -146,6 +147,7 @@ fun MainScreen(
                 .pullRefresh(pullRefreshState)
         ) {
             when (forecastState) {
+                is ForecastState.NoContent -> NoContent()
                 is ForecastState.Loading -> LoadingContent()
                 is ForecastState.Success -> ForecastSuccessContent(
                     forecastLocation = (forecastState as ForecastState.Success).forecastLocation,

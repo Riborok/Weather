@@ -5,14 +5,6 @@
     <string name="ecology">Экология</string>
     <string name="settings">Настройки</string>
 
-    <string name="default_country_name">Беларусь</string>
-    <string name="default_locality">Минск</string>
-    <string name="default_sub_locality">Советский район</string>
-    <string name="default_admin_area">Минская область</string>
-    <string name="default_sub_admin_area">Минский район</string>
-    <string name="default_thoroughfare">улица Гикало</string>
-    <string name="default_sub_thoroughfare">24/1</string>
-
     <string name="weather_icon">Иконка погоды</string>
     <string name="weather_clear_sky">Ясно</string>
     <string name="weather_mainly_clear">Облачно</string>
@@ -186,4 +178,6 @@
     <string name="time">Время</string>
 
     <string name="wind_info">Ветер: %1$d %3$s (порывы до %2$d %3$s)</string>
+
+    <string name="no_content_message">Контент недоступен</string>
 </resources>

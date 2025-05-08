@@ -22,6 +22,10 @@ class ForecastViewModel @Inject constructor(
     private val _forecastState = MutableStateFlow<ForecastState>(ForecastState.Loading)
     val forecastState: StateFlow<ForecastState> = _forecastState.asStateFlow()
 
+    fun setNoContent() {
+        _forecastState.value = ForecastState.NoContent
+    }
+
     fun loadForecast(location: LocationModel) {
         viewModelScope.launch {
             _forecastState.value = try {
