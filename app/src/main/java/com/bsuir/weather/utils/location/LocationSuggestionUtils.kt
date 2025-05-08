@@ -12,6 +12,7 @@ import com.google.android.libraries.places.api.model.PlaceTypes
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import kotlinx.coroutines.tasks.await
+import com.bsuir.weather.R
 
 object LocationSuggestionUtils {
     suspend fun fetchAddressSuggestions(
@@ -56,6 +57,9 @@ object LocationSuggestionUtils {
                 longitude = latLng.longitude,
                 address = address
             )
-        } ?: throw AddressNotFoundException("No location found for placeId: $placeId", placeId)
+        } ?: throw AddressNotFoundException(
+            context.getString(R.string.error_no_location_found),
+            placeId
+        )
     }
 }
