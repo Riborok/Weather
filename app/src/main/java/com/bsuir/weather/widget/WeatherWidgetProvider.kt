@@ -5,7 +5,9 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.domain.usecase.ForecastLocationUseCase
+import com.bsuir.weather.utils.android.ThemeUtils.getDynamicSurfaceColor
 import com.bsuir.weather.utils.ext.createMainActivityPendingIntent
+import com.bsuir.weather.utils.ext.withBackgroundColor
 import com.bsuir.weather.utils.ext.withClickAction
 import com.bsuir.weather.utils.ext.withPadding
 import com.bsuir.weather.widget.utils.ViewBuilder
@@ -51,9 +53,14 @@ class WeatherWidgetProvider : AppWidgetProvider() {
             appWidgetIds: IntArray,
             forecastLocation: ForecastLocationModel
         ) {
+            val padding = 22
+            val pendingIntent = context.createMainActivityPendingIntent()
+            val backgroundColor = getDynamicSurfaceColor(context)
+
             val view = ViewBuilder(context).createView(forecastLocation)
-                .withPadding(4)
-                .withClickAction(context.createMainActivityPendingIntent())
+                .withPadding(padding)
+                .withClickAction(pendingIntent)
+                .withBackgroundColor(backgroundColor)
             appWidgetIds.forEach { id -> appWidgetManager.updateAppWidget(id, view) }
         }
     }

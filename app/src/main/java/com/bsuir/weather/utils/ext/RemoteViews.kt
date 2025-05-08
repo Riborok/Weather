@@ -19,3 +19,9 @@ fun RemoteViews.withClickAction(
         setOnClickPendingIntent(R.id.root, pendingIntent)
     }
 }
+
+fun RemoteViews.withBackgroundColor(color: Int): RemoteViews {
+    return apply {
+        setInt(R.id.root, "setBackgroundColor", color)
+    }
+}
