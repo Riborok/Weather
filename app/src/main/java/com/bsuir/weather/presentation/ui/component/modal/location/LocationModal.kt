@@ -26,13 +26,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.LocationModel
+import com.bsuir.weather.presentation.state.LocationState
 import com.bsuir.weather.presentation.ui.component.main_screen.location.EditableLocationGroupWithDialog
 import com.bsuir.weather.presentation.ui.component.main_screen.location.LocationGroup
+import com.bsuir.weather.presentation.ui.utils.OnSuccess
 import com.bsuir.weather.utils.constants.Route
 
 @Composable
 fun LocationModal(
-    currentLocation: LocationModel?,
+    currentLocationState: LocationState,
     savedLocations: List<LocationModel>,
     onLocationClick: (location: LocationModel) -> Unit,
     onLocationRename: (location: LocationModel, newAlias: String) -> Unit,
@@ -55,7 +57,7 @@ fun LocationModal(
                     .padding(16.dp)
                     .align(Alignment.TopStart)
             ) {
-                if (currentLocation != null) {
+                currentLocationState.OnSuccess { currentLocation ->
                     LocationGroup(
                         title = stringResource(R.string.current),
                         locations = listOf(currentLocation),

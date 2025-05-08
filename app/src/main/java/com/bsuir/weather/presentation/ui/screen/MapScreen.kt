@@ -32,6 +32,7 @@ import com.bsuir.weather.presentation.ui.utils.RequestLocationPermission
 import com.bsuir.weather.presentation.viewmodel.CurrentLocationViewModel
 import com.bsuir.weather.presentation.viewmodel.MapViewModel
 import com.bsuir.weather.utils.constants.mapZoom
+import com.bsuir.weather.utils.ext.onSuccess
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -48,7 +49,7 @@ fun MapScreen(
     mapViewModel: MapViewModel = hiltViewModel()
 ) {
     var permissionGranted by remember { mutableStateOf(false) }
-    val currentLocation by currentLocationViewModel.currentLocation.collectAsState()
+    val currentLocationState by currentLocationViewModel.currentLocationState.collectAsState()
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(LatLng(0.0, 0.0), mapZoom)
     }
@@ -66,9 +67,9 @@ fun MapScreen(
         }
     }
 
-    currentLocation?.let {
+    currentLocationState.onSuccess { currentLocation ->
         cameraPositionState.position = CameraPosition.fromLatLngZoom(
-            LatLng(it.latitude, it.longitude), mapZoom
+            LatLng(currentLocation.latitude, currentLocation.longitude), mapZoom
         )
     }
 
