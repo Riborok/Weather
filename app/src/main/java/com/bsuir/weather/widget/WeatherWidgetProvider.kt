@@ -56,17 +56,6 @@ class WeatherWidgetProvider : AppWidgetProvider() {
     companion object {
         fun updateWidgetWithForecast(
             context: Context,
-            forecastLocation: ForecastLocationModel
-        ) {
-            val mgr = AppWidgetManager.getInstance(context)
-            val ids = mgr.getAppWidgetIds(
-                ComponentName(context, WeatherWidgetProvider::class.java)
-            )
-            updateWidgetWithForecast(context, mgr, ids, forecastLocation)
-        }
-
-        private fun updateWidgetWithForecast(
-            context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetIds: IntArray,
             forecastLocation: ForecastLocationModel
