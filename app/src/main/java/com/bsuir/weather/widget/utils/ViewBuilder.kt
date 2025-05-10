@@ -12,6 +12,10 @@ class ViewBuilder(private val context: Context) {
 
     private val formatter = WeatherStringFormatter(context)
 
+    fun createLoadingView(): RemoteViews {
+        return RemoteViews(context.packageName, R.layout.widget_loading)
+    }
+
     fun createView(
         forecastLocation: ForecastLocationModel
     ): RemoteViews {

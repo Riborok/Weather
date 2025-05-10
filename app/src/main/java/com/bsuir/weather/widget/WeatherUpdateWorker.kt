@@ -55,6 +55,6 @@ class WeatherUpdateWorker @AssistedInject constructor(
         val ids = mgr.getAppWidgetIds(
             ComponentName(applicationContext, WeatherWidgetProvider::class.java)
         )
-        WeatherWidgetProvider.updateAppWidgets(applicationContext, mgr, ids, forecastLocation)
+        WeatherWidgetProvider.updateWidgetWithForecast(applicationContext, mgr, ids, forecastLocation)
     }
 }

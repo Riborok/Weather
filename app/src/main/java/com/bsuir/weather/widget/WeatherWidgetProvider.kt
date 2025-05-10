@@ -35,9 +35,9 @@ class WeatherWidgetProvider : AppWidgetProvider() {
     ) {
         scope.launch {
             val forecastLocation = forecastLocationUseCase.getForecastLocation().firstOrNull()
-            forecastLocation?.let { forecastLocation ->
-                updateAppWidgets(context, appWidgetManager, appWidgetIds, forecastLocation)
-            }
+            forecastLocation
+                ?.let { updateWidgetWithForecast(context, appWidgetManager, appWidgetIds, it) }
+                ?: updateWidgetWithLoadingState(context, appWidgetManager, appWidgetIds)
         }
     }
 
@@ -47,7 +47,7 @@ class WeatherWidgetProvider : AppWidgetProvider() {
     }
 
     companion object {
-        fun updateAppWidgets(
+        fun updateWidgetWithForecast(
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetIds: IntArray,
@@ -62,6 +62,21 @@ class WeatherWidgetProvider : AppWidgetProvider() {
                 .withClickAction(pendingIntent)
                 .withBackgroundColor(backgroundColor)
             appWidgetIds.forEach { id -> appWidgetManager.updateAppWidget(id, view) }
+        }
+
+        private fun updateWidgetWithLoadingState(
+            context: Context,
+            appWidgetManager: AppWidgetManager,
+            appWidgetIds: IntArray
+        ) {
+            val pendingIntent = context.createMainActivityPendingIntent()
+            val backgroundColor = getDynamicSurfaceColor(context)
+
+            val loadingView = ViewBuilder(context).createLoadingView()
+                .withClickAction(pendingIntent)
+                .withBackgroundColor(backgroundColor)
+
+            appWidgetIds.forEach { id -> appWidgetManager.updateAppWidget(id, loadingView) }
         }
     }
 }
