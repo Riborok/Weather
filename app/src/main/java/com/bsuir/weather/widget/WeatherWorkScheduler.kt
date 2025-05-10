@@ -31,8 +31,14 @@ class WeatherWorkScheduler @Inject constructor(
         enqueueHourlyUpdates()
     }
 
-    private fun enqueueImmediateUpdate() {
-        val request = OneTimeWorkRequestBuilder<WeatherUpdateWorker>().build()
+    fun enqueueImmediateUpdate() {
+        val request = OneTimeWorkRequestBuilder<WeatherUpdateWorker>()
+            .setBackoffCriteria(
+                BackoffPolicy.EXPONENTIAL,
+                WorkRequest.DEFAULT_BACKOFF_DELAY_MILLIS,
+                TimeUnit.MILLISECONDS
+            )
+            .build()
         WorkManager.getInstance(context).enqueueUniqueWork(
             WORK_NAME_IMMEDIATE,
             ExistingWorkPolicy.REPLACE,
@@ -45,6 +51,11 @@ class WeatherWorkScheduler @Inject constructor(
         val periodicRequest = PeriodicWorkRequestBuilder<WeatherUpdateWorker>(
             1, TimeUnit.HOURS
         )
+            .setBackoffCriteria(
+                BackoffPolicy.EXPONENTIAL,
+                WorkRequest.DEFAULT_BACKOFF_DELAY_MILLIS,
+                TimeUnit.MILLISECONDS
+            )
             .setInitialDelay(delay, TimeUnit.MILLISECONDS)
             .build()
 

@@ -23,8 +23,9 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class WeatherWidgetProvider : AppWidgetProvider() {
 
-    @Inject
-    lateinit var forecastLocationUseCase: ForecastLocationUseCase
+    @Inject lateinit var forecastLocationUseCase: ForecastLocationUseCase
+
+    @Inject lateinit var weatherWorkScheduler: WeatherWorkScheduler
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
@@ -36,8 +37,13 @@ class WeatherWidgetProvider : AppWidgetProvider() {
         scope.launch {
             val forecastLocation = forecastLocationUseCase.getForecastLocation().firstOrNull()
             forecastLocation
-                ?.let { updateWidgetWithForecast(context, appWidgetManager, appWidgetIds, it) }
-                ?: updateWidgetWithLoadingState(context, appWidgetManager, appWidgetIds)
+                ?.let { forecastLocation ->
+                    updateWidgetWithForecast(context, appWidgetManager, appWidgetIds, forecastLocation)
+                }
+                ?: run {
+                    updateWidgetWithLoadingState(context, appWidgetManager, appWidgetIds)
+                    weatherWorkScheduler.enqueueImmediateUpdate()
+                }
         }
     }
 
