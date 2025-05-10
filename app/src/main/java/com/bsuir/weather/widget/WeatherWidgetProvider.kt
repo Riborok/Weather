@@ -2,6 +2,7 @@ package com.bsuir.weather.widget
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
+import android.content.ComponentName
 import android.content.Context
 import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.domain.usecase.ForecastLocationUseCase
@@ -54,6 +55,17 @@ class WeatherWidgetProvider : AppWidgetProvider() {
 
     companion object {
         fun updateWidgetWithForecast(
+            context: Context,
+            forecastLocation: ForecastLocationModel
+        ) {
+            val mgr = AppWidgetManager.getInstance(context)
+            val ids = mgr.getAppWidgetIds(
+                ComponentName(context, WeatherWidgetProvider::class.java)
+            )
+            updateWidgetWithForecast(context, mgr, ids, forecastLocation)
+        }
+
+        private fun updateWidgetWithForecast(
             context: Context,
             appWidgetManager: AppWidgetManager,
             appWidgetIds: IntArray,

@@ -1,8 +1,6 @@
 package com.bsuir.weather.widget
 
 import android.app.NotificationManager
-import android.appwidget.AppWidgetManager
-import android.content.ComponentName
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
@@ -51,10 +49,6 @@ class WeatherUpdateWorker @AssistedInject constructor(
     }
 
     private fun updateWidgets(forecastLocation: ForecastLocationModel) {
-        val mgr = AppWidgetManager.getInstance(applicationContext)
-        val ids = mgr.getAppWidgetIds(
-            ComponentName(applicationContext, WeatherWidgetProvider::class.java)
-        )
-        WeatherWidgetProvider.updateWidgetWithForecast(applicationContext, mgr, ids, forecastLocation)
+        WeatherWidgetProvider.updateWidgetWithForecast(applicationContext, forecastLocation)
     }
 }
