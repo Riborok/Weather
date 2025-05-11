@@ -100,6 +100,9 @@ dependencies {
     // Material
     implementation(libs.material)
 
+    // Google Fonts
+    implementation(libs.androidx.ui.text.google.fonts)
+
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
