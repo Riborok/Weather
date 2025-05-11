@@ -87,16 +87,6 @@ fun MainScreen(
         }
     }
 
-    LaunchedEffect(currentLocationState) {
-        currentLocationState.onSuccess { currentLocation ->
-            pickedLocationViewModel.setPickedLocation(currentLocation)
-        }
-
-        currentLocationState.onNoContent {
-            pickedLocationViewModel.setPickedLocation(savedLocations.firstOrNull())
-        }
-    }
-
     LaunchedEffect(pickedLocationState) {
         pickedLocationState.onSuccess { pickedLocation ->
             forecastViewModel.loadForecast(pickedLocation)
