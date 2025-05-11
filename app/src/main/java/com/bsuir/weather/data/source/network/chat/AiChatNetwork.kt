@@ -55,7 +55,7 @@ class AiChatNetwork @Inject constructor(
     private suspend fun handleAIResponse(response: HttpResponse): ChatResponse {
         val status = response.status
         if (!status.isSuccess()) {
-            val errorMessage = context.getString(R.string.ai_api_error, status.value.toString())
+            val errorMessage = context.getString(R.string.ai_api_error)
             throw NetworkRequestException(errorMessage, status)
         }
         return response.body()

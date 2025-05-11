@@ -55,7 +55,7 @@ class WeatherForecastNetwork @Inject constructor(
     private suspend fun handleWeatherForecastResponse(response: HttpResponse): WeatherResponse {
         val status = response.status
         if (!status.isSuccess()) {
-            val errorMessage = context.getString(R.string.open_meteo_error, status.value.toString())
+            val errorMessage = context.getString(R.string.open_meteo_error)
             throw NetworkRequestException(errorMessage, status)
         }
         return response.body()

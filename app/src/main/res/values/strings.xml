@@ -163,8 +163,8 @@
         <item>Когда лучше ехать на дачу?</item>
     </string-array>
 
-    <string name="open_meteo_error">Ошибка Open Meteo API: %1$s</string>
-    <string name="ai_api_error">Ошибка AI API: %1$s</string>
+    <string name="open_meteo_error">Ошибка Open Meteo API</string>
+    <string name="ai_api_error">Ошибка AI API</string>
     <string name="error_no_location_found">Местоположение не найдено</string>
 
     <string name="forecast_for_24_hour">Прогноз на 24 часа</string>
