@@ -3,9 +3,6 @@ package com.bsuir.weather.di
 import android.content.Context
 import android.location.Geocoder
 import com.bsuir.weather.BuildConfig.MAPS_API_KEY
-import com.bsuir.weather.data.source.android.location.CurrentCoordinatesFetcher
-import com.bsuir.weather.data.source.android.location.LocationFetcher
-import com.bsuir.weather.data.source.android.location.LocationSuggestionFetcher
 import com.bsuir.weather.utils.ext.currentLocale
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -20,7 +17,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AndroidLocationFetchersModule {
+object AndroidLocationServicesModule {
 
     @Provides
     @Singleton
@@ -44,31 +41,5 @@ object AndroidLocationFetchersModule {
     @Singleton
     fun provideFusedLocationClient(@ApplicationContext context: Context): FusedLocationProviderClient {
         return LocationServices.getFusedLocationProviderClient(context)
-    }
-
-    @Provides
-    @Singleton
-    fun provideCurrentCoordinatesFetcher(
-        @ApplicationContext context: Context,
-        fusedClient: FusedLocationProviderClient
-    ): CurrentCoordinatesFetcher {
-        return CurrentCoordinatesFetcher(context, fusedClient)
-    }
-
-    @Provides
-    @Singleton
-    fun provideLocationFetcher(
-        geocoder: Geocoder
-    ): LocationFetcher {
-        return LocationFetcher(geocoder)
-    }
-
-    @Provides
-    @Singleton
-    fun provideLocationSuggestionFetcher(
-        @ApplicationContext context: Context,
-        placesClient: PlacesClient,
-    ): LocationSuggestionFetcher {
-        return LocationSuggestionFetcher(context, placesClient)
     }
 }
