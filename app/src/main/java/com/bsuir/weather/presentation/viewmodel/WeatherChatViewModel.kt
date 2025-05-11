@@ -1,7 +1,7 @@
 package com.bsuir.weather.presentation.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.ForecastLocationModel
@@ -24,9 +24,8 @@ data class ChatMessage(val question: Message, val response: Message?)
 
 @HiltViewModel
 class WeatherChatViewModel @Inject constructor(
-    application: Application,
     private val askAiChatUseCase: AskAiChatUseCase
-) : AndroidViewModel(application) {
+) : ViewModel() {
     private val _messagesByLocation = MutableStateFlow<Map<ForecastLocationModel, List<ChatMessage>>>(emptyMap())
 
     fun getMessagesForLocation(locationModel: ForecastLocationModel): StateFlow<List<ChatMessage>> =
@@ -47,8 +46,7 @@ class WeatherChatViewModel @Inject constructor(
                 val response = askAiChatUseCase.askWeatherAI(forecastLocation, question)
                 updateChatMessage(forecastLocation, initialMessage, response)
             } catch (exception: Exception) {
-                val context = getApplication<Application>().weatherAppContext
-                val errorMessage = context.getString(R.string.ai_request_error, exception.message)
+                val errorMessage = exception.message ?: ""
                 updateChatMessage(forecastLocation, initialMessage, errorMessage)
             }
         }

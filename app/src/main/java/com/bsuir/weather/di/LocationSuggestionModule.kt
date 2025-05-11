@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class LocationSuggestionModule {
+object LocationSuggestionModule {
     @Provides
     @Singleton
     fun provideCurrentLocationRepository(

@@ -150,7 +150,6 @@
     <string name="content_description_ai">Искусственный интеллект</string>
     <string name="header_ai_chat">🤖 Погодный AI-ассистент</string>
     <string name="thinking_state">Думает</string>
-    <string name="ai_request_error">Ошибка при запросе: %1$s</string>
 
     <string name="popular_questions">Популярные вопросы</string>
     <string-array name="popular_questions">
@@ -166,7 +165,7 @@
 
     <string name="open_meteo_error">Ошибка Open Meteo API: %1$s</string>
     <string name="ai_api_error">Ошибка AI API: %1$s</string>
-    <string name="error_no_location_found">No location found</string>
+    <string name="error_no_location_found">Местоположение не найдено</string>
 
     <string name="forecast_for_24_hour">Прогноз на 24 часа</string>
     <string name="forecast_for_7_days">Прогноз на 7 дней</string>
