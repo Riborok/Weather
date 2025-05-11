@@ -3,6 +3,7 @@ package com.bsuir.weather.di
 import android.content.Context
 import androidx.room.Room
 import com.bsuir.weather.data.db.AppDatabase
+import com.bsuir.weather.data.db.dao.CoordinatesDao
 import com.bsuir.weather.data.db.dao.ForecastDao
 import com.bsuir.weather.data.db.dao.LocationDao
 import dagger.Module
@@ -36,5 +37,11 @@ object DatabaseModule {
     @Singleton
     fun provideLocationDao(database: AppDatabase): LocationDao {
         return database.locationDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCoordinatesDao(database: AppDatabase): CoordinatesDao {
+        return database.coordinatesDao()
     }
 }

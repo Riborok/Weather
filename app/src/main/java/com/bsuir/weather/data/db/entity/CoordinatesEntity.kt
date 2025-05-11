@@ -1,0 +1,13 @@
+package com.bsuir.weather.data.db.entity
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.bsuir.weather.data.dto.CoordinatesDTO
+
+@Entity(tableName = "coordinates")
+data class CoordinatesEntity(
+    @PrimaryKey
+    val id: String,
+    val coordinates: CoordinatesDTO,
+    val timestamp: Long
+)

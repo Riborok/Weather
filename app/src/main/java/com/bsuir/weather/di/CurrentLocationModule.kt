@@ -1,5 +1,6 @@
 package com.bsuir.weather.di
 
+import com.bsuir.weather.data.db.cache.CoordinatesCache
 import com.bsuir.weather.data.db.cache.LocationCache
 import com.bsuir.weather.data.db.dao.LocationDao
 import com.bsuir.weather.data.repository.CurrentLocationRepositoryImpl
@@ -27,9 +28,10 @@ object CurrentLocationModule {
     fun provideCurrentLocationRepository(
         currentCoordinatesFetcher: CurrentCoordinatesFetcher,
         locationFetcher: LocationFetcher,
+        coordinatesCache: CoordinatesCache,
         locationCache: LocationCache
     ): CurrentLocationRepository {
-        return CurrentLocationRepositoryImpl(currentCoordinatesFetcher, locationFetcher, locationCache)
+        return CurrentLocationRepositoryImpl(currentCoordinatesFetcher, locationFetcher, coordinatesCache, locationCache)
     }
 
     @Provides

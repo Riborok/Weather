@@ -1,11 +1,14 @@
 package com.bsuir.weather.data.repository
 
+import com.bsuir.weather.data.db.cache.CoordinatesCache
 import com.bsuir.weather.data.db.cache.LocationCache
 import com.bsuir.weather.data.source.android.location.CurrentCoordinatesFetcher
 import com.bsuir.weather.data.source.android.location.LocationFetcher
 import com.bsuir.weather.domain.model.Coordinates
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.domain.repository.CurrentLocationRepository
+import com.bsuir.weather.utils.mapper.CoordinatesMapper.toDTO
+import com.bsuir.weather.utils.mapper.CoordinatesMapper.toModel
 import com.bsuir.weather.utils.mapper.LocationMapper.toDTO
 import com.bsuir.weather.utils.mapper.LocationMapper.toModel
 import javax.inject.Inject
@@ -13,10 +16,17 @@ import javax.inject.Inject
 class CurrentLocationRepositoryImpl @Inject constructor(
     private val currentCoordinatesFetcher: CurrentCoordinatesFetcher,
     private val locationFetcher: LocationFetcher,
+    private val coordinatesCache: CoordinatesCache,
     private val locationCache: LocationCache
 ) : CurrentLocationRepository {
     override suspend fun fetchCurrentCoordinates(): Coordinates? {
-        return currentCoordinatesFetcher.fetchCurrentCoordinates()
+        coordinatesCache.getCoordinates()?.let { coordinates ->
+            return coordinates.toModel()
+        }
+
+        return currentCoordinatesFetcher.fetchCurrentCoordinates()?.also { coords ->
+            coordinatesCache.saveCoordinates(coords.toDTO())
+        }
     }
 
     override suspend fun fetchCurrentLocation(): LocationModel? {

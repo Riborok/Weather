@@ -4,6 +4,7 @@ import com.bsuir.weather.data.db.dao.LocationDao
 import com.bsuir.weather.data.db.entity.LocationEntity
 import com.bsuir.weather.data.dto.LocationDTO
 import com.bsuir.weather.domain.model.Coordinates
+import com.bsuir.weather.utils.TimeUtils.minutesToMillis
 import com.bsuir.weather.utils.mapper.CoordinatesMapper.toModel
 import javax.inject.Inject
 
@@ -11,8 +12,9 @@ class LocationCache @Inject constructor(
     private val locationDao: LocationDao
 ) {
     companion object {
-        private const val CACHE_DURATION = 30 * 60 * 1000L
         private const val COORDINATE_PRECISION = 4
+
+        private val CACHE_DURATION = minutesToMillis(30L)
         private const val CURRENT_LOCATION_KEY = "current_location"
     }
 

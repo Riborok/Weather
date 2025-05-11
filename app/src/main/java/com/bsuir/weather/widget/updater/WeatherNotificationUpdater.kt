@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
 import com.bsuir.weather.domain.model.ForecastLocationModel
+import com.bsuir.weather.utils.TimeUtils.minutesToMillis
 import com.bsuir.weather.widget.utils.notification.WeatherNotificationBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -56,7 +57,7 @@ class WeatherNotificationUpdater @Inject constructor(
         retryJob = coroutineScope.launch {
             for (attempt in 0 until MAX_RETRY_COUNT) {
                 val delayMinutes = BASE_DELAY_MINUTES shl attempt
-                delay(delayMinutes * 60 * 1000)
+                delay(minutesToMillis(delayMinutes))
 
                 if (hasNotificationPermission()) {
                     showNotification(forecastLocation, forForeground)

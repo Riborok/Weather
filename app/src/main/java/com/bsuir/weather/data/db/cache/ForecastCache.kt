@@ -4,13 +4,14 @@ import com.bsuir.weather.data.db.dao.ForecastDao
 import com.bsuir.weather.data.dto.ForecastDTO
 import com.bsuir.weather.data.db.entity.ForecastEntity
 import com.bsuir.weather.domain.model.Coordinates
+import com.bsuir.weather.utils.TimeUtils.minutesToMillis
 import javax.inject.Inject
 
 class ForecastCache @Inject constructor(
     private val forecastDao: ForecastDao
 ) {
     companion object {
-        private const val CACHE_DURATION = 30 * 60 * 1000L
+        private val CACHE_DURATION = minutesToMillis(30L)
         private const val COORDINATE_PRECISION = 4
     }
 
