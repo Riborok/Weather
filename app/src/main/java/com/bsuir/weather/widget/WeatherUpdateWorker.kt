@@ -1,6 +1,5 @@
 package com.bsuir.weather.widget
 
-import android.app.NotificationManager
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
@@ -8,9 +7,11 @@ import androidx.work.WorkerParameters
 import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.domain.usecase.ForecastLocationUseCase
 import com.bsuir.weather.domain.usecase.GetCurrentForecastLocationUseCase
-import com.bsuir.weather.widget.utils.notification.WeatherNotificationBuilder
+import com.bsuir.weather.widget.updater.WeatherNotificationUpdater
+import com.bsuir.weather.widget.updater.WeatherWidgetUpdater
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import javax.inject.Inject
 
 @HiltWorker
 class WeatherUpdateWorker @AssistedInject constructor(
@@ -20,9 +21,8 @@ class WeatherUpdateWorker @AssistedInject constructor(
     private val forecastLocationUseCase: ForecastLocationUseCase,
 ) : CoroutineWorker(appContext, workerParams) {
 
-    private companion object {
-        const val NOTIFICATION_ID = 1
-    }
+    @Inject lateinit var weatherNotificationUpdater: WeatherNotificationUpdater
+    @Inject lateinit var weatherWidgetUpdater: WeatherWidgetUpdater
 
     override suspend fun doWork(): Result {
         return try {
@@ -39,16 +39,10 @@ class WeatherUpdateWorker @AssistedInject constructor(
     }
 
     private fun updateNotification(forecastLocation: ForecastLocationModel) {
-        val notification = WeatherNotificationBuilder(applicationContext).createNotification(
-            forecastLocation = forecastLocation,
-            forForeground = true
-        )
-        val notificationManager = applicationContext
-            .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(NOTIFICATION_ID, notification)
+        weatherNotificationUpdater.updateNotification(forecastLocation)
     }
 
     private fun updateWidgets(forecastLocation: ForecastLocationModel) {
-        WeatherWidgetProvider.updateWidgetWithForecast(applicationContext, forecastLocation)
+        weatherWidgetUpdater.updateWidgetWithForecast(forecastLocation)
     }
 }
