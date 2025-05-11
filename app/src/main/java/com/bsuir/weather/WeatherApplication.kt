@@ -14,6 +14,8 @@ class WeatherApplication : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
+
+        // TODO: Add functionality to enable and disable weather updates.
         weatherWorkScheduler.scheduleWeatherUpdates()
     }
 
