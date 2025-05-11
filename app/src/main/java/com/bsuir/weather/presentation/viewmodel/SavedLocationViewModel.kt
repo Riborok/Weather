@@ -22,7 +22,7 @@ class SavedLocationViewModel @Inject constructor(
     }
 
     private fun observeLocations() {
-        storedLocationListUseCase.getSavedLocations()
+        storedLocationListUseCase.getLocations()
             .onEach { locations ->
                 _savedLocations.value = locations
             }

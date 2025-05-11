@@ -8,8 +8,8 @@ import javax.inject.Inject
 class StoredLocationListUseCase @Inject constructor(
     private val locationListRepository: LocationListRepository
 ) {
-    fun getSavedLocations(): Flow<List<LocationModel>> {
-        return locationListRepository.getSavedLocations()
+    fun getLocations(): Flow<List<LocationModel>> {
+        return locationListRepository.getLocations()
     }
 
     suspend fun saveLocation(location: LocationModel) {

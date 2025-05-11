@@ -12,8 +12,8 @@ import javax.inject.Inject
 class LocationListRepositoryImpl @Inject constructor(
     private val locationListDataStore: LocationListDataStore
 ) : LocationListRepository {
-    override fun getSavedLocations(): Flow<List<LocationModel>> {
-        return locationListDataStore.savedLocations.map { dtoList ->
+    override fun getLocations(): Flow<List<LocationModel>> {
+        return locationListDataStore.locations.map { dtoList ->
             dtoList.map { it.toModel() }
         }
     }

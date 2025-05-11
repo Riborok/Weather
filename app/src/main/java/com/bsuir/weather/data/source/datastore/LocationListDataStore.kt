@@ -9,43 +9,43 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
 
-private val Context.locationDataStore by preferencesDataStore("location_data_store")
+private val Context.locationListDataStore by preferencesDataStore("location_list_data_store")
 
 class LocationListDataStore(
     private val context: Context,
-    private val forecastKey: Preferences.Key<Set<String>>
+    private val locationListKey: Preferences.Key<Set<String>>
 ) {
 
-    val savedLocations: Flow<List<LocationDTO>> = context.locationDataStore.data
+    val locations: Flow<List<LocationDTO>> = context.locationListDataStore.data
         .map { preferences ->
-            preferences[forecastKey]?.map {
+            preferences[locationListKey]?.map {
                 Json.decodeFromString(serializer(), it)
             } ?: emptyList()
         }
 
     suspend fun addLocation(location: LocationDTO) {
         val json = Json.encodeToString(serializer(), location)
-        context.locationDataStore.edit { preferences ->
-            val currentSet = preferences[forecastKey] ?: emptySet()
-            preferences[forecastKey] = currentSet + json
+        context.locationListDataStore.edit { preferences ->
+            val currentSet = preferences[locationListKey] ?: emptySet()
+            preferences[locationListKey] = currentSet + json
         }
     }
 
     suspend fun removeLocation(location: LocationDTO) {
         val json = Json.encodeToString(serializer(), location)
-        context.locationDataStore.edit { preferences ->
-            val currentSet = preferences[forecastKey] ?: emptySet()
-            preferences[forecastKey] = currentSet - json
+        context.locationListDataStore.edit { preferences ->
+            val currentSet = preferences[locationListKey] ?: emptySet()
+            preferences[locationListKey] = currentSet - json
         }
     }
 
     suspend fun updateLocation(oldLocation: LocationDTO, newLocation: LocationDTO) {
         val oldJson = Json.encodeToString(serializer(), oldLocation)
         val newJson = Json.encodeToString(serializer(), newLocation)
-        context.locationDataStore.edit { preferences ->
-            val currentSet = preferences[forecastKey] ?: emptySet()
+        context.locationListDataStore.edit { preferences ->
+            val currentSet = preferences[locationListKey] ?: emptySet()
             if (currentSet.contains(oldJson)) {
-                preferences[forecastKey] = currentSet - oldJson + newJson
+                preferences[locationListKey] = currentSet - oldJson + newJson
             }
         }
     }
