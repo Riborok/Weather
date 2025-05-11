@@ -11,21 +11,20 @@ import kotlinx.serialization.json.Json
 
 private val Context.forecastDataStore by preferencesDataStore("forecast_location_data_store")
 
-class ForecastLocationDataStore(private val context: Context) {
-
-    companion object {
-        private val FORECAST_KEY = stringPreferencesKey("saved_forecast_locations")
-    }
+class ForecastLocationDataStore(
+    private val context: Context,
+    private val forecastKey: Preferences.Key<String>
+) {
 
     val forecastLocation: Flow<ForecastLocationDTO?> = context.forecastDataStore.data
         .map { preferences ->
-            preferences[FORECAST_KEY]?.let { Json.decodeFromString(serializer(), it) }
+            preferences[forecastKey]?.let { Json.decodeFromString(serializer(), it) }
         }
 
     suspend fun updateForecastLocation(forecastLocation: ForecastLocationDTO) {
         val json = Json.encodeToString(serializer(), forecastLocation)
         context.forecastDataStore.edit { preferences ->
-            preferences[FORECAST_KEY] = json
+            preferences[forecastKey] = json
         }
     }
 }

@@ -20,11 +20,13 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 @AndroidEntryPoint
 class WeatherWidgetProvider : AppWidgetProvider() {
 
-    @Inject lateinit var forecastLocationUseCase: ForecastLocationUseCase
+    @Inject @Named("WidgetForecastLocationUseCase")
+    lateinit var forecastLocationUseCase: ForecastLocationUseCase
 
     @Inject lateinit var weatherWorkScheduler: WeatherWorkScheduler
 

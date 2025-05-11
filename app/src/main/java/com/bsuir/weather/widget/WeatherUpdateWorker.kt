@@ -12,13 +12,14 @@ import com.bsuir.weather.widget.updater.WeatherWidgetUpdater
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltWorker
 class WeatherUpdateWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,
     private val getCurrentForecastLocationUseCase: GetCurrentForecastLocationUseCase,
-    private val forecastLocationUseCase: ForecastLocationUseCase,
+    @Named("WidgetForecastLocationUseCase") private val forecastLocationUseCase: ForecastLocationUseCase,
 ) : CoroutineWorker(appContext, workerParams) {
 
     @Inject lateinit var weatherNotificationUpdater: WeatherNotificationUpdater
