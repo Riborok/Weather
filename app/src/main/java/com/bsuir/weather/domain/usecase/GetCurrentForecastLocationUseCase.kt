@@ -13,7 +13,7 @@ class GetCurrentForecastLocationUseCase @Inject constructor(
     suspend fun fetchCurrentForecast(): ForecastLocationModel? {
         val location = currentLocationRepository.getCurrentLocation() ?: return null
         return try {
-            val forecast = forecastUseCase.execute(location.latitude, location.longitude)
+            val forecast = forecastUseCase.getForecast(location.latitude, location.longitude)
             ForecastLocationModel(forecast, location)
         } catch (e: Exception) {
             currentCoroutineContext().ensureActive()

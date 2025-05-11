@@ -5,7 +5,7 @@ import androidx.datastore.preferences.core.stringSetPreferencesKey
 import com.bsuir.weather.data.repository.LocationRepositoryImpl
 import com.bsuir.weather.data.source.datastore.LocationDataStore
 import com.bsuir.weather.domain.repository.LocationRepository
-import com.bsuir.weather.domain.usecase.LocationUseCase
+import com.bsuir.weather.domain.usecase.StoredLocationUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,7 +41,7 @@ object SavedLocationModule {
     @Named("SavedLocationUseCase")
     fun provideSavedLocationUseCase(
         @Named("SavedLocationRepository") savedLocationRepository: LocationRepository
-    ): LocationUseCase {
-        return LocationUseCase(savedLocationRepository)
+    ): StoredLocationUseCase {
+        return StoredLocationUseCase(savedLocationRepository)
     }
 }

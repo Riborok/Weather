@@ -5,7 +5,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.bsuir.weather.data.repository.ForecastLocationRepositoryImpl
 import com.bsuir.weather.data.source.datastore.ForecastLocationDataStore
 import com.bsuir.weather.domain.repository.ForecastLocationRepository
-import com.bsuir.weather.domain.usecase.ForecastLocationUseCase
+import com.bsuir.weather.domain.usecase.StoredForecastLocationUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,7 +41,7 @@ object WidgetForecastLocationModule {
     @Named("WidgetForecastLocationUseCase")
     fun provideWidgetForecastLocationUseCase(
         @Named("WidgetForecastLocationRepository") widgetForecastLocationRepository: ForecastLocationRepository
-    ): ForecastLocationUseCase {
-        return ForecastLocationUseCase(widgetForecastLocationRepository)
+    ): StoredForecastLocationUseCase {
+        return StoredForecastLocationUseCase(widgetForecastLocationRepository)
     }
 }

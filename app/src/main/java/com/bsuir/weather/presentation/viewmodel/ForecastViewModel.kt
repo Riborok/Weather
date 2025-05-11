@@ -29,7 +29,7 @@ class ForecastViewModel @Inject constructor(
     fun loadForecast(location: LocationModel) {
         viewModelScope.launch {
             _forecastState.value = try {
-                val forecast = getForecastUseCase.execute(
+                val forecast = getForecastUseCase.getForecast(
                     location.latitude,
                     location.longitude
                 )

@@ -2,10 +2,9 @@ package com.bsuir.weather.widget
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
-import android.content.ComponentName
 import android.content.Context
 import com.bsuir.weather.domain.model.ForecastLocationModel
-import com.bsuir.weather.domain.usecase.ForecastLocationUseCase
+import com.bsuir.weather.domain.usecase.StoredForecastLocationUseCase
 import com.bsuir.weather.utils.android.ThemeUtils.getDynamicSurfaceColor
 import com.bsuir.weather.utils.ext.createMainActivityPendingIntent
 import com.bsuir.weather.utils.ext.withBackgroundColor
@@ -26,7 +25,7 @@ import javax.inject.Named
 class WeatherWidgetProvider : AppWidgetProvider() {
 
     @Inject @Named("WidgetForecastLocationUseCase")
-    lateinit var forecastLocationUseCase: ForecastLocationUseCase
+    lateinit var storedForecastLocationUseCase: StoredForecastLocationUseCase
 
     @Inject lateinit var weatherWorkScheduler: WeatherWorkScheduler
 
@@ -38,7 +37,7 @@ class WeatherWidgetProvider : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         scope.launch {
-            val forecastLocation = forecastLocationUseCase.getForecastLocation().firstOrNull()
+            val forecastLocation = storedForecastLocationUseCase.getForecastLocation().firstOrNull()
             forecastLocation
                 ?.let { forecastLocation ->
                     updateWidgetWithForecast(context, appWidgetManager, appWidgetIds, forecastLocation)

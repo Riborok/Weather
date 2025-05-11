@@ -3,7 +3,7 @@ package com.bsuir.weather.presentation.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.bsuir.weather.domain.usecase.LocationUseCase
+import com.bsuir.weather.domain.usecase.StoredLocationUseCase
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +20,7 @@ import javax.inject.Named
 @HiltViewModel
 class AddressSearchViewModel @Inject constructor(
     application: Application,
-    @Named("SavedLocationUseCase") private val locationUseCase: LocationUseCase
+    @Named("SavedLocationUseCase") private val storedLocationUseCase: StoredLocationUseCase
 ) : AndroidViewModel(application) {
     private val _searchText = MutableStateFlow("")
     val searchText: StateFlow<String> = _searchText.asStateFlow()
@@ -59,7 +59,7 @@ class AddressSearchViewModel @Inject constructor(
                 context = context,
                 placeId = placeId
             )
-            locationUseCase.saveLocation(location)
+            storedLocationUseCase.saveLocation(location)
         }
     }
 }

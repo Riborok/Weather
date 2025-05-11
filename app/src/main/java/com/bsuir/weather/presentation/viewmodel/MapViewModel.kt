@@ -3,7 +3,7 @@ package com.bsuir.weather.presentation.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.bsuir.weather.domain.usecase.LocationUseCase
+import com.bsuir.weather.domain.usecase.StoredLocationUseCase
 import com.bsuir.weather.utils.ext.weatherAppContext
 import com.bsuir.weather.utils.location.LocationUtils.fetchLocationFromCoordinates
 import com.google.android.gms.maps.model.LatLng
@@ -18,7 +18,7 @@ import javax.inject.Named
 @HiltViewModel
 class MapViewModel @Inject constructor(
     application: Application,
-    @Named("SavedLocationUseCase") private val locationUseCase: LocationUseCase
+    @Named("SavedLocationUseCase") private val storedLocationUseCase: StoredLocationUseCase
 ) : AndroidViewModel(application) {
 
     private val _userInput = MutableStateFlow("")
@@ -45,7 +45,7 @@ class MapViewModel @Inject constructor(
                     longitude = coords.longitude
                 )
                 location.address.alias = _userInput.value
-                locationUseCase.saveLocation(location)
+                storedLocationUseCase.saveLocation(location)
             }
         }
     }
