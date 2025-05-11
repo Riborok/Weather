@@ -37,7 +37,7 @@ class AiChatNetwork @Inject constructor(
 
             setBody(
                 ChatRequest(
-                    model = "gpt-4o",
+                    model = "gpt-4o-mini",
                     messages = listOf(
                         ChatMessageRequest(role = "system", content = systemPrompt),
                         ChatMessageRequest(role = "user", content = userRequest)
