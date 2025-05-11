@@ -72,8 +72,7 @@ fun HourlyProfileView(
                     state = rowState,
                     modifier = Modifier
                         .padding(
-                            vertical = 8.dp,
-                            horizontal = contentPadding.dp
+                            vertical = 8.dp
                         )
                 ) {
                     items(times) { time ->

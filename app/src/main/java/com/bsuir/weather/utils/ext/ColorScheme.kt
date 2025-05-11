@@ -1,11 +1,10 @@
 package com.bsuir.weather.utils.ext
 
 import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.TextFieldColors
-import androidx.compose.ui.graphics.Color
 
 val ColorScheme.primaryCardColors: CardColors
     get() = CardColors(
@@ -23,12 +22,12 @@ val ColorScheme.secondaryCardColors: CardColors
         disabledContentColor = onTertiaryContainer,
     )
 
-val ColorScheme.primaryButtonColors: ButtonColors
-    get() = ButtonColors(
-        containerColor = primaryContainer,
-        contentColor = onPrimaryContainer,
-        disabledContainerColor = secondaryContainer,
-        disabledContentColor = onSecondaryContainer,
+val ColorScheme.tertiaryCardColors: CardColors
+    get() = CardColors(
+        containerColor = tertiaryContainer,
+        contentColor = onTertiaryContainer,
+        disabledContainerColor = tertiaryContainer,
+        disabledContentColor = onTertiaryContainer,
     )
 
 val ColorScheme.primaryTextFieldColors: TextFieldColors
@@ -38,7 +37,7 @@ val ColorScheme.primaryTextFieldColors: TextFieldColors
         disabledTextColor = onSurface.copy(alpha = 0.38f),
         errorTextColor = onError,
         focusedContainerColor = surface,
-        unfocusedContainerColor = surfaceVariant,
+        unfocusedContainerColor = surface,
         disabledContainerColor = surface.copy(alpha = 0.12f),
         errorContainerColor = errorContainer,
 
@@ -50,10 +49,10 @@ val ColorScheme.primaryTextFieldColors: TextFieldColors
             backgroundColor = primary.copy(alpha = 0.4f)
         ),
 
-        focusedIndicatorColor = Color.Transparent,
-        unfocusedIndicatorColor = Color.Transparent,
-        disabledIndicatorColor = Color.Transparent,
-        errorIndicatorColor = Color.Transparent,
+        focusedIndicatorColor = primary,
+        unfocusedIndicatorColor = outline,
+        disabledIndicatorColor = onSurface.copy(alpha = 0.12f),
+        errorIndicatorColor = error,
 
         focusedLeadingIconColor = onSurface,
         unfocusedLeadingIconColor = onSurfaceVariant,
@@ -89,4 +88,12 @@ val ColorScheme.primaryTextFieldColors: TextFieldColors
         unfocusedSuffixColor = onSurfaceVariant,
         disabledSuffixColor = onSurface.copy(alpha = 0.38f),
         errorSuffixColor = onError
+    )
+
+val ColorScheme.primaryIconButtonColors: IconButtonColors
+    get() = IconButtonColors(
+        containerColor = primaryContainer,
+        contentColor = onPrimaryContainer,
+        disabledContainerColor = secondaryContainer,
+        disabledContentColor = onSecondaryContainer,
     )

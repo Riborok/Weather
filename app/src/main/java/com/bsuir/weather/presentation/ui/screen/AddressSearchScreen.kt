@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.bsuir.weather.R
 import com.bsuir.weather.presentation.ui.component.top_bar.TopAppBarWithBackButton
 import com.bsuir.weather.presentation.viewmodel.AddressSearchViewModel
+import com.bsuir.weather.utils.ext.primaryTextFieldColors
 
 @Composable
 fun AddressSearchScreen(
@@ -53,6 +54,7 @@ fun AddressSearchScreen(
                 label = { Text(stringResource(R.string.enter_city_name)) },
                 leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = stringResource(R.string.search)) },
                 singleLine = true,
+                colors = MaterialTheme.colorScheme.primaryTextFieldColors,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp),

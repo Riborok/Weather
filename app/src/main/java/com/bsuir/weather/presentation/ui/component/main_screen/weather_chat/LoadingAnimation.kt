@@ -44,6 +44,7 @@ fun LoadingAnimation() {
     Text(
         text = stringResource(id = R.string.thinking_state) + dots,
         style = MaterialTheme.typography.bodyMedium,
-        color = MaterialTheme.colorScheme.onSurface
+        color = MaterialTheme.colorScheme.onSecondaryContainer,
+        modifier = Modifier.padding(8.dp)
     )
 }

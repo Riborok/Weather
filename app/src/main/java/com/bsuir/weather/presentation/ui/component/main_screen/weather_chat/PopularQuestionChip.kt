@@ -20,14 +20,14 @@ fun PopularQuestionChip(
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(12.dp))
-            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f))
+            .background(MaterialTheme.colorScheme.tertiaryContainer)
             .clickable { onClick() }
             .padding(vertical = 8.dp, horizontal = 16.dp)
     ) {
         Text(
             text = text,
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.onTertiaryContainer
         )
     }
 }

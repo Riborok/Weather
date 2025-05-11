@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.utils.ext.getCapitalizedDisplayName
+import com.bsuir.weather.utils.ext.primaryCardColors
 import kotlinx.datetime.DayOfWeek
 
 @Composable
@@ -28,7 +29,7 @@ fun DailyForecastItem(
     minTemperature: String,
     maxTemperature: String,
     modifier: Modifier = Modifier,
-    textColor: Color = MaterialTheme.colorScheme.onSurface,
+    textColor: Color = MaterialTheme.colorScheme.primaryCardColors.contentColor,
 ) {
     Row (
         verticalAlignment = Alignment.CenterVertically,

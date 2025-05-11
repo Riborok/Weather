@@ -10,13 +10,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.bsuir.weather.utils.ext.primaryCardColors
 
 @Composable
 fun AdditionalInfoItem (
     title: String,
     value: String,
     modifier: Modifier = Modifier,
-    textColor: Color = MaterialTheme.colorScheme.onSurface
+    textColor: Color = MaterialTheme.colorScheme.primaryCardColors.contentColor
 ) {
     Row (
         horizontalArrangement = Arrangement.SpaceBetween,

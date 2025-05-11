@@ -15,15 +15,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
+import com.bsuir.weather.utils.ext.primaryIconButtonColors
+import com.bsuir.weather.utils.ext.primaryTextFieldColors
 
 @Composable
 fun ColumnScope.ChatInputField(
@@ -38,19 +38,17 @@ fun ColumnScope.ChatInputField(
             value = userMessage,
             onValueChange = onMessageChange,
             placeholder = { Text(stringResource(id = R.string.chat_placeholder_weather)) },
+            colors = MaterialTheme.colorScheme.primaryTextFieldColors,
             modifier = Modifier
                 .weight(1f)
-                .clip(RoundedCornerShape(16.dp)),
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                unfocusedContainerColor = MaterialTheme.colorScheme.surface
-            )
+                .clip(RoundedCornerShape(16.dp))
         )
 
         Spacer(modifier = Modifier.width(8.dp))
 
         IconButton(
             onClick = onSendMessage,
+            colors = MaterialTheme.colorScheme.primaryIconButtonColors,
             modifier = Modifier
                 .size(48.dp)
                 .background(
@@ -60,8 +58,7 @@ fun ColumnScope.ChatInputField(
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.Send,
-                contentDescription = stringResource(id = R.string.content_description_send),
-                tint = Color.White
+                contentDescription = stringResource(id = R.string.content_description_send)
             )
         }
     }

@@ -25,7 +25,7 @@ fun PopularQuestionsSection(
         Text(
             text = stringResource(R.string.popular_questions),
             style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.onSurface,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier.padding(bottom = 8.dp)
         )
 

@@ -8,13 +8,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -33,7 +33,7 @@ import com.bsuir.weather.presentation.ui.component.top_bar.TopAppBarWithBackButt
 import com.bsuir.weather.presentation.ui.utils.RequestLocationPermission
 import com.bsuir.weather.presentation.viewmodel.MapViewModel
 import com.bsuir.weather.utils.constants.mapZoom
-import com.bsuir.weather.utils.ext.primaryButtonColors
+import com.bsuir.weather.utils.ext.primaryIconButtonColors
 import com.bsuir.weather.utils.ext.primaryTextFieldColors
 import com.bsuir.weather.utils.mapper.CoordinatesMapper.toLatLng
 import com.bsuir.weather.utils.mapper.CoordinatesMapper.toModel
@@ -105,10 +105,26 @@ fun MapScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
-                    TextField(
+                    OutlinedTextField(
                         value = userInput,
                         onValueChange = mapViewModel::onUserInputChange,
                         label = { Text(stringResource(R.string.enter_alias)) },
+                        trailingIcon = {
+                            IconButton (
+                                onClick = {
+                                    mapViewModel.saveLocation()
+                                    onNavigateToMainClick()
+                                },
+                                enabled = selectedCoordinates != null,
+                                colors = MaterialTheme.colorScheme.primaryIconButtonColors,
+                                modifier = Modifier.padding(end = 4.dp)
+                            ) {
+                                Icon(
+                                    Icons.Default.Done,
+                                    contentDescription = stringResource(R.string.done)
+                                )
+                            }
+                        },
                         singleLine = true,
                         shape = MaterialTheme.shapes.medium,
                         colors = MaterialTheme.colorScheme.primaryTextFieldColors,
@@ -116,21 +132,6 @@ fun MapScreen(
                             .weight(1f)
                             .padding(end = 8.dp)
                     )
-
-                    Button(
-                        onClick = {
-                            mapViewModel.saveLocation()
-                            onNavigateToMainClick()
-                        },
-                        enabled = selectedCoordinates != null,
-                        shape = MaterialTheme.shapes.medium,
-                        colors = MaterialTheme.colorScheme.primaryButtonColors
-                    ) {
-                        Icon(
-                            Icons.Default.Done,
-                            contentDescription = stringResource(R.string.done)
-                        )
-                    }
                 }
             }
 
