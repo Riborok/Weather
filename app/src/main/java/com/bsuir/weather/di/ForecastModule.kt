@@ -1,6 +1,10 @@
 package com.bsuir.weather.di
 
 import android.content.Context
+import androidx.room.Room
+import com.bsuir.weather.data.db.AppDatabase
+import com.bsuir.weather.data.db.cache.ForecastCache
+import com.bsuir.weather.data.db.dao.ForecastDao
 import com.bsuir.weather.data.repository.ForecastRepositoryImpl
 import com.bsuir.weather.data.source.network.weather.WeatherForecastNetwork
 import com.bsuir.weather.domain.repository.ForecastRepository
@@ -25,8 +29,33 @@ object ForecastModule {
 
     @Provides
     @Singleton
-    fun provideForecastRepository(weatherForecastNetwork: WeatherForecastNetwork): ForecastRepository {
-        return ForecastRepositoryImpl(weatherForecastNetwork)
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(
+            context,
+            AppDatabase::class.java,
+            "weather_database"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideForecastDao(database: AppDatabase): ForecastDao {
+        return database.forecastDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideForecastCache(forecastDao: ForecastDao): ForecastCache {
+        return ForecastCache(forecastDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideForecastRepository(
+        weatherForecastNetwork: WeatherForecastNetwork,
+        forecastCache: ForecastCache
+    ): ForecastRepository {
+        return ForecastRepositoryImpl(weatherForecastNetwork, forecastCache)
     }
 
     @Provides
