@@ -1,23 +1,25 @@
-package com.bsuir.weather.utils.location
+package com.bsuir.weather.data.source.android.location
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
-import com.bsuir.weather.domain.model.LocationModel
-import com.bsuir.weather.utils.ext.weatherAppContext
-import com.bsuir.weather.utils.location.LocationUtils.fetchLocationFromCoordinates
+import com.bsuir.weather.domain.model.Coordinates
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import kotlinx.coroutines.suspendCancellableCoroutine
 
-object CurrentLocationUtils {
-    suspend fun fetchCurrentLocation(context: Context): LocationModel? =
+class CurrentCoordinatesFetcher(
+    private val context: Context,
+    private val fusedClient: FusedLocationProviderClient
+) {
+    suspend fun fetchCurrentCoordinates(): Coordinates? =
         suspendCancellableCoroutine { cont ->
             val cts = CancellationTokenSource()
-            fetchCurrentLocation(context, cts.token) { location ->
+            fetchCurrentCoordinates(cts.token) { location ->
                 if (cont.isActive) {
                     cont.resume(location) {}
                 }
@@ -27,19 +29,18 @@ object CurrentLocationUtils {
             }
         }
 
-    fun fetchCurrentLocation(
-        context: Context,
+    private fun fetchCurrentCoordinates(
         ct: CancellationToken,
-        setCurrentLocationCallback: (LocationModel?) -> Unit,
+        setCurrentCoordinatesCallback: (Coordinates?) -> Unit,
     ) {
-        if (hasLocationPermission(context)) {
-            requestCurrentLocation(context, ct, setCurrentLocationCallback)
+        if (hasLocationPermission()) {
+            requestCurrentCoordinates(ct, setCurrentCoordinatesCallback)
         } else if (!ct.isCancellationRequested) {
-            setCurrentLocationCallback(null)
+            setCurrentCoordinatesCallback(null)
         }
     }
 
-    private fun hasLocationPermission(context: Context): Boolean {
+    private fun hasLocationPermission(): Boolean {
         val fineLocationGranted = ActivityCompat.checkSelfPermission(
             context,
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -54,31 +55,28 @@ object CurrentLocationUtils {
     }
 
     @SuppressLint("MissingPermission")
-    private fun requestCurrentLocation(
-        context: Context,
+    private fun requestCurrentCoordinates(
         ct: CancellationToken,
-        setCurrentLocationCallback: (LocationModel?) -> Unit
+        setCurrentCoordinatesCallback: (Coordinates?) -> Unit
     ) {
-        val fusedClient = context.weatherAppContext.fusedLocationClient
         fusedClient.getCurrentLocation(
             Priority.PRIORITY_BALANCED_POWER_ACCURACY,
             ct
         )
             .addOnSuccessListener { location ->
                 if (location != null) {
-                    fetchLocationFromCoordinates(
-                        context = context,
-                        latitude = location.latitude,
-                        longitude = location.longitude,
-                        onResult = setCurrentLocationCallback,
-                        ct = ct
+                    setCurrentCoordinatesCallback(
+                        Coordinates(
+                            latitude = location.latitude,
+                            longitude = location.longitude
+                        )
                     )
                 } else {
-                    setCurrentLocationCallback(null)
+                    setCurrentCoordinatesCallback(null)
                 }
             }
             .addOnFailureListener {
-                setCurrentLocationCallback(null)
+                setCurrentCoordinatesCallback(null)
             }
     }
 }

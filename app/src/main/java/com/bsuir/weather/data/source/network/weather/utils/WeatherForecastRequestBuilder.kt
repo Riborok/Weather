@@ -1,5 +1,6 @@
 package com.bsuir.weather.data.source.network.weather.utils
 
+import com.bsuir.weather.domain.model.Coordinates
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.parameter
 
@@ -29,9 +30,9 @@ class WeatherForecastRequestBuilder private constructor(private val builder: Htt
         }
     }
 
-    fun setCoordinates(latitude: Double, longitude: Double): WeatherForecastRequestBuilder = apply {
-        builder.parameter("latitude", latitude)
-        builder.parameter("longitude", longitude)
+    fun setCoordinates(coords: Coordinates): WeatherForecastRequestBuilder = apply {
+        builder.parameter("latitude", coords.latitude)
+        builder.parameter("longitude", coords.longitude)
     }
 
     fun addDailyParam(param: String): WeatherForecastRequestBuilder = apply {

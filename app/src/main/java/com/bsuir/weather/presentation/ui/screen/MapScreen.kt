@@ -17,7 +17,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,11 +28,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bsuir.weather.R
+import com.bsuir.weather.presentation.state.CoordinatesState
+import com.bsuir.weather.presentation.ui.component.content.LoadingContent
 import com.bsuir.weather.presentation.ui.utils.RequestLocationPermission
-import com.bsuir.weather.presentation.viewmodel.CurrentLocationViewModel
 import com.bsuir.weather.presentation.viewmodel.MapViewModel
 import com.bsuir.weather.utils.constants.mapZoom
-import com.bsuir.weather.utils.ext.onSuccess
+import com.bsuir.weather.utils.mapper.CoordinatesMapper.toLatLng
+import com.bsuir.weather.utils.mapper.CoordinatesMapper.toModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -46,32 +47,35 @@ import com.google.maps.android.compose.rememberCameraPositionState
 fun MapScreen(
     onNavigateToMainClick: () -> Unit,
     modifier: Modifier = Modifier,
-    currentLocationViewModel: CurrentLocationViewModel = hiltViewModel(),
     mapViewModel: MapViewModel = hiltViewModel()
 ) {
     var permissionGranted by remember { mutableStateOf(false) }
-    val currentLocationState by currentLocationViewModel.currentLocationState.collectAsState()
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(LatLng(0.0, 0.0), mapZoom)
-    }
-
-    val userInput by mapViewModel.userInput.collectAsState()
-    val selectedCoordinates by mapViewModel.selectedCoordinates.collectAsState()
-
     RequestLocationPermission { granted ->
         permissionGranted = granted
     }
 
-    LaunchedEffect(permissionGranted) {
-        if (permissionGranted) {
-            currentLocationViewModel.fetchCurrentLocation()
-        }
-    }
+    val currentCoordinatesState by mapViewModel.currentCoordinatesState.collectAsState()
+    val cameraPositionState = rememberCameraPositionState()
+    val userInput by mapViewModel.userInput.collectAsState()
+    val selectedCoordinates by mapViewModel.selectedCoordinates.collectAsState()
 
-    currentLocationState.onSuccess { currentLocation ->
-        cameraPositionState.position = CameraPosition.fromLatLngZoom(
-            LatLng(currentLocation.latitude, currentLocation.longitude), mapZoom
-        )
+    when (currentCoordinatesState) {
+        is CoordinatesState.Loading -> {
+            LoadingContent()
+            return
+        }
+        is CoordinatesState.Success -> {
+            val currentCoordinates = (currentCoordinatesState as CoordinatesState.Success).coordinates
+            cameraPositionState.position = CameraPosition.fromLatLngZoom(
+                currentCoordinates.toLatLng(),
+                mapZoom
+            )
+        }
+        is CoordinatesState.NoContent -> {
+            cameraPositionState.position = CameraPosition.fromLatLngZoom(
+                LatLng(53.9021, 27.5505), mapZoom
+            )
+        }
     }
 
     Column (
@@ -135,14 +139,14 @@ fun MapScreen(
         GoogleMap(
             cameraPositionState = cameraPositionState,
             properties = MapProperties(isMyLocationEnabled = permissionGranted),
-            onMapClick = mapViewModel::onMapClick,
+            onMapClick = { latLng -> mapViewModel.onMapClick(latLng.toModel()) },
             modifier = Modifier
                 .fillMaxSize()
                 .weight(1f)
         ) {
-            selectedCoordinates?.let {
+            selectedCoordinates?.let { coordinates ->
                 Marker(
-                    state = MarkerState(position = it),
+                    state = MarkerState(position = coordinates.toLatLng()),
                     title = userInput.ifBlank { stringResource(R.string.selected_point) }
                 )
             }

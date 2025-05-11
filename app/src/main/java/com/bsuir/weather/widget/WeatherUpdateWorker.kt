@@ -27,7 +27,7 @@ class WeatherUpdateWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         return try {
-            getCurrentForecastLocationUseCase.fetchCurrentForecast()?.let { forecast ->
+            getCurrentForecastLocationUseCase.getCurrentForecast()?.let { forecast ->
                 storedForecastLocationUseCase.updateForecastLocation(forecast)
                 updateNotification(forecast)
                 updateWidgets(forecast)

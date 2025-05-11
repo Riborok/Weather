@@ -30,8 +30,8 @@ object AiChatPromptBuilder {
     private fun buildLocationSection(location: LocationModel): String {
         return buildString {
             appendLine("Location details:")
-            appendLine("• Latitude: ${location.latitude}")
-            appendLine("• Longitude: ${location.longitude}")
+            appendLine("• Latitude: ${location.coordinates.latitude}")
+            appendLine("• Longitude: ${location.coordinates.longitude}")
             appendLine("• Address: ${location.address.fullAddress()}")
         }
     }

@@ -29,10 +29,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bsuir.weather.R
 import com.bsuir.weather.presentation.state.ForecastState
-import com.bsuir.weather.presentation.ui.component.main_screen.content.ErrorContent
+import com.bsuir.weather.presentation.ui.component.content.ErrorContent
 import com.bsuir.weather.presentation.ui.component.main_screen.content.ForecastSuccessContent
-import com.bsuir.weather.presentation.ui.component.main_screen.content.LoadingContent
-import com.bsuir.weather.presentation.ui.component.main_screen.content.NoContent
+import com.bsuir.weather.presentation.ui.component.content.LoadingContent
+import com.bsuir.weather.presentation.ui.component.content.NoContent
 import com.bsuir.weather.presentation.ui.component.modal.location.LocationModal
 import com.bsuir.weather.presentation.ui.utils.RequestLocationPermission
 import com.bsuir.weather.presentation.ui.utils.RequestNotificationPermission

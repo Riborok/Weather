@@ -5,6 +5,7 @@ import com.bsuir.weather.R
 import com.bsuir.weather.data.dto.WeatherResponse
 import com.bsuir.weather.data.source.network.weather.utils.WeatherForecastRequestBuilder.Companion.weatherForecast
 import com.bsuir.weather.data.source.network.weather.utils.WeatherParameters
+import com.bsuir.weather.domain.model.Coordinates
 import com.bsuir.weather.exception.NetworkRequestException
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -19,31 +20,28 @@ class WeatherForecastNetwork @Inject constructor(
     private val context: Context
 ) {
     suspend fun getForecastList(
-        latitude: Double,
-        longitude: Double,
+        coords: Coordinates,
         forecastDays: Int
     ): WeatherResponse {
-        val response = makeWeatherForecastRequest(latitude, longitude, forecastDays)
+        val response = makeWeatherForecastRequest(coords, forecastDays)
         return handleWeatherForecastResponse(response)
     }
 
     private suspend fun makeWeatherForecastRequest(
-        latitude: Double,
-        longitude: Double,
+        coords: Coordinates,
         forecastDays: Int
     ): HttpResponse {
         return http.get("https://api.open-meteo.com/v1/forecast",
-            buildWeatherForecastRequest(latitude, longitude, forecastDays))
+            buildWeatherForecastRequest(coords, forecastDays))
     }
 
     private fun buildWeatherForecastRequest(
-        latitude: Double,
-        longitude: Double,
+        coords: Coordinates,
         forecastDays: Int
     ): HttpRequestBuilder.() -> Unit {
         return {
             weatherForecast {
-                setCoordinates(latitude, longitude)
+                setCoordinates(coords)
                 setForecastDays(forecastDays)
                 setTimezone("Europe/Moscow")
 

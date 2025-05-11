@@ -1,28 +1,27 @@
-package com.bsuir.weather.utils.location
+package com.bsuir.weather.data.source.android.location
 
-import android.content.Context
 import android.location.Address
+import android.location.Geocoder
 import android.location.Geocoder.GeocodeListener
 import android.os.Build
+import com.bsuir.weather.domain.model.Coordinates
 import com.bsuir.weather.domain.model.LocationModel
-import com.bsuir.weather.utils.ext.weatherAppContext
 import com.bsuir.weather.utils.mapper.LocationMapper.toModel
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import kotlinx.coroutines.suspendCancellableCoroutine
+import javax.inject.Inject
 
-object LocationUtils {
+class LocationFetcher @Inject constructor(
+    private val geocoder: Geocoder
+) {
     suspend fun fetchLocationFromCoordinates(
-        context: Context,
-        latitude: Double,
-        longitude: Double
+        coords: Coordinates
     ): LocationModel = suspendCancellableCoroutine { cont ->
         val cts = CancellationTokenSource()
 
         fetchLocationFromCoordinates(
-            context   = context,
-            latitude  = latitude,
-            longitude = longitude,
+            coords  = coords,
             ct        = cts.token
         ) { model ->
             if (cont.isActive) {
@@ -35,42 +34,34 @@ object LocationUtils {
         }
     }
 
-    fun fetchLocationFromCoordinates(
-        context: Context,
-        latitude: Double,
-        longitude: Double,
+    private fun fetchLocationFromCoordinates(
+        coords: Coordinates,
         ct: CancellationToken,
         onResult: (LocationModel) -> Unit
     ) {
         if (ct.isCancellationRequested) return
         fetchAddressFromCoordinates(
-            context = context,
-            latitude = latitude,
-            longitude = longitude,
+            coords = coords,
             onResult = { address ->
                 if (!ct.isCancellationRequested) {
-                    onResult(address?.toModel() ?: LocationModel(latitude, longitude))
+                    onResult(address?.toModel() ?: LocationModel(coords))
                 }
             },
             onError = {
                 if (!ct.isCancellationRequested) {
-                    onResult(LocationModel(latitude, longitude))
+                    onResult(LocationModel(coords))
                 }
             },
         )
     }
 
     private fun fetchAddressFromCoordinates(
-        context: Context,
-        latitude: Double,
-        longitude: Double,
+        coords: Coordinates,
         onResult: (Address?) -> Unit,
         onError: (Exception) -> Unit = {}
     ) {
-        val geocoder = context.weatherAppContext.geocoder
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            geocoder.getFromLocation(latitude, longitude, 1, object : GeocodeListener {
+            geocoder.getFromLocation(coords.latitude, coords.longitude, 1, object : GeocodeListener {
                 override fun onGeocode(addresses: MutableList<Address>) {
                     if (addresses.isNotEmpty()) {
                         val cityName = addresses[0]
@@ -86,7 +77,7 @@ object LocationUtils {
         } else {
             try {
                 @Suppress("DEPRECATION")
-                val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+                val addresses = geocoder.getFromLocation(coords.latitude, coords.longitude, 1)
                 if (!addresses.isNullOrEmpty()) {
                     val cityName = addresses[0]
                     onResult(cityName)

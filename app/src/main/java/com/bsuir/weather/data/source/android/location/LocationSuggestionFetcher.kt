@@ -1,27 +1,29 @@
-package com.bsuir.weather.utils.location
+package com.bsuir.weather.data.source.android.location
 
 import android.content.Context
+import com.bsuir.weather.R
+import com.bsuir.weather.domain.model.Coordinates
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.exception.AddressNotFoundException
 import com.bsuir.weather.utils.ext.AddressModel
-import com.bsuir.weather.utils.ext.weatherAppContext
+import com.bsuir.weather.utils.mapper.CoordinatesMapper.toModel
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.PlaceTypes
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
+import com.google.android.libraries.places.api.net.PlacesClient
 import kotlinx.coroutines.tasks.await
-import com.bsuir.weather.R
 
-object LocationSuggestionUtils {
+class LocationSuggestionFetcher(
+    private val context: Context,
+    private val placesClient: PlacesClient,
+) {
     suspend fun fetchAddressSuggestions(
-        context: Context,
         query: String,
         sessionToken: AutocompleteSessionToken
     ): List<AutocompletePrediction> {
-        val placesClient = context.weatherAppContext.placesClient
-
         val request = FindAutocompletePredictionsRequest.builder()
             .setQuery(query)
             .setTypesFilter(listOf(PlaceTypes.ADDRESS))
@@ -34,11 +36,8 @@ object LocationSuggestionUtils {
     }
 
     suspend fun fetchLocationByPlaceId(
-        context: Context,
-        placeId: String,
+        placeId: String
     ): LocationModel {
-        val placesClient = context.weatherAppContext.placesClient
-
         val placeFields = listOf(
             Place.Field.LAT_LNG,
             Place.Field.ADDRESS_COMPONENTS,
@@ -53,8 +52,7 @@ object LocationSuggestionUtils {
         val address = place.AddressModel
         return latLng?.let { latLng ->
             LocationModel(
-                latitude = latLng.latitude,
-                longitude = latLng.longitude,
+                coordinates = latLng.toModel(),
                 address = address
             )
         } ?: throw AddressNotFoundException(

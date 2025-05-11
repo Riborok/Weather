@@ -1,16 +1,13 @@
 package com.bsuir.weather.presentation.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bsuir.weather.domain.usecase.GetLocationSuggestionUseCase
 import com.bsuir.weather.domain.usecase.StoredLocationUseCase
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import com.bsuir.weather.utils.ext.weatherAppContext
-import com.bsuir.weather.utils.location.LocationSuggestionUtils.fetchAddressSuggestions
-import com.bsuir.weather.utils.location.LocationSuggestionUtils.fetchLocationByPlaceId
 import com.google.android.libraries.places.api.model.AutocompletePrediction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,9 +16,9 @@ import javax.inject.Named
 
 @HiltViewModel
 class AddressSearchViewModel @Inject constructor(
-    application: Application,
+    private val getLocationSuggestionUseCase: GetLocationSuggestionUseCase,
     @Named("SavedLocationUseCase") private val storedLocationUseCase: StoredLocationUseCase
-) : AndroidViewModel(application) {
+) : ViewModel() {
     private val _searchText = MutableStateFlow("")
     val searchText: StateFlow<String> = _searchText.asStateFlow()
 
@@ -36,11 +33,9 @@ class AddressSearchViewModel @Inject constructor(
     }
 
     private fun searchCities(query: String) {
-        val context = getApplication<Application>().weatherAppContext
         if (query.isNotBlank()) {
             viewModelScope.launch {
-                _cityResults.value = fetchAddressSuggestions(
-                    context = context,
+                _cityResults.value = getLocationSuggestionUseCase.getAddressSuggestions(
                     query = query,
                     sessionToken = sessionToken
                 )
@@ -53,10 +48,8 @@ class AddressSearchViewModel @Inject constructor(
     fun saveLocation(
         placeId: String
     ) {
-        val context = getApplication<Application>().weatherAppContext
         viewModelScope.launch {
-            val location = fetchLocationByPlaceId(
-                context = context,
+            val location = getLocationSuggestionUseCase.getLocationByPlaceId(
                 placeId = placeId
             )
             storedLocationUseCase.saveLocation(location)

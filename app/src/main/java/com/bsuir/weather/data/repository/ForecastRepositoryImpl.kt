@@ -2,6 +2,7 @@ package com.bsuir.weather.data.repository
 
 import com.bsuir.weather.data.db.cache.ForecastCache
 import com.bsuir.weather.data.source.network.weather.WeatherForecastNetwork
+import com.bsuir.weather.domain.model.Coordinates
 import com.bsuir.weather.domain.model.ForecastModel
 import com.bsuir.weather.domain.repository.ForecastRepository
 import com.bsuir.weather.utils.mapper.ForecastMapper.toDTO
@@ -13,14 +14,14 @@ class ForecastRepositoryImpl @Inject constructor(
     private val weatherForecastNetwork: WeatherForecastNetwork,
     private val forecastCache: ForecastCache
 ) : ForecastRepository {
-    override suspend fun getForecast(latitude: Double, longitude: Double): ForecastModel {
-        forecastCache.get(latitude, longitude)?.let {
+    override suspend fun fetchForecast(coords: Coordinates): ForecastModel {
+        forecastCache.get(coords)?.let {
             return it.toModel()
         }
 
-        val forecast = weatherForecastNetwork.getForecastList(latitude, longitude, 7).toModel()
+        val forecast = weatherForecastNetwork.getForecastList(coords, 7).toModel()
 
-        forecastCache.save(latitude, longitude, forecast.toDTO())
+        forecastCache.save(coords, forecast.toDTO())
 
         return forecast
     }

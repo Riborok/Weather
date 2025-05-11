@@ -3,6 +3,8 @@ package com.bsuir.weather.data.db.cache
 import com.bsuir.weather.data.db.dao.LocationDao
 import com.bsuir.weather.data.db.entity.LocationEntity
 import com.bsuir.weather.data.dto.LocationDTO
+import com.bsuir.weather.domain.model.Coordinates
+import com.bsuir.weather.utils.mapper.CoordinatesMapper.toModel
 import javax.inject.Inject
 
 class LocationCache @Inject constructor(
@@ -14,23 +16,23 @@ class LocationCache @Inject constructor(
         private const val CURRENT_LOCATION_KEY = "current_location"
     }
 
-    private fun generateCacheKey(latitude: Double, longitude: Double): String {
-        val roundedLatitude = "%.${COORDINATE_PRECISION}f".format(latitude)
-        val roundedLongitude = "%.${COORDINATE_PRECISION}f".format(longitude)
+    private fun generateCacheKey(coords: Coordinates): String {
+        val roundedLatitude = "%.${COORDINATE_PRECISION}f".format(coords.latitude)
+        val roundedLongitude = "%.${COORDINATE_PRECISION}f".format(coords.longitude)
         return "$roundedLatitude,$roundedLongitude"
     }
 
-    suspend fun get(latitude: Double, longitude: Double): LocationDTO? {
+    suspend fun get(coords: Coordinates): LocationDTO? {
         val currentTime = System.currentTimeMillis()
         val minValidTime = currentTime - CACHE_DURATION
-        return locationDao.getLocation(generateCacheKey(latitude, longitude), minValidTime)?.location
+        return locationDao.getLocation(generateCacheKey(coords), minValidTime)?.location
     }
 
     suspend fun save(location: LocationDTO) {
         val currentTime = System.currentTimeMillis()
         locationDao.insertLocation(
             LocationEntity(
-                id = generateCacheKey(location.latitude, location.longitude),
+                id = generateCacheKey(location.coordinates.toModel()),
                 location = location,
                 timestamp = currentTime
             )
