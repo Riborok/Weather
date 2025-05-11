@@ -16,8 +16,4 @@ class GetCurrentLocationUseCase @Inject constructor(
     suspend fun getCurrentLocation(): LocationModel? {
         return currentLocationRepository.fetchCurrentLocation()
     }
-
-    suspend fun getCachedCurrentLocation(): LocationModel? {
-        return currentLocationRepository.fetchCachedCurrentLocation()
-    }
 }

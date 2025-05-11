@@ -2,11 +2,13 @@ package com.bsuir.weather.di
 
 import com.bsuir.weather.data.db.cache.CoordinatesCache
 import com.bsuir.weather.data.db.cache.LocationCache
+import com.bsuir.weather.data.db.dao.CoordinatesDao
 import com.bsuir.weather.data.db.dao.LocationDao
 import com.bsuir.weather.data.repository.CurrentLocationRepositoryImpl
 import com.bsuir.weather.data.source.android.location.CurrentCoordinatesFetcher
 import com.bsuir.weather.data.source.android.location.LocationFetcher
 import com.bsuir.weather.domain.repository.CurrentLocationRepository
+import com.bsuir.weather.domain.repository.LocationFromCoordinatesRepository
 import com.bsuir.weather.domain.usecase.GetCurrentLocationUseCase
 import dagger.Module
 import dagger.Provides
@@ -19,19 +21,18 @@ import javax.inject.Singleton
 object CurrentLocationModule {
     @Provides
     @Singleton
-    fun provideLocationCache(locationDao: LocationDao): LocationCache {
-        return LocationCache(locationDao)
+    fun provideCoordinatesCache(coordinatesDao: CoordinatesDao): CoordinatesCache {
+        return CoordinatesCache(coordinatesDao)
     }
 
     @Provides
     @Singleton
     fun provideCurrentLocationRepository(
         currentCoordinatesFetcher: CurrentCoordinatesFetcher,
-        locationFetcher: LocationFetcher,
         coordinatesCache: CoordinatesCache,
-        locationCache: LocationCache
+        locationFromCoordinatesRepository: LocationFromCoordinatesRepository,
     ): CurrentLocationRepository {
-        return CurrentLocationRepositoryImpl(currentCoordinatesFetcher, locationFetcher, coordinatesCache, locationCache)
+        return CurrentLocationRepositoryImpl(currentCoordinatesFetcher, coordinatesCache, locationFromCoordinatesRepository)
     }
 
     @Provides

@@ -7,6 +7,7 @@ import com.bsuir.weather.data.source.android.location.LocationFetcher
 import com.bsuir.weather.domain.model.Coordinates
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.domain.repository.CurrentLocationRepository
+import com.bsuir.weather.domain.repository.LocationFromCoordinatesRepository
 import com.bsuir.weather.utils.mapper.CoordinatesMapper.toDTO
 import com.bsuir.weather.utils.mapper.CoordinatesMapper.toModel
 import com.bsuir.weather.utils.mapper.LocationMapper.toDTO
@@ -15,35 +16,21 @@ import javax.inject.Inject
 
 class CurrentLocationRepositoryImpl @Inject constructor(
     private val currentCoordinatesFetcher: CurrentCoordinatesFetcher,
-    private val locationFetcher: LocationFetcher,
     private val coordinatesCache: CoordinatesCache,
-    private val locationCache: LocationCache
+    private val locationFromCoordinatesRepository: LocationFromCoordinatesRepository,
 ) : CurrentLocationRepository {
     override suspend fun fetchCurrentCoordinates(): Coordinates? {
-        coordinatesCache.getCoordinates()?.let { coordinates ->
-            return coordinates.toModel()
+        coordinatesCache.get()?.let {
+            return it.toModel()
         }
 
-        return currentCoordinatesFetcher.fetchCurrentCoordinates()?.also { coords ->
-            coordinatesCache.saveCoordinates(coords.toDTO())
+        return currentCoordinatesFetcher.fetchCurrentCoordinates()?.also {
+            coordinatesCache.save(it.toDTO())
         }
     }
 
     override suspend fun fetchCurrentLocation(): LocationModel? {
-        val coords = currentCoordinatesFetcher.fetchCurrentCoordinates() ?: return null
-        return locationFetcher.fetchLocationFromCoordinates(coords)
-    }
-
-    override suspend fun fetchCachedCurrentLocation(): LocationModel? {
-        locationCache.getCurrentLocation()?.let { cachedLocation ->
-            return cachedLocation.toModel()
-        }
-
-        val coords = currentCoordinatesFetcher.fetchCurrentCoordinates() ?: return null
-        val locationModel = locationFetcher.fetchLocationFromCoordinates(coords)
-
-        locationCache.saveCurrentLocation(locationModel.toDTO())
-
-        return locationModel
+        val coords = fetchCurrentCoordinates() ?: return null
+        return locationFromCoordinatesRepository.fetchLocationFromCoordinates(coords)
     }
 }

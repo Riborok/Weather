@@ -14,13 +14,13 @@ class CoordinatesCache @Inject constructor(
         private const val CURRENT_COORDINATES_KEY = "current_coordinates"
     }
 
-    suspend fun getCoordinates(): CoordinatesDTO? {
+    suspend fun get(): CoordinatesDTO? {
         val currentTime = System.currentTimeMillis()
         val minValidTime = currentTime - CACHE_DURATION
         return coordinatesDao.getCoordinates(CURRENT_COORDINATES_KEY, minValidTime)?.coordinates
     }
 
-    suspend fun saveCoordinates(coordinates: CoordinatesDTO) {
+    suspend fun save(coordinates: CoordinatesDTO) {
         val currentTime = System.currentTimeMillis()
         coordinatesDao.insertCoordinates(
             CoordinatesEntity(

@@ -24,7 +24,7 @@ class CurrentLocationViewModel @Inject constructor(
 
     fun fetchCurrentLocation() {
         viewModelScope.launch {
-            _currentLocationState.value = getCurrentLocationUseCase.getCachedCurrentLocation()
+            _currentLocationState.value = getCurrentLocationUseCase.getCurrentLocation()
                 ?.let(LocationState::Success)
                 ?: LocationState.NoContent
         }

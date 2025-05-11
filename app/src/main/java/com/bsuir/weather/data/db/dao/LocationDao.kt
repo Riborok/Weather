@@ -8,12 +8,12 @@ import com.bsuir.weather.data.db.entity.LocationEntity
 
 @Dao
 interface LocationDao {
-    @Query("SELECT * FROM locations WHERE id = :id AND timestamp > :minTimestamp")
-    suspend fun getLocation(id: String, minTimestamp: Long): LocationEntity?
+    @Query("SELECT * FROM locations WHERE id = :id")
+    suspend fun getLocation(id: String): LocationEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertLocation(location: LocationEntity)
 
-    @Query("DELETE FROM locations WHERE timestamp <= :timestamp")
-    suspend fun deleteOldLocations(timestamp: Long)
+    @Query("DELETE FROM locations WHERE id NOT IN (SELECT id FROM locations ORDER BY timestamp DESC LIMIT :limit)")
+    suspend fun deleteExcessLocations(limit: Int)
 }

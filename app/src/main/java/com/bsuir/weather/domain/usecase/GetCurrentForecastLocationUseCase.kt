@@ -10,7 +10,7 @@ class GetCurrentForecastLocationUseCase @Inject constructor(
     private val forecastUseCase: GetForecastUseCase,
 ) {
     suspend fun getCurrentForecast(): ForecastLocationModel? {
-        val location = getCurrentLocationUseCase.getCachedCurrentLocation() ?: return null
+        val location = getCurrentLocationUseCase.getCurrentLocation() ?: return null
         return try {
             val forecast = forecastUseCase.getForecast(location.coordinates)
             ForecastLocationModel(forecast, location)

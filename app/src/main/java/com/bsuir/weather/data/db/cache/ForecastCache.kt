@@ -12,7 +12,7 @@ class ForecastCache @Inject constructor(
 ) {
     companion object {
         private val CACHE_DURATION = minutesToMillis(30L)
-        private const val COORDINATE_PRECISION = 4
+        private const val COORDINATE_PRECISION = 2
     }
 
     private fun generateCacheKey(coords: Coordinates): String {

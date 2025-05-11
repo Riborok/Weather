@@ -1,5 +1,7 @@
 package com.bsuir.weather.di
 
+import com.bsuir.weather.data.db.cache.LocationCache
+import com.bsuir.weather.data.db.dao.LocationDao
 import com.bsuir.weather.data.repository.LocationFromCoordinatesRepositoryImpl
 import com.bsuir.weather.data.source.android.location.LocationFetcher
 import com.bsuir.weather.domain.repository.LocationFromCoordinatesRepository
@@ -15,10 +17,17 @@ import javax.inject.Singleton
 object LocationFromCoordinatesModule {
     @Provides
     @Singleton
+    fun provideLocationCache(locationDao: LocationDao): LocationCache {
+        return LocationCache(locationDao)
+    }
+
+    @Provides
+    @Singleton
     fun provideCurrentLocationRepository(
-        locationFetcher: LocationFetcher
+        locationFetcher: LocationFetcher,
+        locationCache: LocationCache
     ): LocationFromCoordinatesRepository {
-        return LocationFromCoordinatesRepositoryImpl(locationFetcher)
+        return LocationFromCoordinatesRepositoryImpl(locationFetcher, locationCache)
     }
 
     @Provides

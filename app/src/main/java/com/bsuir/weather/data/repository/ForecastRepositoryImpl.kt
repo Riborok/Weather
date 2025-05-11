@@ -19,10 +19,8 @@ class ForecastRepositoryImpl @Inject constructor(
             return it.toModel()
         }
 
-        val forecast = weatherForecastNetwork.getForecastList(coords, 7).toModel()
-
-        forecastCache.save(coords, forecast.toDTO())
-
-        return forecast
+        return weatherForecastNetwork.getForecastList(coords, 7).toModel().also {
+            forecastCache.save(coords, it.toDTO())
+        }
     }
 }
