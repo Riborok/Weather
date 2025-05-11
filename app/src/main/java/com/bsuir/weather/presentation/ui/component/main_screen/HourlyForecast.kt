@@ -17,7 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.ui.unit.Dp
-import com.bsuir.weather.utils.ext.cardColors
+import com.bsuir.weather.utils.ext.primaryCardColors
+import com.bsuir.weather.utils.ext.secondaryCardColors
 
 @Composable
 fun <T> HourlyForecast (
@@ -30,7 +31,7 @@ fun <T> HourlyForecast (
 ) {
     Card (
         modifier = modifier,
-        colors = MaterialTheme.colorScheme.cardColors
+        colors = MaterialTheme.colorScheme.secondaryCardColors
     ) {
         Column (
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -40,7 +41,7 @@ fun <T> HourlyForecast (
             Text (
                 text = title,
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.secondary,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(start = contentPaddingSize)
             )
 

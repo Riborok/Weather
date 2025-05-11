@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
-import com.bsuir.weather.utils.ext.cardColors
+import com.bsuir.weather.utils.ext.primaryCardColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.CurrentForecastModel
 import com.bsuir.weather.domain.model.DailyForecastModel
+import com.bsuir.weather.utils.ext.secondaryCardColors
 
 @Composable
 fun AdditionalInfo (
@@ -27,7 +28,7 @@ fun AdditionalInfo (
 
     Card(
         modifier = modifier,
-        colors = MaterialTheme.colorScheme.cardColors
+        colors = MaterialTheme.colorScheme.secondaryCardColors
     ) {
         Column (
             verticalArrangement = Arrangement.spacedBy(12.dp),

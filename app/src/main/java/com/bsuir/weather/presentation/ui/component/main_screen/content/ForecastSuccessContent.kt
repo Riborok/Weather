@@ -119,8 +119,8 @@ fun ForecastSuccessContent(
 
         FloatingActionButton(
             onClick = { isChatOpen = true },
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(24.dp)

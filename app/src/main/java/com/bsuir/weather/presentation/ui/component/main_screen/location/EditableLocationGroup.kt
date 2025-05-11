@@ -35,7 +35,8 @@ import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.presentation.ui.component.main_screen.location.item.LocationItem
 import com.bsuir.weather.presentation.ui.component.main_screen.location.item.TitleItem
-import com.bsuir.weather.utils.ext.cardColors
+import com.bsuir.weather.utils.ext.primaryCardColors
+import com.bsuir.weather.utils.ext.secondaryCardColors
 import kotlinx.coroutines.delay
 
 @Composable
@@ -78,7 +79,7 @@ fun EditableLocationGroup(
                 )
 
                 Card(
-                    colors = MaterialTheme.colorScheme.cardColors,
+                    colors = MaterialTheme.colorScheme.secondaryCardColors,
                     modifier = Modifier
                         .fillMaxWidth()
                         .combinedClickable(
