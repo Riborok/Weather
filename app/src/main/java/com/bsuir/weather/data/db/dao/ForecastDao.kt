@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.bsuir.weather.data.entity.ForecastEntity
+import com.bsuir.weather.data.db.entity.ForecastEntity
 
 @Dao
 interface ForecastDao {

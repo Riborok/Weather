@@ -1,4 +1,4 @@
-package com.bsuir.weather.data.entity
+package com.bsuir.weather.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

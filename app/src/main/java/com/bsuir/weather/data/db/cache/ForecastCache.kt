@@ -2,7 +2,7 @@ package com.bsuir.weather.data.db.cache
 
 import com.bsuir.weather.data.db.dao.ForecastDao
 import com.bsuir.weather.data.dto.ForecastDTO
-import com.bsuir.weather.data.entity.ForecastEntity
+import com.bsuir.weather.data.db.entity.ForecastEntity
 import javax.inject.Inject
 
 class ForecastCache @Inject constructor(
