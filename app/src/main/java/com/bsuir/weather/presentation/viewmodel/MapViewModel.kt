@@ -13,11 +13,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
     application: Application,
-    private val locationUseCase: LocationUseCase
+    @Named("SavedLocationUseCase") private val locationUseCase: LocationUseCase
 ) : AndroidViewModel(application) {
 
     private val _userInput = MutableStateFlow("")

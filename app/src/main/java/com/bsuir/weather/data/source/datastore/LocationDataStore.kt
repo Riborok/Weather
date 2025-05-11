@@ -11,15 +11,14 @@ import kotlinx.serialization.json.Json
 
 private val Context.locationDataStore by preferencesDataStore("location_data_store")
 
-class LocationDataStore(private val context: Context) {
-
-    companion object {
-        private val SAVED_LOCATIONS_KEY = stringSetPreferencesKey("saved_locations")
-    }
+class LocationDataStore(
+    private val context: Context,
+    private val forecastKey: Preferences.Key<Set<String>>
+) {
 
     val savedLocations: Flow<List<LocationDTO>> = context.locationDataStore.data
         .map { preferences ->
-            preferences[SAVED_LOCATIONS_KEY]?.map {
+            preferences[forecastKey]?.map {
                 Json.decodeFromString(serializer(), it)
             } ?: emptyList()
         }
@@ -27,16 +26,16 @@ class LocationDataStore(private val context: Context) {
     suspend fun addLocation(location: LocationDTO) {
         val json = Json.encodeToString(serializer(), location)
         context.locationDataStore.edit { preferences ->
-            val currentSet = preferences[SAVED_LOCATIONS_KEY] ?: emptySet()
-            preferences[SAVED_LOCATIONS_KEY] = currentSet + json
+            val currentSet = preferences[forecastKey] ?: emptySet()
+            preferences[forecastKey] = currentSet + json
         }
     }
 
     suspend fun removeLocation(location: LocationDTO) {
         val json = Json.encodeToString(serializer(), location)
         context.locationDataStore.edit { preferences ->
-            val currentSet = preferences[SAVED_LOCATIONS_KEY] ?: emptySet()
-            preferences[SAVED_LOCATIONS_KEY] = currentSet - json
+            val currentSet = preferences[forecastKey] ?: emptySet()
+            preferences[forecastKey] = currentSet - json
         }
     }
 
@@ -44,9 +43,9 @@ class LocationDataStore(private val context: Context) {
         val oldJson = Json.encodeToString(serializer(), oldLocation)
         val newJson = Json.encodeToString(serializer(), newLocation)
         context.locationDataStore.edit { preferences ->
-            val currentSet = preferences[SAVED_LOCATIONS_KEY] ?: emptySet()
+            val currentSet = preferences[forecastKey] ?: emptySet()
             if (currentSet.contains(oldJson)) {
-                preferences[SAVED_LOCATIONS_KEY] = currentSet - oldJson + newJson
+                preferences[forecastKey] = currentSet - oldJson + newJson
             }
         }
     }

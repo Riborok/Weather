@@ -15,11 +15,12 @@ import com.google.android.libraries.places.api.model.AutocompletePrediction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltViewModel
 class AddressSearchViewModel @Inject constructor(
     application: Application,
-    private val locationUseCase: LocationUseCase
+    @Named("SavedLocationUseCase") private val locationUseCase: LocationUseCase
 ) : AndroidViewModel(application) {
     private val _searchText = MutableStateFlow("")
     val searchText: StateFlow<String> = _searchText.asStateFlow()

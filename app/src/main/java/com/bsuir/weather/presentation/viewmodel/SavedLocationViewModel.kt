@@ -8,10 +8,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import javax.inject.Named
 
 @HiltViewModel
 class SavedLocationViewModel @Inject constructor(
-    private val locationUseCase: LocationUseCase
+    @Named("SavedLocationUseCase") private val locationUseCase: LocationUseCase
 ) : ViewModel() {
     private var _savedLocations = MutableStateFlow<List<LocationModel>>(emptyList())
     val savedLocations: StateFlow<List<LocationModel>> = _savedLocations.asStateFlow()
