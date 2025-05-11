@@ -6,16 +6,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -25,14 +24,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bsuir.weather.R
 import com.bsuir.weather.presentation.state.CoordinatesState
 import com.bsuir.weather.presentation.ui.component.content.LoadingContent
+import com.bsuir.weather.presentation.ui.component.top_bar.TopAppBarWithBackButton
+import com.bsuir.weather.presentation.ui.theme.WeatherTheme
 import com.bsuir.weather.presentation.ui.utils.RequestLocationPermission
 import com.bsuir.weather.presentation.viewmodel.MapViewModel
 import com.bsuir.weather.utils.constants.mapZoom
+import com.bsuir.weather.utils.ext.primaryButtonColors
+import com.bsuir.weather.utils.ext.primaryTextFieldColors
 import com.bsuir.weather.utils.mapper.CoordinatesMapper.toLatLng
 import com.bsuir.weather.utils.mapper.CoordinatesMapper.toModel
 import com.google.android.gms.maps.model.CameraPosition
@@ -78,43 +82,48 @@ fun MapScreen(
         }
     }
 
-    Column (
-        modifier = modifier
-    ) {
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
+    Scaffold (
+        topBar = {
+            TopAppBarWithBackButton(
+                title = stringResource(R.string.add_with_map),
+                onBackClick = { onNavigateToMainClick() },
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+            )
+        }
+    ) { innerPadding ->
+        Column (
+            modifier = modifier.padding(innerPadding)
         ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.padding(16.dp)
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 16.dp)
             ) {
-                Row (
+                Row(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxWidth()
                 ) {
-                    IconButton (
-                        onClick = { onNavigateToMainClick() },
-                        modifier = Modifier.size(50.dp)
-                    ) {
-                        Icon(
-                            Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.cancel)
-                        )
-                    }
-                    Text(
-                        text = stringResource(R.string.add_with_map),
-                        style = MaterialTheme.typography.titleLarge
+                    TextField(
+                        value = userInput,
+                        onValueChange = mapViewModel::onUserInputChange,
+                        label = { Text(stringResource(R.string.enter_alias)) },
+                        maxLines = 1,
+                        shape = MaterialTheme.shapes.medium,
+                        colors = MaterialTheme.colorScheme.primaryTextFieldColors,
                     )
-                    IconButton(
+
+                    Button(
                         onClick = {
                             mapViewModel.saveLocation()
                             onNavigateToMainClick()
                         },
                         enabled = selectedCoordinates != null,
-                        modifier = Modifier.size(50.dp)
+                        shape = MaterialTheme.shapes.medium,
+                        colors = MaterialTheme.colorScheme.primaryButtonColors,
                     ) {
                         Icon(
                             Icons.Default.Done,
@@ -122,33 +131,64 @@ fun MapScreen(
                         )
                     }
                 }
+            }
 
-                OutlinedTextField(
-                    value = userInput,
-                    onValueChange = mapViewModel::onUserInputChange,
+            GoogleMap(
+                cameraPositionState = cameraPositionState,
+                properties = MapProperties(isMyLocationEnabled = permissionGranted),
+                onMapClick = { latLng -> mapViewModel.onMapClick(latLng.toModel()) },
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                selectedCoordinates?.let { coordinates ->
+                    Marker(
+                        state = MarkerState(position = coordinates.toLatLng()),
+                        title = userInput.ifBlank { stringResource(R.string.selected_point) }
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Preview
+@Composable
+fun MapScreenPreview() {
+    WeatherTheme {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp)
+        ) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+
+                TextField(
+                    value = "",
+                    onValueChange = {},
                     label = { Text(stringResource(R.string.enter_alias)) },
                     maxLines = 1,
                     shape = MaterialTheme.shapes.medium,
+                    colors = MaterialTheme.colorScheme.primaryTextFieldColors,
                     modifier = Modifier
-                        .fillMaxWidth()
-
                 )
-            }
-        }
 
-        GoogleMap(
-            cameraPositionState = cameraPositionState,
-            properties = MapProperties(isMyLocationEnabled = permissionGranted),
-            onMapClick = { latLng -> mapViewModel.onMapClick(latLng.toModel()) },
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1f)
-        ) {
-            selectedCoordinates?.let { coordinates ->
-                Marker(
-                    state = MarkerState(position = coordinates.toLatLng()),
-                    title = userInput.ifBlank { stringResource(R.string.selected_point) }
-                )
+                Button(
+                    onClick = {},
+                    enabled = true,
+                    shape = MaterialTheme.shapes.medium,
+                    colors = MaterialTheme.colorScheme.primaryButtonColors,
+                ) {
+                    Icon(
+                        Icons.Default.Done,
+                        contentDescription = stringResource(R.string.done)
+                    )
+                }
             }
         }
     }

@@ -3,7 +3,6 @@ package com.bsuir.weather.presentation.ui.component.day_forecast_screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -14,11 +13,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.ForecastLocationModel
+import com.bsuir.weather.presentation.ui.component.top_bar.TopAppBarWithBackButton
 import com.bsuir.weather.utils.constants.WeatherProfile
+import com.bsuir.weather.utils.ext.getLocalizedDayOfWeekAndDate
 
 @Composable
 fun DayForecastContent(
@@ -51,11 +53,10 @@ fun DayForecastContent(
 
         Scaffold (
             topBar = {
-                DayForecastTopBar(
-                    onNavigateToMainClick = onNavigateToMainClick,
-                    date = dailyForecastModel.date,
+                TopAppBarWithBackButton(
+                    onBackClick = onNavigateToMainClick,
+                    title = dailyForecastModel.date.getLocalizedDayOfWeekAndDate(LocalContext.current),
                     modifier = Modifier
-                        .fillMaxWidth()
                         .padding(horizontal = 16.dp)
                 )
             },

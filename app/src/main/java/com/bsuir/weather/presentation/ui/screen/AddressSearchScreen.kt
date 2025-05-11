@@ -18,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bsuir.weather.R
+import com.bsuir.weather.presentation.ui.component.top_bar.TopAppBarWithBackButton
 import com.bsuir.weather.presentation.viewmodel.AddressSearchViewModel
 
 @Composable
@@ -29,51 +30,63 @@ fun AddressSearchScreen(
     val searchText by addressSearchViewModel.searchText.collectAsState()
     val cityResults by addressSearchViewModel.cityResults.collectAsState()
 
-    Column(
-        verticalArrangement = Arrangement.Top,
-        modifier = modifier
-            .padding(16.dp)
-            .fillMaxSize()
-    ) {
-        OutlinedTextField(
-            value = searchText,
-            onValueChange = { addressSearchViewModel.onSearchTextChanged(it) },
-            label = { Text(stringResource(R.string.enter_city_name)) },
-            leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = stringResource(R.string.search)) },
-            singleLine = true,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
-            shape = Shapes().medium
-        )
-
-        if (cityResults.isEmpty() && searchText.isNotBlank()) {
-            Text(
-                text = stringResource(R.string.nothing_found),
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+    Scaffold (
+        topBar = {
+            TopAppBarWithBackButton(
+                onBackClick = onNavigateToMainClick,
+                title = stringResource(R.string.add_with_name),
                 modifier = Modifier
-                    .padding(top = 16.dp)
-                    .align(Alignment.CenterHorizontally)
+                    .padding(horizontal = 16.dp)
             )
         }
-
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.fillMaxSize()
+    ) { innerPadding ->
+        Column(
+            verticalArrangement = Arrangement.Top,
+            modifier = modifier
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp)
+                .fillMaxSize()
         ) {
-            items(
-                items = cityResults,
-                key = { it.placeId }
-            ) { prediction ->
-                val cityName = prediction.getFullText(null).toString()
-                AddressSearchItem(
-                    city = cityName,
-                    onClick = {
-                        addressSearchViewModel.saveLocation(prediction.placeId)
-                        onNavigateToMainClick()
-                    }
+            OutlinedTextField(
+                value = searchText,
+                onValueChange = { addressSearchViewModel.onSearchTextChanged(it) },
+                label = { Text(stringResource(R.string.enter_city_name)) },
+                leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = stringResource(R.string.search)) },
+                singleLine = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                shape = Shapes().medium
+            )
+
+            if (cityResults.isEmpty() && searchText.isNotBlank()) {
+                Text(
+                    text = stringResource(R.string.nothing_found),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .align(Alignment.CenterHorizontally)
                 )
+            }
+
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(
+                    items = cityResults,
+                    key = { it.placeId }
+                ) { prediction ->
+                    val cityName = prediction.getFullText(null).toString()
+                    AddressSearchItem(
+                        city = cityName,
+                        onClick = {
+                            addressSearchViewModel.saveLocation(prediction.placeId)
+                            onNavigateToMainClick()
+                        }
+                    )
+                }
             }
         }
     }

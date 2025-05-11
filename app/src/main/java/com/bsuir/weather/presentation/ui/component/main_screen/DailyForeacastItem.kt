@@ -12,11 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.bsuir.weather.presentation.ui.utils.getFormattedDayOfWeek
+import com.bsuir.weather.utils.ext.getCapitalizedDisplayName
 import kotlinx.datetime.DayOfWeek
 
 @Composable
@@ -34,7 +35,7 @@ fun DailyForecastItem(
         modifier = modifier
     ) {
         Text (
-            text = getFormattedDayOfWeek(dayName),
+            text = dayName.getCapitalizedDisplayName(LocalContext.current),
             style = MaterialTheme.typography.titleLarge,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1,
