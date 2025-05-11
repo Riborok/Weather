@@ -5,7 +5,7 @@ import com.bsuir.weather.domain.repository.ForecastLocationRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class ForecastLocationUseCase @Inject constructor(
+class StoredForecastLocationUseCase @Inject constructor(
     private val forecastLocationRepository: ForecastLocationRepository
 ) {
     suspend fun updateForecastLocation(forecastLocation: ForecastLocationModel) {

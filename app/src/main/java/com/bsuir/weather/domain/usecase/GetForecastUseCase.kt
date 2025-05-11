@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetForecastUseCase @Inject constructor(
     private val forecastRepository: ForecastRepository
 ) {
-    suspend fun execute(latitude: Double, longitude: Double): ForecastModel {
+    suspend fun getForecast(latitude: Double, longitude: Double): ForecastModel {
         return forecastRepository.getForecast(latitude, longitude)
     }
 }

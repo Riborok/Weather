@@ -5,7 +5,7 @@ import com.bsuir.weather.domain.repository.LocationRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class LocationUseCase @Inject constructor(
+class StoredLocationUseCase @Inject constructor(
     private val locationRepository: LocationRepository
 ) {
     fun getSavedLocations(): Flow<List<LocationModel>> {
