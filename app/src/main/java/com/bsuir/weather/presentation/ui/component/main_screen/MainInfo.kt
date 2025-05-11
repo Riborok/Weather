@@ -30,6 +30,8 @@ fun MainInfo (
     modifier: Modifier = Modifier
 ) {
     Surface(
+        color = MaterialTheme.colorScheme.surface,
+        contentColor = MaterialTheme.colorScheme.onSurface,
         modifier = modifier
     ) {
         Row(
@@ -46,7 +48,7 @@ fun MainInfo (
                     text = pickedLocationName,
                     style = MaterialTheme.typography.titleLarge,
                     overflow = TextOverflow.Ellipsis,
-                    maxLines = 2,
+                    maxLines = 3,
                     modifier = Modifier
                         .clickable(onClick = onOpenDrawerClick)
                 )
@@ -55,9 +57,10 @@ fun MainInfo (
                     style = MaterialTheme.typography.displayLarge
                 )
                 Text(
-                    text = "${dailyForecast.maxTemperature} "
+                    text = "${dailyForecast.minTemperature} "
                             + stringResource(R.string.celsius_degrees)
-                            + " / ${dailyForecast.minTemperature} "
+                            + " / " +
+                            "${dailyForecast.maxTemperature} "
                             + stringResource(R.string.celsius_degrees),
                     style = MaterialTheme.typography.bodyLarge,
                 )

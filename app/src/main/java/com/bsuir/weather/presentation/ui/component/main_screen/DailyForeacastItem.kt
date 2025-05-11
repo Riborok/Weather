@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -25,7 +26,8 @@ fun DailyForecastItem(
     weatherDescriptionId: Int,
     minTemperature: String,
     maxTemperature: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    textColor: Color = MaterialTheme.colorScheme.onSurface,
 ) {
     Row (
         verticalAlignment = Alignment.CenterVertically,
@@ -57,5 +59,8 @@ fun DailyForecastItem(
         )
     }
 
-    HorizontalDivider(thickness = 1.dp)
+    HorizontalDivider(
+        thickness = 1.dp,
+        color = textColor.copy(alpha = 0.2f)
+    )
 }

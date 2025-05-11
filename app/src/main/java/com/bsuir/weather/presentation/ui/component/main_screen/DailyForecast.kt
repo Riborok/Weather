@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.DailyForecastModel
+import com.bsuir.weather.utils.ext.cardColors
 
 @Composable
 fun DailyForecast (
@@ -23,7 +24,8 @@ fun DailyForecast (
     modifier: Modifier = Modifier
 ) {
     Card (
-        modifier = modifier
+        modifier = modifier,
+        colors = MaterialTheme.colorScheme.cardColors
     ) {
         Column (
             verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -46,12 +48,13 @@ fun DailyForecast (
             ) {
                 dailyForecastList.forEachIndexed { index, dailyForecastModel ->
                     DailyForecastItem(
-                        dailyForecastModel.date.dayOfWeek,
-                        dailyForecastModel.iconId,
-                        dailyForecastModel.weatherDescriptionId,
-                        dailyForecastModel.minTemperature.toString(),
-                        dailyForecastModel.maxTemperature.toString(),
-                        Modifier
+                        dayName = dailyForecastModel.date.dayOfWeek,
+                        icon = dailyForecastModel.iconId,
+                        weatherDescriptionId = dailyForecastModel.weatherDescriptionId,
+                        minTemperature = dailyForecastModel.minTemperature.toString(),
+                        maxTemperature = dailyForecastModel.maxTemperature.toString(),
+                        textColor = MaterialTheme.colorScheme.cardColors.contentColor,
+                        modifier = Modifier
                             .fillMaxWidth()
                             .clickable { onNavigateToDayForecast(index) }
                     )

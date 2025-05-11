@@ -16,34 +16,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.ui.unit.Dp
+import com.bsuir.weather.utils.ext.cardColors
 
 @Composable
 fun <T> HourlyForecast (
     title: String,
     items: List<T>,
     modifier: Modifier = Modifier,
-    contentPadding: PaddingValues = PaddingValues(16.dp),
+    contentPaddingSize: Dp = 16.dp,
     lazyListState: LazyListState = rememberLazyListState(),
     itemContent: @Composable (ColumnScope.(T) -> Unit),
 ) {
     Card (
-        modifier = modifier
+        modifier = modifier,
+        colors = MaterialTheme.colorScheme.cardColors
     ) {
         Column (
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.Start,
-            modifier = Modifier.padding(contentPadding)
+            modifier = Modifier.padding(vertical = contentPaddingSize)
         ) {
             Text (
                 text = title,
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.secondary
+                color = MaterialTheme.colorScheme.secondary,
+                modifier = Modifier.padding(start = contentPaddingSize)
             )
 
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                state = lazyListState
+                state = lazyListState,
+                contentPadding = PaddingValues(horizontal = contentPaddingSize),
             ) {
                 items(items) { hourlyForecast ->
                     itemContent(hourlyForecast)

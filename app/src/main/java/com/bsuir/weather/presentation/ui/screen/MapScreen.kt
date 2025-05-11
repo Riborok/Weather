@@ -80,7 +80,6 @@ fun MapScreen(
             tonalElevation = 4.dp,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 8.dp)
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),

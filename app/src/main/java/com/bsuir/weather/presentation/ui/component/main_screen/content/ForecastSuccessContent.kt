@@ -27,7 +27,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.ForecastLocationModel
-import com.bsuir.weather.domain.model.HourlyForecastModel
 import com.bsuir.weather.presentation.ui.component.main_screen.AdditionalInfo
 import com.bsuir.weather.presentation.ui.component.main_screen.DailyForecast
 import com.bsuir.weather.presentation.ui.component.main_screen.HourlyForecast
@@ -36,7 +35,6 @@ import com.bsuir.weather.presentation.ui.component.main_screen.MainInfo
 import com.bsuir.weather.presentation.ui.component.modal.WeatherChatDialog
 import com.bsuir.weather.utils.ext.formattedOrUnknown
 import com.bsuir.weather.utils.forecast.ForecastUtils.getHourlyForecastSubset
-import java.time.LocalTime
 
 @Composable
 fun ForecastSuccessContent(
@@ -81,7 +79,7 @@ fun ForecastSuccessContent(
                 )
             }
             item(key = "hourly_forecast") {
-                HourlyForecast<HourlyForecastModel> (
+                HourlyForecast (
                     title = stringResource(R.string.forecast_for_24_hour),
                     items = limitedHourlyForecastList,
                     modifier = Modifier
@@ -121,6 +119,8 @@ fun ForecastSuccessContent(
 
         FloatingActionButton(
             onClick = { isChatOpen = true },
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            contentColor = MaterialTheme.colorScheme.onTertiaryContainer,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(24.dp)

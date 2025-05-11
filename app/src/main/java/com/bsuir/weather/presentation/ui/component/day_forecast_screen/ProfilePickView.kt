@@ -24,6 +24,8 @@ fun ProfilePickView(
     modifier: Modifier = Modifier
 ) {
     Surface (
+        color = MaterialTheme.colorScheme.surface,
+        contentColor = MaterialTheme.colorScheme.onSurface,
         modifier = modifier
     ) {
         Row(
@@ -48,10 +50,12 @@ fun ProfilePickView(
                         )
                     },
                     colors = FilterChipDefaults.filterChipColors(
-                        selectedContainerColor = MaterialTheme.colorScheme.primary,
-                        selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
+                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                        selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                        selectedLeadingIconColor = MaterialTheme.colorScheme.onPrimaryContainer,
                         containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                        labelColor = MaterialTheme.colorScheme.onSecondaryContainer
+                        labelColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                        iconColor = MaterialTheme.colorScheme.onSecondaryContainer
                     ),
                     modifier = Modifier
                         .defaultMinSize(minHeight = 40.dp)

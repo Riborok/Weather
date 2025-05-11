@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.presentation.ui.component.main_screen.location.item.LocationItem
 import com.bsuir.weather.presentation.ui.component.main_screen.location.item.TitleItem
+import com.bsuir.weather.utils.ext.cardColors
 
 @Composable
 fun LocationGroup(
@@ -33,6 +35,7 @@ fun LocationGroup(
         ) {
             locations.forEach { location ->
                 Card (
+                    colors = MaterialTheme.colorScheme.cardColors,
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable(
@@ -40,13 +43,12 @@ fun LocationGroup(
                         )
                         .padding(horizontal = 2.dp)
                 ) {
-                    Card(
+                    LocationItem(
+                        location = location,
                         modifier = Modifier
                             .padding(12.dp)
-                            .fillMaxWidth(),
-                    ) {
-                        LocationItem(location)
-                    }
+                            .fillMaxWidth()
+                    )
                 }
             }
         }

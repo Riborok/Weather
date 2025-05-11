@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Surface
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -147,8 +148,10 @@ fun MainScreen(
             )
         }
     ) {
-        Box(
-            Modifier
+        Surface(
+            color = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface,
+            modifier = Modifier
                 .fillMaxSize()
                 .pullRefresh(pullRefreshState)
         ) {
@@ -166,15 +169,19 @@ fun MainScreen(
                 )
             }
 
-            PullRefreshIndicator(
-                refreshing = isRefreshing,
-                state = pullRefreshState,
-                backgroundColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.16f),
-                contentColor    = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 16.dp)
-            )
+            Box (
+                modifier = Modifier.fillMaxSize()
+            ) {
+                PullRefreshIndicator(
+                    refreshing = isRefreshing,
+                    state = pullRefreshState,
+                    backgroundColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.16f),
+                    contentColor    = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .padding(top = 16.dp)
+                )
+            }
         }
     }
 }

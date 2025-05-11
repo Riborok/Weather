@@ -8,10 +8,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AdditionalInfoItem (title: String, value: String, modifier: Modifier = Modifier) {
+fun AdditionalInfoItem (
+    title: String,
+    value: String,
+    modifier: Modifier = Modifier,
+    textColor: Color = MaterialTheme.colorScheme.onSurface
+) {
     Row (
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -28,5 +34,8 @@ fun AdditionalInfoItem (title: String, value: String, modifier: Modifier = Modif
         )
     }
 
-    HorizontalDivider (thickness = 1.dp)
+    HorizontalDivider (
+        thickness = 1.dp,
+        color = textColor.copy(alpha = 0.2f)
+    )
 }

@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.ForecastLocationModel
-import com.bsuir.weather.presentation.ui.component.main_screen.DayForecastTopBar
 import com.bsuir.weather.utils.constants.WeatherProfile
 
 @Composable
@@ -55,7 +54,9 @@ fun DayForecastContent(
                 DayForecastTopBar(
                     onNavigateToMainClick = onNavigateToMainClick,
                     date = dailyForecastModel.date,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp)
                 )
             },
             modifier = modifier

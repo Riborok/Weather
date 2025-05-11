@@ -8,7 +8,7 @@ import com.bsuir.weather.utils.android.ThemeUtils.getColorScheme
 @Composable
 fun WeatherTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = getColorScheme(
