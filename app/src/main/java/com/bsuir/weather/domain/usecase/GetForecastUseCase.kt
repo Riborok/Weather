@@ -11,4 +11,8 @@ class GetForecastUseCase @Inject constructor(
     suspend fun getForecast(coords: Coordinates): ForecastModel {
         return forecastRepository.fetchForecast(coords)
     }
+
+    suspend fun getForecastForced(coords: Coordinates): ForecastModel {
+        return forecastRepository.fetchForecastForced(coords)
+    }
 }

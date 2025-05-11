@@ -112,7 +112,7 @@ fun MainScreen(
         onRefresh = {
             pickedLocationState.onSuccess { pickedLocation ->
                 isRefreshing = true
-                forecastViewModel.loadForecast(pickedLocation)
+                forecastViewModel.loadForecastForced(pickedLocation)
             }
         }
     )

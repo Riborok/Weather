@@ -19,6 +19,14 @@ class ForecastRepositoryImpl @Inject constructor(
             return it.toModel()
         }
 
+        return fetchForecastFromNetwork(coords)
+    }
+
+    override suspend fun fetchForecastForced(coords: Coordinates): ForecastModel {
+        return fetchForecastFromNetwork(coords)
+    }
+
+    private suspend fun fetchForecastFromNetwork(coords: Coordinates): ForecastModel {
         return weatherForecastNetwork.getForecastList(coords, 7).toModel().also {
             forecastCache.save(coords, it.toDTO())
         }
