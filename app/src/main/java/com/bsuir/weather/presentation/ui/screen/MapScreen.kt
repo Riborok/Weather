@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
@@ -77,7 +78,6 @@ fun MapScreen(
         modifier = modifier
     ) {
         Surface(
-            tonalElevation = 4.dp,
             modifier = Modifier
                 .fillMaxWidth()
         ) {
@@ -92,7 +92,8 @@ fun MapScreen(
                         .fillMaxWidth()
                 ) {
                     IconButton (
-                        onClick = { onNavigateToMainClick() }
+                        onClick = { onNavigateToMainClick() },
+                        modifier = Modifier.size(50.dp)
                     ) {
                         Icon(
                             Icons.AutoMirrored.Default.ArrowBack,
@@ -108,7 +109,8 @@ fun MapScreen(
                             mapViewModel.saveLocation()
                             onNavigateToMainClick()
                         },
-                        enabled = selectedCoordinates != null
+                        enabled = selectedCoordinates != null,
+                        modifier = Modifier.size(50.dp)
                     ) {
                         Icon(
                             Icons.Default.Done,
@@ -121,8 +123,11 @@ fun MapScreen(
                     value = userInput,
                     onValueChange = mapViewModel::onUserInputChange,
                     label = { Text(stringResource(R.string.enter_alias)) },
+                    maxLines = 1,
+                    shape = MaterialTheme.shapes.medium,
                     modifier = Modifier
                         .fillMaxWidth()
+
                 )
             }
         }

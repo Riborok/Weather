@@ -14,5 +14,6 @@ fun TitleItem(
         style = MaterialTheme.typography.titleSmall,
         overflow = TextOverflow.Ellipsis,
         maxLines = 2,
+        color = MaterialTheme.colorScheme.primary
     )
 }

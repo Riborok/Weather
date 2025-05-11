@@ -49,6 +49,7 @@ fun MainInfo (
                     style = MaterialTheme.typography.titleLarge,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 3,
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .clickable(onClick = onOpenDrawerClick)
                 )
@@ -63,10 +64,12 @@ fun MainInfo (
                             "${dailyForecast.maxTemperature} "
                             + stringResource(R.string.celsius_degrees),
                     style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.secondary
                 )
                 Text(
                     text = stringResource(currentForecast.weatherDescriptionId),
                     style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.secondary
                 )
             }
 
