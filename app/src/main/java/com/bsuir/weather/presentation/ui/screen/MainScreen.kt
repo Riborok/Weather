@@ -146,7 +146,7 @@ fun MainScreen(
                 .pullRefresh(pullRefreshState)
         ) {
             when (forecastState) {
-                is ForecastState.NoContent -> NoContent()
+                is ForecastState.NoContent -> NoContent(stringResource(R.string.choose_location_message))
                 is ForecastState.Loading -> LoadingContent()
                 is ForecastState.Success -> ForecastSuccessContent(
                     forecastLocation = (forecastState as ForecastState.Success).forecastLocation,
