@@ -9,22 +9,22 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
 
-private val Context.forecastDataStore by preferencesDataStore("forecast_location_data_store")
+private val Context.forecastLocationDataStore by preferencesDataStore("forecast_location_data_store")
 
 class ForecastLocationDataStore(
     private val context: Context,
-    private val forecastKey: Preferences.Key<String>
+    private val forecastLocationKey: Preferences.Key<String>
 ) {
 
-    val forecastLocation: Flow<ForecastLocationDTO?> = context.forecastDataStore.data
+    val forecastLocation: Flow<ForecastLocationDTO?> = context.forecastLocationDataStore.data
         .map { preferences ->
-            preferences[forecastKey]?.let { Json.decodeFromString(serializer(), it) }
+            preferences[forecastLocationKey]?.let { Json.decodeFromString(serializer(), it) }
         }
 
     suspend fun updateForecastLocation(forecastLocation: ForecastLocationDTO) {
         val json = Json.encodeToString(serializer(), forecastLocation)
-        context.forecastDataStore.edit { preferences ->
-            preferences[forecastKey] = json
+        context.forecastLocationDataStore.edit { preferences ->
+            preferences[forecastLocationKey] = json
         }
     }
 }
