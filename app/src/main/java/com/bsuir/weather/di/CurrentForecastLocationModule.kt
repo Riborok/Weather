@@ -1,6 +1,9 @@
 package com.bsuir.weather.di
 
 import android.content.Context
+import com.bsuir.weather.data.db.AppDatabase
+import com.bsuir.weather.data.db.cache.LocationCache
+import com.bsuir.weather.data.db.dao.LocationDao
 import com.bsuir.weather.data.repository.CurrentLocationRepositoryImpl
 import com.bsuir.weather.domain.repository.CurrentLocationRepository
 import com.bsuir.weather.domain.usecase.GetCurrentForecastLocationUseCase
@@ -18,8 +21,17 @@ object CurrentForecastLocationModule {
 
     @Provides
     @Singleton
-    fun provideCurrentLocationRepository(@ApplicationContext context: Context): CurrentLocationRepository {
-        return CurrentLocationRepositoryImpl(context)
+    fun provideLocationCache(locationDao: LocationDao): LocationCache {
+        return LocationCache(locationDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCurrentLocationRepository(
+        @ApplicationContext context: Context,
+        locationCache: LocationCache
+    ): CurrentLocationRepository {
+        return CurrentLocationRepositoryImpl(context, locationCache)
     }
 
     @Provides

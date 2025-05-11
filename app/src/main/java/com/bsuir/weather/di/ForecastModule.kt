@@ -29,22 +29,6 @@ object ForecastModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
-        return Room.databaseBuilder(
-            context,
-            AppDatabase::class.java,
-            "weather_database"
-        ).build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideForecastDao(database: AppDatabase): ForecastDao {
-        return database.forecastDao()
-    }
-
-    @Provides
-    @Singleton
     fun provideForecastCache(forecastDao: ForecastDao): ForecastCache {
         return ForecastCache(forecastDao)
     }
