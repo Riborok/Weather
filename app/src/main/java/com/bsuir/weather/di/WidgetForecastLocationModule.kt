@@ -18,13 +18,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object WidgetForecastLocationModule {
 
-    private val WIDGET_FORECAST_KEY = stringPreferencesKey("widget_forecast_locations")
+    private val WIDGET_FORECAST_LOCATION_KEY = stringPreferencesKey("widget_forecast_location")
 
     @Provides
     @Singleton
     @Named("WidgetForecastDataStore")
     fun provideWidgetForecastLocationDataStore(@ApplicationContext context: Context): ForecastLocationDataStore {
-        return ForecastLocationDataStore(context, WIDGET_FORECAST_KEY)
+        return ForecastLocationDataStore(context, WIDGET_FORECAST_LOCATION_KEY)
     }
 
     @Provides
