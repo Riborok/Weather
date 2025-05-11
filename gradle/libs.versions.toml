@@ -12,6 +12,8 @@ material = "1.12.0"
 materialVersion = "1.9.0-alpha02"
 places = "4.2.0"
 playServicesLocation = "21.3.0"
+roomRuntime = "2.7.1"
+roomKtx = "2.7.1"
 runner = "1.6.2"
 kotlinxDatetime = "0.4.0"
 kotlinxSerializationJson = "1.7.3"
@@ -44,6 +46,9 @@ androidx-material = { module = "androidx.compose.material:material", version.ref
 androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "materialIconsCore" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 androidx-material3-android = { module = "androidx.compose.material3:material3-android", version.ref = "material3Android" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
