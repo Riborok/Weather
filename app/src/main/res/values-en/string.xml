@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="weather">Weather</string>
+    <string name="forecast">Forecast</string>
+    <string name="ecology">Ecology</string>
+    <string name="settings">Settings</string>
+
+    <string name="weather_icon">Weather Icon</string>
+    <string name="weather_clear_sky">Clear Sky</string>
+    <string name="weather_mainly_clear">Mostly Clear</string>
+    <string name="weather_partly_cloudy">Partly Cloudy</string>
+    <string name="weather_overcast">Overcast</string>
+    <string name="weather_fog">Fog</string>
+    <string name="weather_rime_fog">Freezing Fog</string>
+    <string name="weather_light_drizzle">Light Drizzle</string>
+    <string name="weather_moderate_drizzle">Moderate Drizzle</string>
+    <string name="weather_dense_drizzle">Dense Drizzle</string>
+    <string name="weather_light_freezing_drizzle">Light Freezing Drizzle</string>
+    <string name="weather_dense_freezing_drizzle">Dense Freezing Drizzle</string>
+    <string name="weather_light_rain">Light Rain</string>
+    <string name="weather_moderate_rain">Moderate Rain</string>
+    <string name="weather_heavy_rain">Heavy Rain</string>
+    <string name="weather_light_freezing_rain">Light Freezing Rain</string>
+    <string name="weather_heavy_freezing_rain">Heavy Freezing Rain</string>
+    <string name="weather_light_snow">Light Snow</string>
+    <string name="weather_moderate_snow">Moderate Snow</string>
+    <string name="weather_heavy_snow">Heavy Snow</string>
+    <string name="weather_snow_grains">Snow Grains</string>
+    <string name="weather_light_rain_showers">Light Rain Showers</string>
+    <string name="weather_moderate_rain_showers">Moderate Rain Showers</string>
+    <string name="weather_heavy_rain_showers">Heavy Rain Showers</string>
+    <string name="weather_light_snow_showers">Light Snow Showers</string>
+    <string name="weather_heavy_snow_showers">Heavy Snow Showers</string>
+    <string name="weather_thunderstorm">Thunderstorm</string>
+    <string name="weather_thunderstorm_light_hail">Thunderstorm with Light Hail</string>
+    <string name="weather_thunderstorm_heavy_hail">Thunderstorm with Heavy Hail</string>
+
+    <string name="delete_location_title">Delete Location</string>
+    <string name="delete_location_message">Are you sure you want to delete the location “%1$s”?</string>
+
+    <string name="next">Next</string>
+    <string name="save">Save</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="done">Done</string>
+    <string name="edit">Edit</string>
+
+    <string name="selected_point">Selected Point</string>
+    <string name="enter_alias">Enter place name:</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="add">Add</string>
+    <string name="warning">Warning!</string>
+    <string name="empty_location_name_error">Name cannot be empty!</string>
+    <string name="add_with_map">Add on Map</string>
+    <string name="menu">Menu</string>
+    <string name="add_with_name">Add by Name</string>
+    <string name="current">Current</string>
+    <string name="saved">Saved</string>
+    <string name="ok">OK</string>
+    <string name="enter_city_name">Enter city name</string>
+    <string name="search">Search</string>
+    <string name="nothing_found">Nothing found</string>
+    <string name="city_icon">City Icon</string>
+    <string name="go_forward">Go</string>
+    <string name="loading">Loading</string>
+
+    <string name="feels_like">Feels like %1$s</string>
+    <string name="degree">%1$d°</string>
+
+    <string name="celsius_degrees">°C</string>
+    <string name="kilometers_per_hour">km/h</string>
+    <string name="kilometers">km</string>
+    <string name="percent">%</string>
+    <string name="millimeters">mm</string>
+    <string name="hectopascal">hPa</string>
+    <string name="m3_per_m3">m³/m³</string>
+    <string name="no_unit" />
+
+    <string name="felt">Feels</string>
+    <string name="wind">Wind</string>
+    <string name="wind_gusts">Gusts up to</string>
+    <string name="humidity">Humidity</string>
+    <string name="precipitation">Precipitation</string>
+    <string name="cloud_cover">Cloud Cover</string>
+    <string name="pressure">Pressure</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="weather_picture">Weather Image</string>
+
+    <string name="profile_field_temperature">Temperature</string>
+    <string name="profile_field_apparent_temperature">Apparent Temperature</string>
+    <string name="profile_field_temperature_80m">Temperature at 80 m</string>
+    <string name="profile_field_temperature_120m">Temperature at 120 m</string>
+    <string name="profile_field_temperature_180m">Temperature at 180 m</string>
+    <string name="profile_field_relative_humidity">Relative Humidity</string>
+    <string name="profile_field_precipitation">Precipitation</string>
+    <string name="profile_field_precipitation_probability">Precipitation Probability</string>
+    <string name="profile_field_cloud_cover">Cloud Cover</string>
+    <string name="profile_field_surface_pressure">Surface Pressure</string>
+    <string name="profile_field_pressure_msl">Pressure at Sea Level</string>
+    <string name="profile_field_uv_index">UV Index</string>
+    <string name="profile_field_uv_index_clear_sky">UV Index (Clear Sky)</string>
+    <string name="profile_field_visibility">Visibility</string>
+    <string name="profile_field_wind_speed_10m">Wind Speed at 10 m</string>
+    <string name="profile_field_wind_speed_80m">Wind Speed at 80 m</string>
+    <string name="profile_field_wind_speed_120m">Wind Speed at 120 m</string>
+    <string name="profile_field_wind_speed_180m">Wind Speed at 180 m</string>
+    <string name="profile_field_wind_gusts_10m">Wind Gusts at 10 m</string>
+    <string name="profile_field_wind_direction_id_10m">Wind Direction at 10 m</string>
+    <string name="profile_field_wind_direction_id_80m">Wind Direction at 80 m</string>
+    <string name="profile_field_wind_direction_id_120m">Wind Direction at 120 m</string>
+    <string name="profile_field_wind_direction_id_180m">Wind Direction at 180 m</string>
+    <string name="profile_field_soil_temperature_0cm">Soil Temperature at 0 cm</string>
+    <string name="profile_field_soil_temperature_6cm">Soil Temperature at 6 cm</string>
+    <string name="profile_field_soil_temperature_18cm">Soil Temperature at 18 cm</string>
+    <string name="profile_field_soil_temperature_54cm">Soil Temperature at 54 cm</string>
+    <string name="profile_field_soil_moisture_0to1cm">Soil Moisture 0–1 cm</string>
+    <string name="profile_field_soil_moisture_1to3cm">Soil Moisture 1–3 cm</string>
+    <string name="profile_field_soil_moisture_3to9cm">Soil Moisture 3–9 cm</string>
+    <string name="profile_field_soil_moisture_9to27cm">Soil Moisture 9–27 cm</string>
+    <string name="profile_field_soil_moisture_27to81cm">Soil Moisture 27–81 cm</string>
+    <string name="profile_field_icon_id">Icon ID</string>
+    <string name="profile_field_weather_description_id">Weather Description ID</string>
+
+    <string name="profile_main">Main</string>
+    <string name="profile_driver">Driver</string>
+    <string name="profile_agronomist">Agronomist</string>
+    <string name="profile_tourist">Tourist</string>
+    <string name="profile_roofer">Roofer</string>
+
+    <string name="wind_direction_n">N</string>
+    <string name="wind_direction_ne">NE</string>
+    <string name="wind_direction_e">E</string>
+    <string name="wind_direction_se">SE</string>
+    <string name="wind_direction_s">S</string>
+    <string name="wind_direction_sw">SW</string>
+    <string name="wind_direction_w">W</string>
+    <string name="wind_direction_nw">NW</string>
+
+    <string name="content_description_ai_chat">AI Chat</string>
+
+    <string name="unknown_error">Unknown error</string>
+    <string name="error_message">Error: %1$s</string>
+
+    <string name="chat_placeholder_weather">Ask a weather question…</string>
+    <string name="content_description_send">Send</string>
+    <string name="content_description_user">User</string>
+    <string name="content_description_ai">AI</string>
+    <string name="header_ai_chat">🤖 Weather AI Assistant</string>
+    <string name="thinking_state">Thinking</string>
+
+    <string name="popular_questions">Popular Questions</string>
+    <string-array name="popular_questions">
+        <item>What should I wear today?</item>
+        <item>Do I need an umbrella today?</item>
+        <item>Is it okay to go for a walk today?</item>
+        <item>Can I go for a run outside today?</item>
+        <item>Can I ride a bicycle today?</item>
+        <item>Is the weather suitable for a picnic or bike ride today?</item>
+        <item>When will it be possible to swim in open water?</item>
+        <item>When is the best time to go to the country house?</item>
+    </string-array>
+
+    <string name="open_meteo_error">Open Meteo API Error</string>
+    <string name="ai_api_error">AI API Error</string>
+    <string name="error_no_location_found">No location found</string>
+
+    <string name="forecast_for_24_hour">24-Hour Forecast</string>
+    <string name="forecast_for_7_days">7-Day Forecast</string>
+
+    <string name="unknown_address">Unknown Address</string>
+
+    <string name="edit_location">Edit Location</string>
+    <string name="enter_new_name">New Name</string>
+    <string name="back">Back</string>
+    <string name="wrong_daily_forecast_index_error">Wrong index for daily weather list!</string>
+    <string name="time">Time</string>
+
+    <string name="wind_info">Wind: %1$d %3$s (gusts up to %2$d %3$s)</string>
+
+    <string name="no_content_message">Content unavailable</string>
+</resources>
