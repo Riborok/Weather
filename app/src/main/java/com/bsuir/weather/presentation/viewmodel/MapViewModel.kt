@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.bsuir.weather.domain.model.Coordinates
 import com.bsuir.weather.domain.usecase.GetCurrentLocationUseCase
 import com.bsuir.weather.domain.usecase.GetLocationFromCoordinatesUseCase
-import com.bsuir.weather.domain.usecase.StoredLocationUseCase
+import com.bsuir.weather.domain.usecase.StoredLocationListUseCase
 import com.bsuir.weather.presentation.state.CoordinatesState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +19,7 @@ import javax.inject.Named
 class MapViewModel @Inject constructor(
     private val getLocationFromCoordinatesUseCase: GetLocationFromCoordinatesUseCase,
     private val getCurrentLocationUseCase: GetCurrentLocationUseCase,
-    @Named("SavedLocationUseCase") private val storedLocationUseCase: StoredLocationUseCase
+    @Named("SavedLocationListUseCase") private val storedLocationListUseCase: StoredLocationListUseCase
 ) : ViewModel() {
     private val _currentCoordinatesState = MutableStateFlow<CoordinatesState>(CoordinatesState.Loading)
     val currentCoordinatesState: StateFlow<CoordinatesState> = _currentCoordinatesState.asStateFlow()
@@ -58,7 +58,7 @@ class MapViewModel @Inject constructor(
                     coords = coords
                 )
                 location.address.alias = _userInput.value
-                storedLocationUseCase.saveLocation(location)
+                storedLocationListUseCase.saveLocation(location)
             }
         }
     }

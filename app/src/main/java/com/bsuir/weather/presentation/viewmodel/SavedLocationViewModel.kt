@@ -3,7 +3,7 @@ package com.bsuir.weather.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bsuir.weather.domain.model.LocationModel
-import com.bsuir.weather.domain.usecase.StoredLocationUseCase
+import com.bsuir.weather.domain.usecase.StoredLocationListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -12,7 +12,7 @@ import javax.inject.Named
 
 @HiltViewModel
 class SavedLocationViewModel @Inject constructor(
-    @Named("SavedLocationUseCase") private val storedLocationUseCase: StoredLocationUseCase
+    @Named("SavedLocationListUseCase") private val storedLocationListUseCase: StoredLocationListUseCase
 ) : ViewModel() {
     private var _savedLocations = MutableStateFlow<List<LocationModel>>(emptyList())
     val savedLocations: StateFlow<List<LocationModel>> = _savedLocations.asStateFlow()
@@ -22,7 +22,7 @@ class SavedLocationViewModel @Inject constructor(
     }
 
     private fun observeLocations() {
-        storedLocationUseCase.getSavedLocations()
+        storedLocationListUseCase.getSavedLocations()
             .onEach { locations ->
                 _savedLocations.value = locations
             }
@@ -31,20 +31,20 @@ class SavedLocationViewModel @Inject constructor(
 
     fun saveLocation(location: LocationModel) {
         viewModelScope.launch {
-            storedLocationUseCase.saveLocation(location)
+            storedLocationListUseCase.saveLocation(location)
         }
     }
 
     fun removeLocation(location: LocationModel) {
         viewModelScope.launch {
-            storedLocationUseCase.removeLocation(location)
+            storedLocationListUseCase.removeLocation(location)
         }
     }
 
     fun updateLocation(oldLocation: LocationModel, newLocation: LocationModel) {
         if (oldLocation != newLocation) {
             viewModelScope.launch {
-                storedLocationUseCase.updateLocation(oldLocation, newLocation)
+                storedLocationListUseCase.updateLocation(oldLocation, newLocation)
             }
         }
     }

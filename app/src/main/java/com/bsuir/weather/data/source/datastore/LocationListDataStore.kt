@@ -11,7 +11,7 @@ import kotlinx.serialization.json.Json
 
 private val Context.locationDataStore by preferencesDataStore("location_data_store")
 
-class LocationDataStore(
+class LocationListDataStore(
     private val context: Context,
     private val forecastKey: Preferences.Key<Set<String>>
 ) {
