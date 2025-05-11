@@ -24,14 +24,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bsuir.weather.R
 import com.bsuir.weather.presentation.state.CoordinatesState
 import com.bsuir.weather.presentation.ui.component.content.LoadingContent
 import com.bsuir.weather.presentation.ui.component.top_bar.TopAppBarWithBackButton
-import com.bsuir.weather.presentation.ui.theme.WeatherTheme
 import com.bsuir.weather.presentation.ui.utils.RequestLocationPermission
 import com.bsuir.weather.presentation.viewmodel.MapViewModel
 import com.bsuir.weather.utils.constants.mapZoom
@@ -111,9 +109,12 @@ fun MapScreen(
                         value = userInput,
                         onValueChange = mapViewModel::onUserInputChange,
                         label = { Text(stringResource(R.string.enter_alias)) },
-                        maxLines = 1,
+                        singleLine = true,
                         shape = MaterialTheme.shapes.medium,
                         colors = MaterialTheme.colorScheme.primaryTextFieldColors,
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 8.dp)
                     )
 
                     Button(
@@ -123,7 +124,7 @@ fun MapScreen(
                         },
                         enabled = selectedCoordinates != null,
                         shape = MaterialTheme.shapes.medium,
-                        colors = MaterialTheme.colorScheme.primaryButtonColors,
+                        colors = MaterialTheme.colorScheme.primaryButtonColors
                     ) {
                         Icon(
                             Icons.Default.Done,
@@ -144,49 +145,6 @@ fun MapScreen(
                     Marker(
                         state = MarkerState(position = coordinates.toLatLng()),
                         title = userInput.ifBlank { stringResource(R.string.selected_point) }
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-fun MapScreenPreview() {
-    WeatherTheme {
-        Surface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(bottom = 16.dp)
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Top,
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-
-                TextField(
-                    value = "",
-                    onValueChange = {},
-                    label = { Text(stringResource(R.string.enter_alias)) },
-                    maxLines = 1,
-                    shape = MaterialTheme.shapes.medium,
-                    colors = MaterialTheme.colorScheme.primaryTextFieldColors,
-                    modifier = Modifier
-                )
-
-                Button(
-                    onClick = {},
-                    enabled = true,
-                    shape = MaterialTheme.shapes.medium,
-                    colors = MaterialTheme.colorScheme.primaryButtonColors,
-                ) {
-                    Icon(
-                        Icons.Default.Done,
-                        contentDescription = stringResource(R.string.done)
                     )
                 }
             }

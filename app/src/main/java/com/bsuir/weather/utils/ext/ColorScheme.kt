@@ -5,6 +5,7 @@ import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.TextFieldColors
+import androidx.compose.ui.graphics.Color
 
 val ColorScheme.primaryCardColors: CardColors
     get() = CardColors(
@@ -49,10 +50,10 @@ val ColorScheme.primaryTextFieldColors: TextFieldColors
             backgroundColor = primary.copy(alpha = 0.4f)
         ),
 
-        focusedIndicatorColor = primary,
-        unfocusedIndicatorColor = outline,
-        disabledIndicatorColor = onSurface.copy(alpha = 0.12f),
-        errorIndicatorColor = error,
+        focusedIndicatorColor = Color.Transparent,
+        unfocusedIndicatorColor = Color.Transparent,
+        disabledIndicatorColor = Color.Transparent,
+        errorIndicatorColor = Color.Transparent,
 
         focusedLeadingIconColor = onSurface,
         unfocusedLeadingIconColor = onSurfaceVariant,
