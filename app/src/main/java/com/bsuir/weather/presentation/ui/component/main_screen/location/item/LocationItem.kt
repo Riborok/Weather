@@ -7,12 +7,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.LocationModel
-import com.bsuir.weather.utils.ext.formatAddress
 import com.bsuir.weather.utils.ext.formattedOrUnknown
 
 @Composable
@@ -29,7 +26,7 @@ fun LocationItem(
             Text(
                 text = alias,
                 style = MaterialTheme.typography.titleLarge,
-                maxLines = 1,
+                maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
@@ -41,7 +38,7 @@ fun LocationItem(
         } ?: Text(
             text = location.address.formattedOrUnknown(context),
             style = MaterialTheme.typography.titleLarge,
-            maxLines = 1,
+            maxLines = 2,
             overflow = TextOverflow.Ellipsis
         )
     }

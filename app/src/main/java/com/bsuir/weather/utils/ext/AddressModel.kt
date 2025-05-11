@@ -21,10 +21,8 @@ fun AddressModel.formattedOrUnknown(context: Context): String {
 
 fun AddressModel.formatAddress(): String? {
     return when {
-        thoroughfare != null && subThoroughfare != null -> "$thoroughfare, $subThoroughfare"
-        thoroughfare != null -> thoroughfare
-        else -> subLocality
-            ?: locality
+        subLocality != null && locality != null -> "$locality, $subLocality"
+        else -> locality
             ?: subAdminArea
             ?: adminArea
             ?: countryName

@@ -2,7 +2,6 @@ package com.bsuir.weather.data.source.android.location
 
 import android.content.Context
 import com.bsuir.weather.R
-import com.bsuir.weather.domain.model.Coordinates
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.exception.AddressNotFoundException
 import com.bsuir.weather.utils.ext.AddressModel
@@ -26,7 +25,7 @@ class LocationSuggestionFetcher(
     ): List<AutocompletePrediction> {
         val request = FindAutocompletePredictionsRequest.builder()
             .setQuery(query)
-            .setTypesFilter(listOf(PlaceTypes.ADDRESS))
+            .setTypesFilter(listOf(PlaceTypes.CITIES))
             .setSessionToken(sessionToken)
             .build()
 
