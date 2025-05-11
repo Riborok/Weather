@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
@@ -33,9 +32,8 @@ import com.bsuir.weather.utils.ext.secondaryCardColors
 fun ChatMessageItem(
     message: ChatMessage
 ) {
-    fun messageBoxModifier(): Modifier {
+    fun messageCardModifier(): Modifier {
         return Modifier
-            .padding(12.dp)
             .widthIn(max = 200.dp)
     }
 
@@ -45,10 +43,13 @@ fun ChatMessageItem(
             horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.Top
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Card(
                     colors = MaterialTheme.colorScheme.primaryCardColors,
-                    modifier = messageBoxModifier()
+                    modifier = messageCardModifier()
                 ) {
                     Text(
                         text = message.question.content,
@@ -56,11 +57,12 @@ fun ChatMessageItem(
                         modifier = Modifier.padding(8.dp)
                     )
                 }
-                Spacer(modifier = Modifier.width(6.dp))
+
                 Icon(
                     imageVector = Icons.Default.Person,
                     contentDescription = stringResource(id = R.string.content_description_user),
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.align(Alignment.Bottom)
                 )
             }
         }
@@ -72,15 +74,20 @@ fun ChatMessageItem(
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.Top
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Icon(
                     imageVector = Icons.Default.SmartToy,
                     contentDescription = stringResource(id = R.string.content_description_ai),
-                    tint = MaterialTheme.colorScheme.secondary
+                    tint = MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.align(Alignment.Bottom)
                 )
-                Spacer(modifier = Modifier.width(6.dp))
+
                 Card(
-                    colors = MaterialTheme.colorScheme.secondaryCardColors
+                    colors = MaterialTheme.colorScheme.secondaryCardColors,
+                    modifier = messageCardModifier()
                 ) {
                     if (message.response == null) {
                         LoadingAnimation()
@@ -104,11 +111,11 @@ fun ChatMessageItemPreview() {
         ChatMessageItem(
             ChatMessage (
                 Message (
-                    "Привет дорогой ChatGPT!!!"
+                    "Привет, дорогой ChatGPT!!!"
                 ),
 
                 Message (
-                    "Иди нахуй."
+                    "Привет, уважаемый! Как я могу помочь вам в этот прекрасный день?"
                 )
             )
             )
