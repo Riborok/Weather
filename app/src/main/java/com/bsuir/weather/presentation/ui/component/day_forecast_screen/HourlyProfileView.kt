@@ -3,6 +3,7 @@ package com.bsuir.weather.presentation.ui.component.day_forecast_screen
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -39,7 +40,7 @@ fun HourlyProfileView(
     val context = LocalContext.current
 
     val itemWidth = 80
-    val contentPadding = 16
+    val contentPaddingSize = 16
 
     val fields = profile.fields
     val times = rememberSaveable {
@@ -70,6 +71,7 @@ fun HourlyProfileView(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     state = rowState,
+                    contentPadding = PaddingValues(horizontal = contentPaddingSize.dp),
                     modifier = Modifier
                         .padding(
                             vertical = 8.dp
@@ -111,7 +113,7 @@ fun HourlyProfileView(
             HourlyForecast (
                 title = stringResource(field.nameResId) + unit,
                 items = items,
-                contentPaddingSize = contentPadding.dp,
+                contentPaddingSize = contentPaddingSize.dp,
                 lazyListState = rowState
             ) { fieldValue ->
                 FieldItem(
