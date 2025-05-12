@@ -182,4 +182,5 @@
     <string name="wind_info">Wind: %1$d %3$s (gusts up to %2$d %3$s)</string>
 
     <string name="no_content_message">Content unavailable</string>
+    <string name="choose_location_message">Choose a location</string>
 </resources>

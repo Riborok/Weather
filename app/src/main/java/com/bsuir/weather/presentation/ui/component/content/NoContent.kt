@@ -14,7 +14,9 @@ import androidx.compose.ui.unit.sp
 import com.bsuir.weather.R
 
 @Composable
-fun NoContent() {
+fun NoContent(
+    message: String = stringResource(R.string.no_content_message),
+) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
