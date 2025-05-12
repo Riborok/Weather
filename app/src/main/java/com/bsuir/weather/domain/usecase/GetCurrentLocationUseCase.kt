@@ -1,6 +1,5 @@
 package com.bsuir.weather.domain.usecase
 
-import android.location.Location
 import com.bsuir.weather.domain.model.Coordinates
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.domain.repository.CurrentLocationRepository

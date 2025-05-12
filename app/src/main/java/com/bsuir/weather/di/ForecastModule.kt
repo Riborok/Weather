@@ -1,8 +1,6 @@
 package com.bsuir.weather.di
 
 import android.content.Context
-import androidx.room.Room
-import com.bsuir.weather.data.db.AppDatabase
 import com.bsuir.weather.data.db.cache.ForecastCache
 import com.bsuir.weather.data.db.dao.ForecastDao
 import com.bsuir.weather.data.repository.ForecastRepositoryImpl

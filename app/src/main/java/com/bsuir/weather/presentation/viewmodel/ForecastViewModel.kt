@@ -3,9 +3,9 @@ package com.bsuir.weather.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bsuir.weather.domain.model.Coordinates
-import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.domain.model.ForecastModel
+import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.domain.usecase.GetForecastUseCase
 import com.bsuir.weather.exception.NetworkRequestException
 import com.bsuir.weather.presentation.state.ForecastState

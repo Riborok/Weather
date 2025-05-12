@@ -1,8 +1,8 @@
 package com.bsuir.weather.di
 
 import android.content.Context
-import com.bsuir.weather.widget.updater.WeatherNotificationUpdater
 import com.bsuir.weather.widget.WeatherWorkScheduler
+import com.bsuir.weather.widget.updater.WeatherNotificationUpdater
 import com.bsuir.weather.widget.updater.WeatherWidgetUpdater
 import dagger.Module
 import dagger.Provides

@@ -5,8 +5,8 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.bsuir.weather.domain.model.ForecastLocationModel
-import com.bsuir.weather.domain.usecase.StoredForecastLocationUseCase
 import com.bsuir.weather.domain.usecase.GetCurrentForecastLocationUseCase
+import com.bsuir.weather.domain.usecase.StoredForecastLocationUseCase
 import com.bsuir.weather.widget.updater.WeatherNotificationUpdater
 import com.bsuir.weather.widget.updater.WeatherWidgetUpdater
 import dagger.assisted.Assisted

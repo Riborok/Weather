@@ -1,9 +1,9 @@
 package com.bsuir.weather.data.source.network.chat.utils
 
 import android.content.Context
+import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.domain.model.ForecastModel
 import com.bsuir.weather.domain.model.LocationModel
-import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.utils.ext.currentLocale
 import com.bsuir.weather.utils.ext.fullAddress
 import java.util.Locale

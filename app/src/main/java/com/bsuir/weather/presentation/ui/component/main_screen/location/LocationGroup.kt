@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.bsuir.weather.domain.model.LocationModel
 import com.bsuir.weather.presentation.ui.component.main_screen.location.item.LocationItem
 import com.bsuir.weather.presentation.ui.component.main_screen.location.item.TitleItem
-import com.bsuir.weather.utils.ext.primaryCardColors
 import com.bsuir.weather.utils.ext.secondaryCardColors
 
 @Composable

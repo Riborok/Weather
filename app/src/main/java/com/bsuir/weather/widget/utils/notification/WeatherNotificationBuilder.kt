@@ -8,10 +8,10 @@ import androidx.core.app.NotificationCompat
 import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.utils.ext.createMainActivityPendingIntent
-import com.bsuir.weather.widget.utils.notification.NotificationChannelHelper.CHANNEL_ID
-import com.bsuir.weather.widget.utils.notification.NotificationChannelHelper.createWeatherChannel
 import com.bsuir.weather.widget.utils.ViewBuilder
 import com.bsuir.weather.widget.utils.WeatherStringFormatter
+import com.bsuir.weather.widget.utils.notification.NotificationChannelHelper.CHANNEL_ID
+import com.bsuir.weather.widget.utils.notification.NotificationChannelHelper.createWeatherChannel
 
 class WeatherNotificationBuilder(private val context: Context) {
     fun createNotification(

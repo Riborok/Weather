@@ -1,7 +1,14 @@
 package com.bsuir.weather.widget
 
 import android.content.Context
-import androidx.work.*
+import androidx.work.BackoffPolicy
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit

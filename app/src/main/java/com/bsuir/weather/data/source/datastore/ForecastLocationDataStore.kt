@@ -1,7 +1,8 @@
 package com.bsuir.weather.data.source.datastore
 
 import android.content.Context
-import androidx.datastore.preferences.core.*
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import com.bsuir.weather.data.dto.ForecastLocationDTO
 import com.bsuir.weather.data.dto.ForecastLocationDTO.Companion.serializer

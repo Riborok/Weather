@@ -1,12 +1,9 @@
 package com.bsuir.weather.presentation.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bsuir.weather.R
 import com.bsuir.weather.domain.model.ForecastLocationModel
 import com.bsuir.weather.domain.usecase.AskAiChatUseCase
-import com.bsuir.weather.utils.ext.weatherAppContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,7 +14,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import javax.inject.Inject
-import kotlin.collections.orEmpty
 
 data class Message(val content: String, val time: LocalDateTime = LocalDateTime.now())
 data class ChatMessage(val question: Message, val response: Message?)
