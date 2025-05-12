@@ -22,7 +22,7 @@ fun NoContent(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = stringResource(R.string.no_content_message),
+            text = message,
             fontSize = 18.sp,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(16.dp)
