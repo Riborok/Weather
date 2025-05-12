@@ -17,7 +17,6 @@ object AiChatPromptBuilder {
         return buildString {
             appendLine("You are a weather expert. Answer questions using complete information about the weather forecast.")
             appendLine("Be concise and answer directly to the point of the question.")
-            appendLine("For questions not related to weather information, inform the user that you can only discuss weather-related topics.")
             appendLine("Below are the data provided to assist you in answering:")
 
             appendLine()
