@@ -31,8 +31,6 @@ fun AddressModel.formatAddress(): String? {
 
 fun AddressModel.fullAddress(): String {
     return listOfNotNull(
-        subThoroughfare,
-        thoroughfare,
         subLocality,
         locality,
         subAdminArea,
