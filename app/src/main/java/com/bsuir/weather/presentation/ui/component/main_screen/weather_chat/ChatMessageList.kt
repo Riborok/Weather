@@ -9,9 +9,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -22,6 +24,14 @@ import com.bsuir.weather.utils.ext.toEpochMillisUTC
 fun ColumnScope.ChatMessageList(
     messageList: List<ChatMessage>
 ) {
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(messageList.size) {
+        if (messageList.isNotEmpty()) {
+            listState.scrollToItem(0)
+        }
+    }
+
     Box(
         modifier = Modifier
             .weight(1f)
@@ -30,6 +40,7 @@ fun ColumnScope.ChatMessageList(
             .background(MaterialTheme.colorScheme.background)
     ) {
         LazyColumn(
+            state = listState,
             reverseLayout = true,
             verticalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier
