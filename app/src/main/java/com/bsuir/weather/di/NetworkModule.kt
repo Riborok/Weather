@@ -18,6 +18,14 @@ object NetworkModule {
     @Singleton
     fun provideHttpClient(): HttpClient {
         return HttpClient(OkHttp) {
+            engine {
+                config {
+                    connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+                    readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+                    writeTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+                }
+            }
+
             install(ContentNegotiation) {
                 json()
             }
